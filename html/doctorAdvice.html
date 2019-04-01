@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>医生建议</title>
+  <link rel="stylesheet" type="text/css" href="../lib/css/weui.min.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/css/jquery-weui.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/doctorAdvice.css" />
+
+</head>
+
+<body>
+<div class="doctorAdviceBox">
+  <div class="doctorMes clearfix" style="display:block;">
+    <span class="photo"><img src="../custom/images/photo.jpg" /><!--  class="default" --></span>
+    <div class="mes">
+      <h3>签约医生：黄晓明</h3>
+      <p>所在单位：上海黄埔的社区中心</p>
+    </div>
+  </div>
+  <div class="main">
+    <div class='custom-nodata' style="display:none;">
+      <img src="../custom/images/nodata.png">
+      <p>暂无建议</p>
+    </div>
+    <div class="have-data-box" style="display:block;">
+      <div class="tabWrap">
+        <span class="current">血糖异常</span><span>血压异常</span>
+      </div>
+      <p class="border-top"></p>
+      <ul class="newadviceList">
+        <li>
+            <p><label>测量时间</label><span>2017-09-10&nbsp;&nbsp;&nbsp;&nbsp;早晨</span></p>
+            <p><label>血糖异常</label><span><em class="abnormal">10.21<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></p>
+            <p><label>干预时间</label><span>2019-09-12</span></p>
+            <p><label>医生建议</label><span>请注意到医院检查</span></p>
+        </li>
+        <li>
+            <p><label>测量时间</label><span>2017-09-10&nbsp;&nbsp;&nbsp;&nbsp;早晨</span></p>
+            <p><label>血糖异常</label><span><em class="">10.21</em>&nbsp;&nbsp;mmol/L</span></p>
+            <p><label>干预时间</label><span>2019-09-12</span></p>
+            <p><label>医生建议</label><span>请注意到医院检查</span></p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../lib/js/flexible.js"></script>
+  <script type="text/javascript" src="../custom/js/native.js"></script>
+  <script type="text/javascript" src="../custom/js/common.js"></script>
+  <script src="../custom/js/api.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+.followpop {
+  text-align: left;
+  line-height: 2;
+  padding: 0.133333rem 0.533333rem;
+  color: #333 !important;
+}
+
+.followUp .list li {
+  background: #fff;
+  margin-bottom: 0.266667rem;
+  font-size: 14px;
+}
+.followUp .list li p {
+  margin: 0.2rem 0;
+}
+.followUp .list li p label {
+  color: #999;
+  margin: 0 0.4rem;
+  display: inline-block;
+  float: left;
+}
+.followUp .list li p span {
+  overflow: hidden;
+  display: block;
+}
+.followUp .list li .top {
+  border-bottom: 0.266667rem solid #f9f9f9;
+  padding: 0.4rem 0.4rem 0.4rem 0;
+  margin: 0;
+}
+.followUp .list li .top img {
+  width: 0.48rem;
+  height: 0.48rem;
+  vertical-align: middle;
+  margin-right: 0.4rem;
+}
+.followUp .list li .con {
+  padding: 0.2rem 0;
+  position: relative;
+}
+.followUp .list li .con .time {
+  display: block;
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+}
+.followUp .list li .con .time.timeOver {
+  color: #FFA73B;
+}
+

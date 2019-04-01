@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>糖尿病</title>
+  <link rel="stylesheet" type="text/css" href="../lib/css/weui.min.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/css/jquery-weui.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/index.css" />
+
+</head>
+
+<body>
+<div class="homeBox">
+  <div class="topBg">
+    <p class="toplink" onClick=''>
+      <span><em>添加更多</em></span>
+    </p>
+    <div class="riskDataWrap">
+      <div class="circleCon nodataCircleCon" onClick='' style="display:none;">
+        <strong>&nbsp;</strong>
+        <em class="no"><!-- 您25未测量血糖 --></em>
+        <em>mmol/L</em>
+      </div>
+      <div class="circleCon" onClick='' style="display:block;">
+        <strong>
+          血糖正常
+        </strong>
+        <span><em>24</em></span>
+        <em>mmol/L</em>
+      </div>
+      <div class="circleCon riskDataCircleCon" onClick='' style="display:none;">
+        <strong>
+          血糖偏低
+        </strong>
+        <span><em>24</em><i class='down'></i></span>
+        <em>mmol/L</em>
+      </div>
+      <ul>
+        <li>
+          <span>
+            24
+          </span><br />
+          <em>糖化血红蛋白</em>
+          <p class="line"></p>
+        </li>
+        <li>
+          <span>23%</span><br />
+          <em>血糖达标率(年)</em>
+          <p class="line"></p>
+        </li>
+        <li>
+          <span>
+              <strong>不合格</strong>
+          </span><br />
+          <em>是否合格</em>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <ul class="homeUl homeUl1 ">
+    <li>
+      <span onClick=''><img src='../custom/images/icon1.png' />风险评估</span>
+    </li>
+    <li>
+      <span onClick=''><img src='../custom/images/icon2.png' />体征测量</span>
+    </li>
+  </ul>
+  <p class="border-top"></p>
+  <ul class="homeUl homeUl2 ">
+    <li>
+      <span onClick=''><img src='../custom/images/icon3.png'} /><br/>用药提醒</span>
+    </li>
+    <li>
+      <span onClick=''><img src='../custom/images/icon4.png' /><br/>随访计划</span>
+    </li>
+    <li>
+      <span onClick=''><img src='../custom/images/icon5.png' /><br/>报告查看</span>
+    </li>
+    <li>
+      <span onClick=''><img src='../custom/images/icon9.png' /><br/>医生建议</span>
+    </li>
+  </ul>
+</div>
+<!-- 添加更多弹出层 -->
+<div class="popup-wrap" style="display:none;">
+  <div class="lightbox"></div>
+  <div class="popup-con popup-con-middle">
+    <span class="close"></span>
+    <ul class="moreUl clearfix">
+      <li onClick=''><span><img src='../custom/images/icon10.png' /><br/>血压</span></li>
+      <li onClick=''><span><img src='../custom/images/icon11.png' /><br/>糖化血红蛋白</span></li>
+      <li onClick=''><span><img src='../custom/images/icon12.png' /><br/>身高体重</span></li>
+    </ul>
+  </div>
+</div>
+
+  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../lib/js/flexible.js"></script>
+  <script type="text/javascript" src="../custom/js/native.js"></script>
+  <script type="text/javascript" src="../custom/js/common.js"></script>
+  <script src="../custom/js/api.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>添加用药</title>
+  <link rel="stylesheet" type="text/css" href="../lib/css/weui.min.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/css/jquery-weui.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/medicationReminder.css" />
+
+</head>
+
+<body>
+<div class="MedicationReminder">
+  <div class="scroll-wrap">
+    <div class="tabWrap">
+      <span class="current">口服药</span><span>胰岛素</span>
+    </div>
+    <div class="mainCon">
+      <ul class="listAdd">
+        <li>
+          <span class="name">服用剂量</span>
+          <div class="r" style="width:70%;text-align:right;">
+            <div class="mySelectDrug"  id="selectDrug">
+                <input type="hidden" name="drug-name" id="drug-name" value="" data-id="0"data-drug-name="">
+                <input type="hidden" name="drug-dose" id="drug-dose" value="" data-drug-dose="">
+                <span data-drug-name="" data-drug-dose="" id="showDrug" class="max-hei">选择用药</span>
+            </div>
+            <span class="arrow-r"></span>
+          </div>
+        </li>
+        <li>
+          <span class="name">服用剂量</span>
+          <span class="r"><input type="text" placeholder="数量"  class="itext"/>片</span>
+        </li>
+      </ul>
+      <h3 class="mTitle">用药时间</h3>
+      <ul class="listDrugTime">
+            <li>
+              <img src='../custom/images/drug_clock.png' class="icoClock" />
+              <span class="time">09:00</span>
+              <span class="r" onClick=''><img src='../custom/images/drug_delete.png' class="icoDelete" /></span>
+            </li>
+            <li>
+              <img src='../custom/images/drug_clock.png' class="icoClock" />
+              <span class="time" data-hour="" data-minute="" id="showTime">09:00</span>
+              <span class="r" onClick=''><img src='../custom/images/drug_delete.png' class="icoDelete" /></span>
+            </li>
+      </ul>
+      <div onClick='' >
+        <p class='addTimeBtn' onClick='' id="selectTime"><span class="link"><img src='../custom/images/drug_add.png' />添加时间</span></p>
+      </div>
+      <div style="display:block;">
+        <h3 class="mTitle">常用药品（长按药品可删除）</h3>
+        <ul class="listCommonDrug clearfix">
+              <li onClick=''>
+                <span>加以探测到华0.5g/片 3片<em style="display:block;"></em></span>
+              </li>
+              <li onClick=''>
+                <span onTouchStart='' onTouchEnd=''>加以探测到华0.5g/片 3片<em></em></span>
+              </li>
+        </ul>
+      </div>
+      <h3 class="mTitle">备注信息</h3>
+      <div class="myTextareaBox">
+        <textarea class="weui-textarea" placeholder="请输入文本" rows="3"></textarea>
+        <div class="weui-textarea-counter"><span>0</span>/200</div>
+      </div>
+    </div>
+  </div>
+  <div class="custom-btm-fixed">
+      <span class="custom-btm-btn" onclick="">保存</span>
+  </div>
+</div>
+<!-- 选择用药的时候display:block; -->
+<div class="mySelect" style="display:none;">
+  <p class="otherDrugIpt"><input type="text" name="" placeholder="填写你找不到的药品名称" /></p>
+</div>
+
+  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../lib/js/flexible.js"></script>
+  <script type="text/javascript" src="../custom/js/native.js"></script>
+  <script type="text/javascript" src="../custom/js/common.js"></script>
+  <script src="../custom/js/api.js"></script>
+
+  <script src="../lib/js/jquery-weui.js"></script>
+  <!-- 选药品 -->
+  <link rel="stylesheet" href="../lib/css/iosSelect.css">
+  <script src="../lib/js/iosSelect.js"></script>
+  <script type="text/javascript">
+      var iosProvinces = [
+      {'id': '0', 'value': '阿司匹林', 'parentId': '0'},
+      {'id': '1', 'value': '酵素粉', 'parentId': '0'},
+      {'id': '2', 'value': '软骨鱼', 'parentId': '0'},
+      {'id': '3', 'value': '柯贵吉', 'parentId': '0'},
+      {'id': '3', 'value': '柯贵吉', 'parentId': '0'},
+      {'id': '3', 'value': '柯贵吉', 'parentId': '0'},
+      {'id': '4', 'value': '才几级', 'parentId': '0'}];
+      var iosCitys = [
+      {"value":"0卡博苹50mg/...","parentId":"0"},
+      {"value":"0卡博苹50mg/...","parentId":"0"},
+      {"value":"1卡博苹50mg/...","parentId":"1"},
+      {"value":"1卡博苹50mg/...","parentId":"1"},
+      {"value":"2卡博苹50mg/...","parentId":"2"},
+      {"value":"2卡博苹50mg/...","parentId":"2"},
+      {"value":"2卡博苹50mg/...","parentId":"2"},
+      {"value":"3卡博苹50mg/...","parentId":"3"},
+      {"value":"4卡博苹50mg/...","parentId":"4"}];
+      var selectDrugDom = $('#selectDrug');
+      var showDrugDom = $('#showDrug');
+      var drugNameDom= $('#drug-name');
+      var drugDoseDom = $('#drug-dose');
+      selectDrugDom.bind('click', function () {
+          var oneLevelId = showDrugDom.attr('data-drug-name');
+          var twoLevelId = showDrugDom.attr('data-drug-dose');
+          var iosSelect = new IosSelect(2,
+              [iosProvinces, iosCitys],
+              {
+                  // title: '地址选择',
+                  container: '.mySelect',
+                  itemHeight: 35,
+                  headerHeight: 100,
+                  relation: [1, 1],
+                  oneLevelId: oneLevelId,
+                  twoLevelId: twoLevelId,
+                  callback: function (selectOneObj, selectTwoObj) {
+                      drugNameDom.val(selectOneObj.id);
+                      drugNameDom.attr('drug-name', selectOneObj.value);
+                      drugDoseDom.val(selectTwoObj.id);
+                      drugDoseDom.attr('drug-dose', selectTwoObj.value);
+
+                      showDrugDom.attr('data-drug-name', selectOneObj.id);
+                      showDrugDom.attr('data-drug-dose', selectTwoObj.id);
+                      showDrugDom.html(selectOneObj.value + ' ' + selectTwoObj.value);
+                  }
+          });
+      });
+  </script>
+  <!-- 新加时间 -->
+  <script type="text/javascript">
+    var selectDateDom = $('#selectTime');
+    var showDateDom = $('#showTime');
+    var hourData = function(callback) {
+        var hours = [];
+        for (var i = 0,len = 24; i < len; i++) {
+            hours.push({
+                id: i,
+                value: i + '时'
+            });
+        }
+        callback(hours);
+    };
+    var minuteData = function(one, callback) {
+        var minutes = [];
+        for (var i = 0, len = 60; i < len; i++) {
+            minutes.push({
+                id: i,
+                value: i + '分'
+            });
+        }
+        callback(minutes);
+    };
+    selectDateDom.bind('click', function () {
+        var oneLevelId = showDateDom.attr('data-hour');
+        var twoLevelId = showDateDom.attr('data-minute');
+        var iosSelect = new IosSelect(2,
+              [hourData, minuteData],
+              {
+                  title: '添加时间',
+                  itemHeight: 35,
+                  itemShowCount: 9,
+                  oneLevelId: oneLevelId,
+                  twoLevelId: twoLevelId,
+                  callback: function (selectOneObj, selectTwoObj) {
+                      showDateDom.attr('data-hour', selectOneObj.id);
+                      showDateDom.attr('data-minute', selectTwoObj.id);
+                      showDateDom.html(selectOneObj.value + ' ' + selectTwoObj.value);
+                  }
+          });
+
+    });
+</script>
+
+</body>
+</html>

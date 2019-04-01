@@ -1,0 +1,155 @@
+.txtAlignLeft {
+  text-align: justify;
+  font-size: 16px;
+  padding: 0.2rem 0.2rem 0;
+}
+.riskAssessment {
+  background-color: #fff;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+.riskAssessment h2 {
+  padding: 0.533333rem 0.4rem 0.933333rem;
+  position: relative;
+  font-size: 18px;
+}
+.riskAssessment h2 em {
+  display: block;
+  position: absolute;
+  right: 0.4rem;
+  top: 0.533333rem;
+  font-style: normal;
+  font-weight: normal;
+  color: #666;
+}
+.riskAssessment .listCheckbox {
+  position: absolute;
+  top: 2.0rem;
+  bottom: 1.8rem;
+  width: 100%;
+  overflow: auto;
+}
+.riskAssessment .listCheckbox .custom_check_label .icon-check{margin-top: 4px;}
+.riskAssessment .listCheckbox li.checked{background-color: #f9f9f9;}
+.riskAssessment .listCheckbox .custom_check_label{display: block;padding:0.4rem 0 .4rem 0.933333rem;}
+.riskAssessment .listCheckbox .custom_check_label input[type="checkbox"] .icon-check{background-image: url(../images/checkbox.png);margin-right: 0.4rem;vertical-align: text-top;margin-top: .07rem;}
+.riskAssessment .listCheckbox .custom_check_label input[type="checkbox"]:checked + .icon-check{
+  background-image: url(../images/sel_checkbox.png);
+}
+.riskAssessment .listCheckbox .custom_check_label .name{color: #666;font-size: 16px;width: 80%;text-align: justify;vertical-align: text-top;}
+.riskAssessmentHistory{background: #f4f4f4;}
+.riskAssessment .historyList {
+  background: #f4f4f4;
+}
+.riskAssessment .historyList .listli {
+  padding: 0 0.373333rem 0 0.426667rem;
+  background: #fff;
+  border-bottom: 20px solid #f4f4f4;
+}
+.riskAssessment .historyList .listli p {
+  font-size: 14px;
+  padding-top: 0.4rem;
+}
+.riskAssessment .historyList .listli p.p4 {
+  border-top: 1px dashed #ddd;
+  margin-top: 0.2rem;
+  padding-bottom: 0.4rem;
+}
+.riskAssessment .historyList .listli p label {
+  display: inline-block;
+  color: #999;
+  margin-right: 0.4rem;
+}
+.riskAssessment .historyList .listli p .normal {
+  color: #0CB7F5;
+}
+.riskAssessment .historyList .listli p .abnormal {
+  color: #FF7768;
+}
+.riskAssessmentIndex .listCheckbox{position: static;}
+.riskAssessment .questionSelect h4 {
+  font-size: 18px;
+  padding: 1.52rem 0.4rem 0.933333rem;
+  color: #333;
+}
+.riskAssessment .questionSelect .alink {
+  display: block;
+  position: absolute;
+  top: 1.52rem;
+  right: 0.4rem;
+  color: #0CB7F5;
+  font-size: 18px;
+}
+.riskAssessment .questionSelect .hide {
+  display: none;
+}
+
+.riskAssessment .questionFill {
+  padding: 1.12rem 0.4rem 0.4rem;
+  font-size: 18px;
+}
+.riskAssessment .questionFill p {
+  padding: 0.4rem 0;
+  color: #333;
+  white-space: normal;
+}
+.riskAssessment .questionFill p .t {
+  border: 0;
+  border-bottom: 1PX solid #ddd;
+  width: 3.0rem;
+  padding: 0 0.2rem;
+  height: 0.933333rem;
+  text-align: center;
+}
+
+.riskAssessment .btmBtn p.col2 .btn_normal {
+  width: 4.0rem;
+}
+.riskAssessment .btmBtn p.col2 .btn_normal:first-child {
+  background-color: #fff;
+  margin-right: 0.666667rem;
+  border: 1PX solid #0CB7F5;
+  color: #0CB7F5 !important;
+}
+.riskAssessmentType{padding-top: 0.533333rem;}
+.riskAssessmentType li{
+  font-size: 16px;
+  width: 9.2rem;
+  height: 3.066667rem;
+  margin: 0 auto 0.533333rem;
+  padding-left: 0.8rem;
+  text-align: center !important;
+  color: #fff !important;
+  padding-top: .4rem;
+  box-sizing: border-box;
+}
+.riskAssessmentType img {
+  margin-bottom: 0.333333rem;
+}
+.riskAssessmentType .typeItem0 {
+  background: url(../images/riskbg0.png) no-repeat center 0;
+  background-size: contain;
+}
+.riskAssessmentType .typeItem1 {
+  background: url(../images/riskbg1.png) no-repeat center 0;
+  background-size: contain;
+}
+.riskAssessmentType .typeItem2 {
+  background: url(../images/riskbg2.png) no-repeat center 0;
+  background-size: contain;
+}
+.riskAssessmentType .typeItem3 {
+  background: url(../images/riskbg3.png) no-repeat center 0;
+  background-size: contain;
+}
+.riskAssessmentType .questionSelectType .hide {
+  display: none;
+}
+.riskAssessmentType .questionSelectType li{padding: 0.4rem 0;}
+.riskAssessmentType .questionSelectType img {
+  width: 1.066667rem;
+  height: 1.066667rem;
+  margin-right: 0.2rem;
+}
+
+/*# sourceMappingURL=riskAssessment.css.map */

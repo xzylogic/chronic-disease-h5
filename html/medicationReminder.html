@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>用药提醒</title>
+  <link rel="stylesheet" type="text/css" href="../lib/css/weui.min.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/css/jquery-weui.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/medicationReminder.css" />
+
+</head>
+
+<body>
+<div class="MedicationReminder" style="display:block;">
+    <div class="scroll-wrap">
+      <div class="weui-cell weui-cell_swiped">
+        <div class="weui-cell__bd">
+          <div class="reminderListLeft" onClick=''>
+            <span class="name">阿米详细讲究</span>
+            <p class="daytime"><label>每天：</label><span>11:00</span><span>11:00</span></p>
+            <p><label>剂量：</label><span class="fc_orange">4ml</span></p>
+          </div>
+          <label for="switchCP1" class="weui-switch-cp">
+            <input id="switchCP1" class="weui-switch-cp__input" type="checkbox" checked="checked">
+            <div class="weui-switch-cp__box"></div>
+          </label>
+        </div>
+        <div class="weui-cell__ft">
+          <a class="weui-swiped-btn delete-swipeout" href="javascript:"><i>删除</i></a>
+        </div>
+      </div>
+      <div class="weui-cell weui-cell_swiped">
+        <div class="weui-cell__bd">
+          <div class="reminderListLeft" onClick=''>
+            <span class="name">阿米详细讲究</span>
+            <p class="daytime"><label>每天：</label><span>11:00</span><span>11:00</span></p>
+            <p><label>剂量：</label><span class="fc_orange">4ml</span></p>
+          </div>
+          <label for="switchCP2" class="weui-switch-cp">
+            <input id="switchCP2" class="weui-switch-cp__input" type="checkbox" checked="checked">
+            <div class="weui-switch-cp__box"></div>
+          </label>
+        </div>
+        <div class="weui-cell__ft">
+          <a class="weui-swiped-btn delete-swipeout" href="javascript:"><i>删除</i></a>
+        </div>
+      </div>
+    </div>
+    <div class="custom-btm-fixed">
+        <span class="custom-btm-btn" onclick="">添加提醒</span>
+    </div>
+</div>
+
+<div class="custom-nodata nodataReminder" style="display:none;">
+  <img src="../custom/images/drug_nodata.png" />
+  <p>暂无用药提醒</p>
+  <p class="btnboxs" onClick=''><a class="btn">添加提醒</a></p>
+</div>
+
+  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../lib/js/flexible.js"></script>
+  <script type="text/javascript" src="../custom/js/native.js"></script>
+  <script type="text/javascript" src="../custom/js/common.js"></script>
+  <script src="../custom/js/api.js"></script>
+
+  <script src="../lib/js/jquery-weui.js"></script>
+</body>
+</html>
