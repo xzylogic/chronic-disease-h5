@@ -73,7 +73,7 @@
   </div>
 </div>
 <!-- 选择用药的时候display:block; -->
-<div class="mySelect" style="display:none;">
+<div class="mySelect" id="iosselectDrug" style="display:none;">
   <p class="otherDrugIpt"><input type="text" name="" placeholder="填写你找不到的药品名称" /></p>
 </div>
 
@@ -88,6 +88,8 @@
   <link rel="stylesheet" href="../lib/css/iosSelect.css">
   <script src="../lib/js/iosSelect.js"></script>
   <script type="text/javascript">
+  initDrugs();
+    function initDrugs() {
       var iosProvinces = [
       {'id': '0', 'value': '阿司匹林', 'parentId': '0'},
       {'id': '1', 'value': '酵素粉', 'parentId': '0'},
@@ -111,9 +113,10 @@
       var drugNameDom= $('#drug-name');
       var drugDoseDom = $('#drug-dose');
       selectDrugDom.bind('click', function () {
+          document.querySelector('#iosselectDrug').style.display = 'block';
           var oneLevelId = showDrugDom.attr('data-drug-name');
           var twoLevelId = showDrugDom.attr('data-drug-dose');
-          var iosSelect = new IosSelect(2,
+          var iosSelect1 = new IosSelect(2,
               [iosProvinces, iosCitys],
               {
                   // title: '地址选择',
@@ -135,9 +138,11 @@
                   }
           });
       });
-  </script>
+  };
+
   <!-- 新加时间 -->
-  <script type="text/javascript">
+  initTime();
+  function initTime() {
     var selectDateDom = $('#selectTime');
     var showDateDom = $('#showTime');
     var hourData = function(callback) {
@@ -161,9 +166,10 @@
         callback(minutes);
     };
     selectDateDom.bind('click', function () {
+        document.querySelector('#iosselectDrug').style.display = 'none';
         var oneLevelId = showDateDom.attr('data-hour');
         var twoLevelId = showDateDom.attr('data-minute');
-        var iosSelect = new IosSelect(2,
+        var iosSelect2 = new IosSelect(2,
               [hourData, minuteData],
               {
                   title: '添加时间',
@@ -179,6 +185,7 @@
           });
 
     });
+  };
 </script>
 
 </body>
