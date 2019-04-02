@@ -13,7 +13,7 @@
 <body>
 <div class="homeBox">
   <div class="topBg">
-    <p class="toplink" onClick=''>
+    <p class="toplink" onClick='addMore()'>
       <span><em>添加更多</em></span>
     </p>
     <div class="riskDataWrap">
@@ -84,9 +84,9 @@
 </div>
 <!-- 添加更多弹出层 -->
 <div class="popup-wrap" style="display:none;">
-  <div class="lightbox"></div>
+  <div class="lightbox" onclick="hideMore()"></div>
   <div class="popup-con popup-con-middle">
-    <span class="close"></span>
+    <span class="close" onclick="hideMore()"></span>
     <ul class="moreUl clearfix">
       <li onClick=''><span><img src='../custom/images/icon10.png' /><br/>血压</span></li>
       <li onClick=''><span><img src='../custom/images/icon11.png' /><br/>糖化血红蛋白</span></li>
@@ -100,6 +100,27 @@
   <script type="text/javascript" src="../custom/js/native.js"></script>
   <script type="text/javascript" src="../custom/js/common.js"></script>
   <script src="../custom/js/api.js"></script>
+  <script>
+    function addMore(){
+      $('.popup-wrap').show();
+    }
+
+    function hideMore() {
+      $('.popup-wrap').hide();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var myDate = new Date();
+      var date = myDate.toLocaleDateString();
+      localStorage.setItem('date', date);
+      if(date !== localStorage.getItem('date')){
+        $('.circleCon').hide();
+        $('.nodataCircleCon').show();
+      }
+
+
+    })
+  </script>
 
 </body>
 </html>
