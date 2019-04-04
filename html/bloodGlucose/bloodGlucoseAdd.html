@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+    <title>血糖</title>
+    <!--<link rel="stylesheet" type="text/css" href="../../lib/css/reset.css"/>-->
+    <link rel="stylesheet" type="text/css" href="../../lib/css/iosSelect.css"/>
+    <link rel="stylesheet" type="text/css" href="../../custom/css/bloodGlucoseAdd.css"/>
+</head>
+<body>
+    <div class="wrap">
+        <div class="single-bar">
+            <span class="bar-title">测量时间</span>
+<!--             <div class="arrow-box"><span  class="showBox" data-date="" data-hour="" data-minute="" ></span><span class="arrow"></span></div> -->
+                  <div class="arrow-box"><span  class="showBox" data-date="" data-hour="" data-minute="" ></span><img src="../../custom/images/top_back.png"/></div>
+        </div>
+        <div class="choose-box">
+            <div class="choose-title">
+                血糖
+            </div>
+            <div class="control-btn">
+                <img class="minus" src="../../custom/images/rulersub.png"/>
+                <span class="value-box"><span class="value">6</span><span class="unit">mmoI/L</span></span>
+                <img class="add" src="../../custom/images/ruleradd.png"/>
+            </div>
+            <div class="outer-box">
+                <div class="ruler-box"><span class="pointer"></span><canvas id="ruler">刻度尺</canvas><canvas id="ruler2">刻度尺</canvas></div>
+            </div>
+        </div>
+        <div class="choose-title">
+            时间点
+        </div>
+        <ul class="tabs">
+            <li>凌晨</li>
+            <li>早餐前</li>
+            <li>早餐后</li>
+            <li>午餐前</li>
+            <li>午餐后</li>
+            <li>晚餐前</li>
+            <li class="color-blue">晚餐后</li>
+            <li>睡前</li>
+            <li class="nosee"></li>
+        </ul>
+    </div>
+    <div class="known-btn">提交</div>
+    <script type="text/javascript" src="../../lib/js/flexible.js"></script>
+    <script type="text/javascript" src="../../lib/js/fastclick.js"></script>
+    <script type="text/javascript" src="../../lib/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/js/iosSelect.js"></script>
+    <script type="text/javascript" src="../../custom/js/native.js"></script>
+    <script type="text/javascript" src="../../custom/js/myTips.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            //优化移动端点击事件
+            FastClick.attach(document.body);
+            //生成当前时间前一年日期,需要产品确认
+            var dateArr=[]
+            function getNowSecond() {
+                var nowSecond=new Date().getSeconds();
+                if(nowSecond<10){
+                    nowSecond='0'+nowSecond
+                }
+                return ":"+nowSecond;
+            }
+            function showdate(n)
+            {
+                var uom = new Date(new Date()-0+n*86400000);
+                var monthHtml=uom.getMonth()+1;
+                var dateHtml=uom.getDate();
+                if(uom.getMonth()+1<10){
+                    monthHtml='0'+(uom.getMonth()+1)
+                }
+                if(uom.getDate()<10){
+                    dateHtml='0'+uom.getDate()
+                }
+                uom = uom.getFullYear() + "-" + monthHtml + "-" + dateHtml;
+                return uom;
+            }
+            for(var k=365;k>-1;k--){
+                dateArr.push({"id":showdate(-k),"value":showdate(-k)})
+            }
+            //时间选择器
+            var selectDateDom = $('.single-bar');
+            var showDateDom = $('.showBox');
+            // 初始当前时间
+            var now = new Date();
+            var nowYear = now.getFullYear();
+            var nowMonth = formatNow(now.getMonth() + 1);
+            var nowDate = formatNow(now.getDate());
+            var nowHour= formatNow(now.getHours());
+            var nowMinute= formatNow(now.getMinutes());
+            function formatNow(val){
+                if(String(val).length==1){
+                    return "0"+val;
+                }else{
+                    return val;
+                }
+            }
+            showDateDom.html(String(nowYear)+'-'+String(nowMonth)+'-'+String(nowDate)+ ' ' + nowHour + ':' + nowMinute);
+            showDateDom.attr('data-date', String(nowYear)+'-'+String(nowMonth)+'-'+String(nowDate));
+            showDateDom.attr('data-hour', nowHour);
+            showDateDom.attr('data-minute', nowMinute);
+            checkRange();
+            //生成选择数据
+            function formatHour () {
+                var arr = [];
+                for (var i = 0; i <24; i++) {
+                    if(i<10){
+                        arr.push({
+                            id: '0'+i ,
+                            value: i + '时'
+                        });
+                    }else{
+                        arr.push({
+                            id: i + '',
+                            value: i + '时'
+                        });
+                    }
+
+                }
+                return arr;
+            }
+            function formatMinute () {
+                var arr = [];
+                for (var i = 0; i <60; i++) {
+                    if(i<10){
+                        arr.push({
+                            id: '0'+i ,
+                            value: i + '分'
+                        });
+                    }else{
+                        arr.push({
+                            id: i + '',
+                            value: i + '分'
+                        });
+                    }
+                }
+                return arr;
+            }
+
+
+            var hourData = formatHour();
+
+            var minuteData = formatMinute();
+            //绑定点击事件new一个选择弃
+            selectDateDom.bind('click', function () {
+                var oneLevelId = showDateDom.attr('data-date');
+                console.log(oneLevelId)
+                var twoLevelId = showDateDom.attr('data-hour');
+                var threeLevelId = showDateDom.attr('data-minute');
+                var iosSelect = new IosSelect(3,
+                        [dateArr, hourData, minuteData],
+                        {
+                            title: '',
+                            itemHeight: 40,
+                            oneLevelId: oneLevelId,
+                            twoLevelId: twoLevelId,
+                            threeLevelId: threeLevelId,
+                            showLoading: true,
+                            callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
+                                if(time_future(selectOneObj.value + ' ' + selectTwoObj.id + ':' + selectThreeObj.id)){
+                                    $(".mytip").html("不支持选择未来的时间");
+                                    showMyTip();
+                                    return;
+                                }
+                                showDateDom.attr('data-date', selectOneObj.id);
+                                showDateDom.attr('data-hour', selectTwoObj.id);
+                                showDateDom.attr('data-minute', selectThreeObj.id);
+                                showDateDom.html(selectOneObj.value + ' ' + selectTwoObj.id + ':' + selectThreeObj.id);
+                                checkRange();
+                                fontRed();
+                            }
+                        });
+            });
+            //判断是否是未来时间
+            function time_future(chooseTime) {
+                var time=chooseTime+":00";
+                time=time.replace(/-/g,':').replace(' ',':');
+                time=time.split(':');
+                var n = new Date(time[0],(time[1]-1),time[2],time[3],time[4],time[5]);
+
+                var b=new Date();
+                if (Date.parse(n) - Date.parse(b)>= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            //判断时间点
+            function time_range(beginTime, endTime) {
+                var strb = beginTime.split (":");
+                if (strb.length != 2) {
+                    return false;
+                }
+
+                var stre = endTime.split (":");
+                if (stre.length != 2) {
+                    return false;
+                }
+
+                var b = new Date ();
+                var e = new Date ();
+                var time=$(".showBox").html()+":00";
+                time=time.replace(/-/g,':').replace(' ',':');
+                time=time.split(':');
+                var n = new Date(time[0],(time[1]-1),time[2],time[3],time[4],time[5]);
+
+                b.setYear ($(".showBox").html().substring(0,4));
+                b.setMonth(Number($(".showBox").html().substring(5,7))-1);
+                b.setDate($(".showBox").html().substring(8,10));
+                b.setHours (strb[0]);
+                b.setMinutes (strb[1]);
+                b.setSeconds("0")
+                e.setYear ($(".showBox").html().substring(0,4));
+                e.setMonth(Number($(".showBox").html().substring(5,7))-1);
+                e.setDate($(".showBox").html().substring(8,10));
+                e.setHours (stre[0]);
+                e.setMinutes (stre[1]);
+                e.setSeconds("0")
+                if (Date.parse(n) - Date.parse(b)>= 0 && Date.parse(n)- Date.parse(e) <= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function checkRange(){
+                if(time_range("00:00","05:00")){
+                    $("li").removeClass("color-blue")
+                    $("li:nth-child(1)").addClass("color-blue")
+                    $("#ruler2").show();
+                    $("#ruler").hide();
+                }
+                if(time_range("05:01","08:00")){
+                    $("li").removeClass("color-blue")
+                    $("li:nth-child(2)").addClass("color-blue")
+                    $("#ruler").show();
+                    $("#ruler2").hide();
+                }
+                if(time_range("08:01","10:00")){
+                    $("li").removeClass("color-blue")
+                    $("li:nth-child(3)").addClass("color-blue")
+                    $("#ruler2").show();
+                    $("#ruler").hide();
+                }
+                if(time_range("10:01","12:00")){
+                    $("li").removeClass("color-blue")
+                    $("li:nth-child(4)").addClass("color-blue")
+                    $("#ruler").show();
+                    $("#ruler2").hide();
+                }
+                if(time_range("12:01","15:00")){
+                    $("li").removeClass("color-blue")
+                    $("li:nth-child(5)").addClass("color-blue")
+                    $("#ruler2").show();
+                    $("#ruler").hide();
+                }
+                if(time_range("15:01","18:00")){
+                    $("li").removeClass("color-blue")
+                    $("li:nth-child(6)").addClass("color-blue")
+                    $("#ruler").show();
+                    $("#ruler2").hide();
+                }
+                if(time_range("18:01","20:00")){
+                    $("li").removeClass("color-blue")
+                    $("li:nth-child(7)").addClass("color-blue")
+                    $("#ruler2").show();
+                    $("#ruler").hide();
+                }
+                if(time_range("20:01","23:59")){
+                    $("li").removeClass("color-blue")
+                    $("li:nth-child(8)").addClass("color-blue")
+                    $("#ruler2").show();
+                    $("#ruler").hide();
+                }
+            }
+            //手动选择时间点
+//            $("li").on("click",function () {
+//                $("li").removeClass("color-blue")
+//                $(this).addClass("color-blue")
+//                if($(this)[0].innerHTML=="早餐前"||$(this)[0].innerHTML=="午餐前"||$(this)[0].innerHTML=="晚餐前"){
+//                    $("#ruler").show();
+//                    $("#ruler2").hide();
+//                    fontRed();
+//                }else{
+//                    $("#ruler2").show();
+//                    $("#ruler").hide();
+//                    fontRed();
+//                }
+//            })
+
+            //画刻度尺，＊2为两倍画图，保证清晰度，父元素zoom:0.5
+            var windowWidth=document.body.clientWidth;
+            rulerboxWidth=windowWidth*0.92*2;
+            var boxheight=$(".ruler-box").css("height");
+            var rulerHeight=(boxheight.substring(0,boxheight.length-2));
+            var ruler=document.getElementById("ruler");
+            $("#ruler").attr("height",rulerHeight).attr("width",(3230*2+rulerboxWidth));
+            var context= ruler.getContext("2d");
+            var myInternal1=setInterval(function () {
+                windowWidth=document.body.clientWidth;
+                rulerboxWidth=windowWidth*0.92*2;
+                boxheight=$(".ruler-box").css("height");
+                rulerHeight=(boxheight.substring(0,boxheight.length-2));
+                $("#ruler").attr("height",rulerHeight).attr("width",(3230*2+rulerboxWidth));
+                var pointerPx=$(".pointer").css("border-left-width")
+                var halfPointerWidth=pointerPx.substring(0,pointerPx.length-2);
+                $(".pointer").css("left",windowWidth-halfPointerWidth)
+                if(context.fillRect&&rulerHeight!=0) {
+                    clearInterval(myInternal1);
+                    drawFun(context);
+                }
+            },100)
+
+            var ruler2=document.getElementById("ruler2");
+            $("#ruler2").attr("height",rulerHeight).attr("width",(3230*2+rulerboxWidth));
+            var context2= ruler2.getContext("2d");
+            var myInternal2=setInterval(function () {
+                windowWidth=document.body.clientWidth;
+                rulerboxWidth=windowWidth*0.92*2;
+                boxheight=$(".ruler-box").css("height");
+                rulerHeight=(boxheight.substring(0,boxheight.length-2));
+                $("#ruler2").attr("height",rulerHeight).attr("width",(3230*2+rulerboxWidth));
+                var pointerPx=$(".pointer").css("border-left-width")
+                var halfPointerWidth=pointerPx.substring(0,pointerPx.length-2);
+                $(".pointer").css("left",windowWidth-halfPointerWidth)
+                if(context2.fillRect&&rulerHeight!=0) {
+                    clearInterval(myInternal2);
+                    drawFun(context2,"true");
+                }
+            },100)
+
+            function drawFun(context,flag){
+                        //画颜色块和刻度线
+                        context.fillStyle="#FF8B8B";
+                        context.fillRect(0,0,rulerboxWidth/2+340*2,rulerHeight);
+                        context.fillStyle="#4CC9FF";
+                        if(flag=="true"){
+                            context.fillRect((rulerboxWidth/2+340*2),0,560*2,rulerHeight);
+                            context.fillStyle="#FF8B8B";
+                            context.fillRect((rulerboxWidth/2+900*2),0,2330*2+rulerboxWidth/2,rulerHeight);
+                        }else{
+                            context.fillRect((rulerboxWidth/2+340*2),0,260*2,rulerHeight);
+                            context.fillStyle="#FF8B8B";
+                            context.fillRect((rulerboxWidth/2+600*2),0,2630*2+rulerboxWidth/2,rulerHeight);
+                        }
+                        context.font ="32px Arial"
+                        context.lineWidth = 2
+                        context.fillStyle = 'white'
+                        context.strokeStyle = 'white'
+                        //安卓设备有刻度线的偏差，分设备
+                        // var ua = navigator.userAgent;
+                        //  if (ua.toLowerCase().indexOf("iphone") > -1||ua.toLowerCase().indexOf("ipad") > -1) {
+                        for(var i=0;i<=323;i++){
+                            if(i % 5 === 0 && i % 10 !== 0){
+                                context.beginPath();
+                                context.moveTo(rulerboxWidth/2+i*10*2,0)
+                                context.lineTo(rulerboxWidth/2+i*10*2,(0.3*rulerHeight))
+                                context.closePath();
+                                context.stroke();
+                            }else if(i % 10 === 0){
+                                context.beginPath();
+                                context.moveTo(rulerboxWidth/2+i*10*2,0)
+                                context.lineTo(rulerboxWidth/2+i*10*2,(0.4*rulerHeight))
+                                context.closePath();
+                                context.stroke();
+                                context.textAlign="center";
+                                context.textBaseline="top"
+                                context.fillText((i*0.1+1),rulerboxWidth/2+i*10*2,(0.45*rulerHeight))
+                            }else{
+                                context.beginPath();
+                                context.moveTo(rulerboxWidth/2+i*10*2,0)
+                                context.lineTo(rulerboxWidth/2+i*10*2,(0.2*rulerHeight))
+                                context.closePath();
+                                context.stroke();
+                            }
+                        }
+                        //  }else{
+                        //       for(var i=0;i<=170;i++){
+                        //             if(i % 5 === 0 && i % 10 !== 0){
+                        //                 context.beginPath();
+                        //                 context.moveTo(rulerboxWidth/2+i*10*2-0.5,0)
+                        //                 context.lineTo(rulerboxWidth/2+i*10*2-0.5,(0.3*rulerHeight))
+                        //                 context.closePath();
+                        //                 context.stroke();
+                        //             }else if(i % 10 === 0){
+                        //                 context.beginPath();
+                        //                 context.moveTo(rulerboxWidth/2+i*10*2-0.5,0)
+                        //                 context.lineTo(rulerboxWidth/2+i*10*2-0.5,(0.4*rulerHeight))
+                        //                 context.closePath();
+                        //                 context.stroke();
+                        //                 context.textAlign="center";
+                        //                 context.textBaseline="top"
+                        //                 context.fillText((i+30),rulerboxWidth/2+i*10*2-0.5,(0.45*rulerHeight))
+                        //             }else{
+                        //                 context.beginPath();
+                        //                 context.moveTo(rulerboxWidth/2+i*10*2-0.5,0)
+                        //                 context.lineTo(rulerboxWidth/2+i*10*2-0.5,(0.2*rulerHeight))
+                        //                 context.closePath();
+                        //                 context.stroke();
+                        //             }
+                        //      }
+
+                        // }
+
+
+                //指针初始值定位
+                $(".ruler-box").scrollLeft(500*2);
+                var currentValue=500*2;//初始化刻度计算方式(6-1)*100*2
+                $(".value").text("6.0");
+                var value=1000;
+                //滚动时监听，刻度整数化
+                function scrollHandler(){         
+                    var sl=$(".ruler-box").scrollLeft();
+                    value=sl;
+                    if(sl%20!=0){
+                      if(sl>currentValue||sl>6440){
+                        $(".ruler-box").scrollLeft(sl+20-sl%20)
+                         value=sl+20-sl%20
+                      }else{
+                        $(".ruler-box").scrollLeft(sl-sl%20)
+                         value=sl-sl%20
+                      }
+                    }
+                    currentValue=value;
+                    $(".value").text((value/(100*2)+1).toFixed(1));
+                    fontRed();
+
+
+
+                    // if($(".ruler-box").scrollLeft()%(10*2)==0){
+                    //         value=$(".ruler-box").scrollLeft();
+                    //         $(".value").text(value/(10*2)+30);
+                    //         return
+                    // }
+                
+                    // if($(".ruler-box").scrollLeft()>=currentValue || $(".ruler-box").scrollLeft()>3380){
+                    //        $(".ruler-box").scrollLeft($(".ruler-box").scrollLeft()+(10*2-$(".ruler-box").scrollLeft()%(10*2)));
+                    //        if($(".ruler-box").scrollLeft()+(10*2-$(".ruler-box").scrollLeft()%(10*2))<=3400){
+                    //             value=$(".ruler-box").scrollLeft()+(10*2-$(".ruler-box").scrollLeft()%(10*2));
+                    //        }else{
+                    //            value=3400
+                    //        }
+                    // }else{
+                    //        $(".ruler-box").scrollLeft($(".ruler-box").scrollLeft()-$(".ruler-box").scrollLeft()%(10*2));
+                    //         value=$(".ruler-box").scrollLeft()-$(".ruler-box").scrollLeft()%(10*2);
+                    // }
+                    // currentValue=$(".ruler-box").scrollLeft();
+                    // $(".value").text(value/(10*2)+30);
+                }
+                $(".ruler-box").on( "scroll", scrollHandler);
+                //加减按钮
+                $(".add").on("click",function(){
+                       $(".ruler-box").scrollLeft(value+10*2);
+                })
+                $(".minus").on("click",function(){
+                       $(".ruler-box").scrollLeft(value-10*2);
+                })
+            }
+            function fontRed() {
+                var time=checkTime();
+                var val=$(".value").text()
+                if(time==0||time==2||time==4){
+                    if(val<=7&&val>=4.4){
+                        $(".value").css("color","#0CB7F5")
+                    }else{
+                        $(".value").css("color","#FF7768")
+                    }
+                }else{
+                    if(val<=10&&val>=4.4){
+                        $(".value").css("color","#0CB7F5")
+                    }else{
+                        $(".value").css("color","#FF7768")
+                    }
+                }
+            }
+            //画刻度尺结束
+            //检查哪个是选中的时间点
+            function checkTime() {
+                for(var s=1;s<9;s++){
+                    if($("li:nth-child("+s+")").hasClass("color-blue")){
+                        if(s-2==-1){
+                            return 7
+                        }
+                        return s-2;
+                    }
+                }
+            }
+            var isSubmitting=false;
+            //提交按钮
+            $(".known-btn").on("click",function(){
+                if(isSubmitting){return};
+                isSubmitting=true;
+                var paramJson={
+                    "card_code": localStorage.getItem('uid'),
+                    "card_type": 80,
+                    "device_code": "jkyappuser",
+                    "measure_time": $(".showBox").text()+getNowSecond(),
+                    "measure_way": "1",
+                    "measure_mode": "0",
+                    "measure_type": "glu",
+                    "measure_data": $(".value").html()+"|"+checkTime()
+                }
+                $.ajax({
+                    url:"/gw/iotV2HealthDataAdd",
+                    type:"post",
+                    contentType: 'application/json',
+                    beforeSend: function(request) {
+                        request.setRequestHeader("token",localStorage.getItem('netToken'));
+                        request.setRequestHeader("channelCode",localStorage.getItem('channelCode'));
+                        request.setRequestHeader("lightAppCode",localStorage.getItem('lightAppCode'));
+                        request.setRequestHeader('timestamp', new Date().getTime());
+                    },
+                    data:JSON.stringify(paramJson),
+                    success:function(data){
+                        if(data.code==0){
+                            NativeFunc({
+                                ACTION: "OPENURL",
+                                PARAM: {
+                                    URL:localStorage.getItem("requestUrl")+"/bloodGlucose/bloodGlucoseTip.html?val="+$(".value").html()+"&time="+checkTime()
+                                }
+                            }, function (response) {
+
+                            })
+                        }else if(data.code==12){
+                            $(".mytip").html("账户在其他设备登录,请重新登录");
+                            showMyTip();
+                        }else{
+                            $(".mytip").html(data.msg||"提交测量数据出错");
+                            showMyTip();
+                        }
+                        isSubmitting=false
+                    },
+                    error:function(error){
+                        showMyTip();
+                        isSubmitting=false
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+</html>

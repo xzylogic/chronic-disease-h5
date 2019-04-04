@@ -17,12 +17,12 @@
       <span><em>添加更多</em></span>
     </p>
     <div class="riskDataWrap">
-      <div class="circleCon nodataCircleCon" onClick='' style="display:none;">
+      <div class="circleCon nodataCircleCon" onClick='' style="display:block;">
         <strong>&nbsp;</strong>
         <em class="no"><!-- 您25未测量血糖 --></em>
         <em>mmol/L</em>
       </div>
-      <div class="circleCon" onClick='' style="display:block;">
+      <div class="circleCon" onClick='' style="display:none;">
         <strong>
           血糖正常
         </strong>
@@ -60,16 +60,16 @@
   </div>
   <ul class="homeUl homeUl1 ">
     <li>
-      <span onClick=''><img src='../custom/images/icon1.png' />风险评估</span>
+      <span onClick='goRisk()'><img src='../custom/images/icon1.png' />风险评估</span>
     </li>
     <li>
-      <span onClick=''><img src='../custom/images/icon2.png' />体征测量</span>
+      <span onClick='goMeasure()'><img src='../custom/images/icon2.png' />体征测量</span>
     </li>
   </ul>
   <p class="border-top"></p>
   <ul class="homeUl homeUl2 ">
     <li>
-      <span onClick=''><img src='../custom/images/icon3.png'} /><br/>用药提醒</span>
+      <span onClick=''><img src='../custom/images/icon3.png' /><br/>用药提醒</span>
     </li>
     <li>
       <span onClick=''><img src='../custom/images/icon4.png' /><br/>随访计划</span>
@@ -101,12 +101,31 @@
   <script type="text/javascript" src="../custom/js/common.js"></script>
   <script src="../custom/js/api.js"></script>
   <script>
-    function addMore(){
+    function addMore() {
       $('.popup-wrap').show();
     }
 
     function hideMore() {
       $('.popup-wrap').hide();
+    }
+
+    function goMeasure() {
+      console.log('体征测量');
+      // NativeFunc({
+      //   ACTION: "OPENURL",
+      //   PARAM: {
+      //     URL: nativeObj.htmlPath + '/healthcloud-measure-web/bloodGlucoseAdd.html'
+      //   }
+      // });
+    }
+
+    function goRisk() {
+      NativeFunc({
+        ACTION: "OPENURL",
+        PARAM: {
+          URL: nativeObj.htmlPath + '/diabetesType.html'
+        }
+      });
     }
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -117,6 +136,15 @@
         $('.circleCon').hide();
         $('.nodataCircleCon').show();
       }
+
+      $('.nodataCircleCon').bind('click', function () {
+        NativeFunc({
+          ACTION: "OPENURL",
+          PARAM: {
+            URL: nativeObj.htmlPath + '/bloodGlucose/bloodGlucoseAdd.html'
+          }
+        });
+      })
 
 
     })

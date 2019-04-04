@@ -396,7 +396,7 @@ function dateIOSelectInit(yLimit) {
 // 初始化加载
 function initloading() {
 	$("body").append(
-		'<div id="myloadingCover" style="position: absolute"></div><div id="myloading"><img src="../custom/images/loading.gif" /><span>努力加载中...</span></div>'
+		'<div id="myloadingCover" style="position: absolute"></div><div id="myloading"><img src="../../custom/images/loading.gif" /><span>努力加载中...</span></div>'
 	);
 	$("#myloading").css(cssObj1);
 	$("#myloading img").css(cssObj2);

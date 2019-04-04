@@ -15,30 +15,30 @@
   <div class="questionSelect">
     <h4>请选择糖尿病的类型<span class="alink" onClick=''>历史评估</span></h4>
     <ul class="listCheckbox">
-      <li class="checked">
-          <label class="custom_check_label">
-              <input type="radio" name="type" id="type1" value="1" hidden checked />
-              <label for="type1" class="icon-check"></label>
-              <span class="name">非糖尿病</span>
-          </label>
-      </li>
+      <!--<li class="checked">-->
+          <!--<label class="custom_check_label">-->
+              <!--<input type="radio" name="type" id="type1" value="1" hidden checked />-->
+              <!--<label for="type1" class="icon-check"></label>-->
+              <!--<span class="name">非糖尿病</span>-->
+          <!--</label>-->
+      <!--</li>-->
       <li>
           <label class="custom_check_label">
-              <input type="radio" name="type" id="type2" value="1" hidden />
+              <input type="radio" name="type" id="type2" value="1" hidden/>
               <label for="type2" class="icon-check"></label>
               <span class="name">Ⅰ 型糖尿病</span>
           </label>
       </li>
       <li>
           <label class="custom_check_label">
-              <input type="radio" name="type" id="type3" value="1" hidden />
+              <input type="radio" name="type" id="type3" value="2" hidden />
               <label for="type3" class="icon-check"></label>
               <span class="name">Ⅱ 型糖尿病</span>
           </label>
       </li>
       <li>
           <label class="custom_check_label">
-              <input type="radio" name="type" id="type4" value="1" hidden />
+              <input type="radio" name="type" id="type4" value="3" hidden />
               <label for="type4" class="icon-check"></label>
               <span class="name">其他糖尿病</span>
           </label>
@@ -52,6 +52,48 @@
   <script type="text/javascript" src="../custom/js/native.js"></script>
   <script type="text/javascript" src="../custom/js/common.js"></script>
   <script src="../custom/js/api.js"></script>
+  <script>
+    $(function () {
+      $('input[type="radio"]').bind('click', function () {
+        if($(this).prop('checked')){
+          NativeFunc({
+            ACTION: "OPENURL",
+            PARAM: {
+              URL: nativeObj.htmlPath + '/riskAssessmentType.html'
+            }
+          });
+          // switch ($(this).val()) {
+          //   case '1':
+          //     NativeFunc({
+          //       ACTION: "OPENURL",
+          //       PARAM: {
+          //         URL: nativeObj.htmlPath + '/diabetesType.html'
+          //       }
+          //     });
+          //     break;
+          //   case '2':
+          //     NativeFunc({
+          //       ACTION: "OPENURL",
+          //       PARAM: {
+          //         URL: nativeObj.htmlPath + '/diabetesType.html'
+          //       }
+          //     });
+          //     break;
+          //   case '3':
+          //     NativeFunc({
+          //       ACTION: "OPENURL",
+          //       PARAM: {
+          //         URL: nativeObj.htmlPath + '/diabetesType.html'
+          //       }
+          //     });
+          //     break;
+          //   default:
+          //     break;
+          // }
+        }
+      })
+    })
+  </script>
 
 </body>
 </html>

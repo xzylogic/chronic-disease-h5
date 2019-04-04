@@ -76,7 +76,7 @@ function hideMyTip() {
     }
 
     $(function () {
-        $("body").append('<div id="myloading"><img src="../custom/images/loading.gif" /><span>努力加载中...</span></div>');
+        $("body").append('<div id="myloading"><img src="../../custom/images/loading.gif" /><span>努力加载中...</span></div>');
         $("#myloading").css(cssObj1);
         $("#myloading img").css(cssObj2);
         $("#myloading span").css(cssObj3);
