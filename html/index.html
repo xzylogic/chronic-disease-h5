@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>糖尿病</title>
-  <link rel="stylesheet" type="text/css" href="../lib/css/weui.min.css" />
-  <link rel="stylesheet" type="text/css" href="../lib/css/jquery-weui.css" />
-  <link rel="stylesheet" type="text/css" href="../custom/css/common.css" />
-  <link rel="stylesheet" type="text/css" href="../custom/css/index.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/css/weui.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../lib/css/jquery-weui.css"/>
+  <link rel="stylesheet" type="text/css" href="../custom/css/common.css"/>
+  <link rel="stylesheet" type="text/css" href="../custom/css/index.css"/>
 
 </head>
 
@@ -40,19 +40,20 @@
         <li>
           <span>
             24
-          </span><br />
+          </span><br/>
           <em>糖化血红蛋白</em>
           <p class="line"></p>
         </li>
         <li>
-          <span>23%</span><br />
+          <span>23%</span><br/>
+          <!--value.match(/\d+\.?\d{0,1}/,'');-->
           <em>血糖达标率(年)</em>
           <p class="line"></p>
         </li>
         <li>
           <span>
               <strong>不合格</strong>
-          </span><br />
+          </span><br/>
           <em>是否合格</em>
         </li>
       </ul>
@@ -60,25 +61,25 @@
   </div>
   <ul class="homeUl homeUl1 ">
     <li>
-      <span onClick='goRisk()'><img src='../custom/images/icon1.png' />风险评估</span>
+      <span onClick='goRisk()'><img src='../custom/images/icon1.png'/>风险评估</span>
     </li>
     <li>
-      <span onClick='goMeasure()'><img src='../custom/images/icon2.png' />体征测量</span>
+      <span onClick='goMeasure()'><img src='../custom/images/icon2.png'/>体征测量</span>
     </li>
   </ul>
   <p class="border-top"></p>
   <ul class="homeUl homeUl2 ">
     <li>
-      <span onClick=''><img src='../custom/images/icon3.png' /><br/>用药提醒</span>
+      <span onClick='goMedicine()'><img src='../custom/images/icon3.png'/><br/>用药提醒</span>
     </li>
     <li>
-      <span onClick=''><img src='../custom/images/icon4.png' /><br/>随访计划</span>
+      <span onClick='goPlan()'><img src='../custom/images/icon4.png'/><br/>随访计划</span>
     </li>
     <li>
-      <span onClick=''><img src='../custom/images/icon5.png' /><br/>报告查看</span>
+      <span onClick='goReport()'><img src='../custom/images/icon5.png'/><br/>报告查看</span>
     </li>
-    <li>
-      <span onClick=''><img src='../custom/images/icon9.png' /><br/>医生建议</span>
+    <li class="doctorAdvice">
+      <span onClick='goAdvice()'><img src='../custom/images/icon9.png'/><br/>医生建议</span>
     </li>
   </ul>
 </div>
@@ -88,67 +89,241 @@
   <div class="popup-con popup-con-middle">
     <span class="close" onclick="hideMore()"></span>
     <ul class="moreUl clearfix">
-      <li onClick=''><span><img src='../custom/images/icon10.png' /><br/>血压</span></li>
-      <li onClick=''><span><img src='../custom/images/icon11.png' /><br/>糖化血红蛋白</span></li>
-      <li onClick=''><span><img src='../custom/images/icon12.png' /><br/>身高体重</span></li>
+      <li onClick=''><span><img src='../custom/images/icon10.png'/><br/>血压</span></li>
+      <li onClick=''><span><img src='../custom/images/icon11.png'/><br/>糖化血红蛋白</span></li>
+      <li onClick=''><span><img src='../custom/images/icon12.png'/><br/>身高体重</span></li>
     </ul>
   </div>
 </div>
 
-  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
-  <script type="text/javascript" src="../lib/js/flexible.js"></script>
-  <script type="text/javascript" src="../custom/js/native.js"></script>
-  <script type="text/javascript" src="../custom/js/common.js"></script>
-  <script src="../custom/js/api.js"></script>
-  <script>
-    function addMore() {
-      $('.popup-wrap').show();
+<script type="text/javascript" src="../lib/js/flexible.js"></script>
+<script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
+<script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+<script type="text/javascript" src="../custom/js/native.js"></script>
+<script type="text/javascript" src="../custom/js/common.js"></script>
+<script src="../custom/js/api.js"></script>
+<script>
+  FastClick.attach(document.body);
+
+  function addMore() {
+    $('.popup-wrap').show();
+  }
+
+  function hideMore() {
+    $('.popup-wrap').hide();
+  }
+
+  function goRisk() {
+    NativeFunc({
+      ACTION: "OPENURL",
+      PARAM: {
+        URL: nativeObj.htmlPath + '/diabetesType.html'
+      }
+    });
+  }
+
+  function goMeasure() {
+    console.log('体征测量');
+    // NativeFunc({
+    //   ACTION: "OPENURL",
+    //   PARAM: {
+    //     URL: nativeObj.htmlPath + '/healthcloud-measure-web/bloodGlucoseAdd.html'
+    //   }
+    // });
+  }
+
+  function goMedicine() {
+    NativeFunc({
+      ACTION: "OPENURL",
+      PARAM: {
+        URL: nativeObj.htmlPath + '/medicationReminder.html'
+      }
+    });
+  }
+
+  function goPlan() {
+    NativeFunc({
+      ACTION: "OPENURL",
+      PARAM: {
+        URL: nativeObj.htmlPath + '/followUpPlan.html'
+      }
+    });
+  }
+
+  function goReport() {
+    NativeFunc({
+      ACTION: "OPENURL",
+      PARAM: {
+        URL: nativeObj.htmlPath + '/followUpReport.html'
+      }
+    });
+  }
+
+  function goAdvice() {
+    NativeFunc({
+      ACTION: "OPENURL",
+      PARAM: {
+        URL: nativeObj.htmlPath + '/doctorAdvice.html'
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    //获取随机字符串
+    var randomString = randomWord(true, 3, 40);
+
+    var myDate = new Date();
+    var date = myDate.toLocaleDateString();
+    localStorage.setItem('date', date);
+    if (date !== localStorage.getItem('date')) {
+      $('.circleCon').hide();
+      $('.nodataCircleCon').show();
     }
 
-    function hideMore() {
-      $('.popup-wrap').hide();
-    }
-
-    function goMeasure() {
-      console.log('体征测量');
-      // NativeFunc({
-      //   ACTION: "OPENURL",
-      //   PARAM: {
-      //     URL: nativeObj.htmlPath + '/healthcloud-measure-web/bloodGlucoseAdd.html'
-      //   }
-      // });
-    }
-
-    function goRisk() {
+    $('.circleCon').bind('click', function () {
       NativeFunc({
         ACTION: "OPENURL",
         PARAM: {
-          URL: nativeObj.htmlPath + '/diabetesType.html'
+          URL: nativeObj.htmlPath + '/bloodGlucose/bloodGlucoseAdd.html'
         }
       });
-    }
+    });
 
-    document.addEventListener('DOMContentLoaded', function () {
-      var myDate = new Date();
-      var date = myDate.toLocaleDateString();
-      localStorage.setItem('date', date);
-      if(date !== localStorage.getItem('date')){
-        $('.circleCon').hide();
-        $('.nodataCircleCon').show();
-      }
-
-      $('.nodataCircleCon').bind('click', function () {
-        NativeFunc({
-          ACTION: "OPENURL",
-          PARAM: {
-            URL: nativeObj.htmlPath + '/bloodGlucose/bloodGlucoseAdd.html'
+    //获取token
+    var pageData = {};
+    var code = getParams('code');
+    showMyloading();
+    var pro = function () {
+      return new Promise(function (resolve, reject) {
+        $.ajax({
+          type: "GET",
+          url: ajaxUrl.userGetTokenByAuthCode,
+          data: {'authCode': code},
+          beforeSend: function (request) {
+            request.setRequestHeader('token', localStorage.getItem('netToken'));
+            request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+            request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+            request.setRequestHeader('appid', localStorage.getItem('appid'));
+            request.setRequestHeader('timestamp', new Date().getTime());
+          },
+          success: function (data) {
+            var tokenData = data.data;
+            if (data.code === 0) {
+              localStorage.setItem('netToken', tokenData.token);
+              localStorage.setItem('uid', tokenData.uid);
+              localStorage.setItem('channelCode', tokenData.channelCode);
+              localStorage.setItem('lightAppCode', tokenData.lightAppCode);
+              localStorage.setItem('appid', tokenData.appid);
+              pageData = {
+                netToken: tokenData.token,
+                uid: tokenData.uid,
+                channelCode: tokenData.channelCode,
+                lightAppCode: tokenData.lightAppCode,
+              };
+              resolve();
+            } else {
+              pageData = {
+                netToken: localStorage.getItem('netToken'),
+                uid: localStorage.getItem('uid'),
+                channelCode: localStorage.getItem('channelCode'),
+                lightAppCode: localStorage.getItem('lightAppCode'),
+              };
+              if (!pageData.netToken) {
+                $.toast(data.msg || '请求错误', 'text');
+                reject(data.msg || '请求错误', 'text');
+              }else{
+                resolve();
+              }
+            }
+          },
+          error: function (err) {
+            hideMyloading();
+            console.log(err);
           }
         });
       })
+    };
 
+    //获取血糖记录
+    function getBloodGlucose(){
+      return new Promise(function (resolve, reject) {
+        $.ajax({
+          url: ajaxUrl.iotV2HealthDataList + '?measure_type=glu&pgFlag=0&uid=' + pageData.uid,
+          type: "GET",
+          // contentType: 'application/json; charset=utf-8',
+          beforeSend: function (request) {
+            request.setRequestHeader('token', pageData.netToken);
+            request.setRequestHeader('channelCode', pageData.channelCode);
+            request.setRequestHeader('lightAppCode', pageData.lightAppCode);
+            request.setRequestHeader('appid', localStorage.getItem('appid'));
+            request.setRequestHeader('timestamp', new Date().getTime());
+          },
+          success: function (data) {
+            console.log(data);
+            // data = JSON.parse(data) || data;
+            // if (data.code === 0 && (data.data.content && data.data.content.length > 0)) {
+            //   $('.doctorAdvice').css('color', 'red');
+            //   hideMyloading();
+            // } else {
+            //   hideMyloading();
+            //   $.toast(data.msg || "创建支付信息接口出错", 'text');
+            // }
+            resolve('获取血糖记录');
+          },
+          error: function (err) {
+            hideMyloading();
+            console.log(err);
+          }
+        });
+      });
+    }
 
-    })
-  </script>
+    // 获取医生建议
+    function getDoctorAdvice(){
+      console.log(randomString)
+      return new Promise(function (resolve, reject) {
+        $.ajax({
+          url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid,
+          type: "GET",
+          beforeSend: function (request) {
+            request.setRequestHeader('token', pageData.netToken);
+            request.setRequestHeader('channelCode', pageData.channelCode);
+            request.setRequestHeader('lightAppCode', pageData.lightAppCode);
+            request.setRequestHeader('appid', localStorage.getItem('appid'));
+            request.setRequestHeader('request-id', randomString);
+            request.setRequestHeader('timestamp', new Date().getTime());
+          },
+          success: function (data) {
+            console.log('advice:',data);
+            resolve('获取医生建议列表');
+            // data = JSON.parse(data) || data;
+            // if (data.code === 0 && (data.data.content && data.data.content.length > 0)) {
+            //   $('.doctorAdvice').css('color', 'red');
+            //   hideMyloading();
+            // } else {
+            //   hideMyloading();
+            //   $.toast(data.msg || "创建支付信息接口出错", 'text');
+            // }
+          },
+          error: function (err) {
+            hideMyloading();
+            console.log(err);
+          }
+        });
+      });
+    }
+
+    pro().then(function () {
+      return Promise.all([getBloodGlucose(), getDoctorAdvice()])
+    }).then(function (res) {
+      hideMyloading();
+      console.log(res);
+    }).catch(function (err) {
+      hideMyloading();
+      console.log(err);
+    });
+  })
+</script>
 
 </body>
 </html>

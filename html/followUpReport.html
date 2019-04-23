@@ -3,89 +3,300 @@
 <head>
   <meta charset="UTF-8">
   <title>随访报告</title>
-  <link rel="stylesheet" type="text/css" href="../lib/css/weui.min.css" />
-  <link rel="stylesheet" type="text/css" href="../lib/css/jquery-weui.css" />
-  <link rel="stylesheet" type="text/css" href="../custom/css/common.css" />
-  <link rel="stylesheet" type="text/css" href="../custom/css/report.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/css/weui.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../lib/css/jquery-weui.css"/>
+  <link rel="stylesheet" type="text/css" href="../custom/css/common.css"/>
+  <link rel="stylesheet" type="text/css" href="../custom/css/report.css"/>
 
 </head>
 
 <body>
 <div class="reportBox">
-    <div class="tabWrap">
-      <span>筛查报告<em>(3)</em></span><span class="current">随访报告<em>(2)</em></span>
-    </div>
-    <div class="have-data-wrap">
-      <p class="border-top"></p>
-      <ul class="followUpReportList">
-        <li class="showItem">
-          <div class="item" onclick="">
-            <span class="date">2019-09-11&nbsp;&nbsp;随访医生：黄小珊</span>
-            <h5><span class="max-hei">黄陂顿饭霍可可医院</span></h5>
+  <div class="tabWrap">
+    <span class="current">筛查报告<em>(3)</em></span><span>随访报告<em>(2)</em></span>
+  </div>
+
+  <div class="have-data-wrap" style="padding-top: 1.4rem;">
+    <p class="border-top"></p>
+    <ul class="followUpReportList">
+      <li class="showItem">
+        <div class="item" onclick="">
+          <span class="date">2019-09-11&nbsp;&nbsp;筛查医生：黄小珊</span>
+          <h5><span class="max-hei">黄陂顿饭霍可可医院</span></h5>
+        </div>
+        <div class="showDetail" style="display:block;">
+          <div class="detailItem">
+            <h5>检查信息</h5>
+            <p>
+              <em>空腹末稍血糖</em>12.33 mmol/L<br/>
+              <em>空腹静脉血糖</em>0.9 mmol/L<br/>
+              <em>DGTT2h静脉血糖</em>0.1 mmol/L<br/>
+            </p>
           </div>
-          <div class="showDetail" style="display:block;">
-                <div class="detailItem detailItemSpecial">
-                  <p>
-                    <em>随访方式</em>门诊<br />
-                    <em>随访状态</em>继续随访<br />
-                    <em>预约下次随访时间</em>2019-01-09<br />
-                  </p>
-                </div>
-                <div class="detailItem">
-                      <h5>糖尿病临床症状</h5>
-                      <p>
-                         <span>1、高血压（收缩压>140和(或)舒张压>90mmHg)<br /></span>
-                         <span>1、高血压（收缩压>140和(或)舒张压>90mmHg)<br /></span>
-                         <span>1、高血压（收缩压>140和(或)舒张压>90mmHg)<br /></span>
-                      </p>
-                </div>
-                <div class="detailItem">
-                  <h5>检查信息</h5>
-                  <p>
-                    1、空腹血糖 7.0mmol/L<br />
-                    2、餐后两小时血糖OGTT<br />
-                    3、糖化血红蛋白：7.0%<br />
-                  </p>
-                </div>
-                <div class="detailItem">
-                    <h5>随访建议</h5>
-                    <p>
-                      建议多运动，多吃水果，每三个月随访一次
-                    </p>
-                </div>
-                <div class="detailItem">
-                    <h5>其他随访建议</h5>
-                    <p>
-                      其他
-                    </p>
-                </div>
+          <div class="detailItem">
+            <h5>糖尿病危险因素</h5>
+            <p>
+              1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/>
+              1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/>
+              1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/>
+            </p>
           </div>
-        </li>
-        <li>
-          <div class="item" onclick="">
-            <span class="date">2019-09-11&nbsp;&nbsp;随访医生：黄小珊</span>
-            <h5><span class="max-hei">黄陂顿饭霍可可医院</span></h5>
+          <div class="detailItem">
+            <h5>筛查结果</h5>
+            <p>
+              1、空腹血糖 7.0mmol/L<br/>
+              2、餐后两小时血糖OGTT<br/>
+              3、糖化血红蛋白：7.0%<br/>
+            </p>
           </div>
-        </li>
-        <li>
-          <div class="item" onclick="">
-            <span class="date">2019-09-11&nbsp;&nbsp;随访医生：黄小珊</span>
-            <h5><span class="max-hei">黄陂顿饭霍可可医院</span></h5>
+        </div>
+      </li>
+      <li>
+        <div class="item" onclick="">
+          <span class="date">2019-09-11 &nbsp;筛查医生：黄小珊</span>
+          <h5><span class="max-hei">黄陂顿饭霍可可医院</span></h5>
+        </div>
+        <div class="showDetail" style="display:none;">
+          <div class="detailItem">
+            <h5>检查信息</h5>
+            <p>
+              <em>空腹末稍血糖</em>12.33 mmol/L<br/>
+              <em>空腹静脉血糖</em>0.9 mmol/L<br/>
+              <em>DGTT2h静脉血糖</em>0.1 mmol/L<br/>
+            </p>
           </div>
-        </li>
-      </ul>
-    </div>
-    <div class='custom-nodata' style="display:none;">
-      <img src="../custom/images/nodata.png">
-      <p>暂无报告</p>
-    </div>
+          <div class="detailItem">
+            <h5>糖尿病危险因素</h5>
+            <p>
+              1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/>
+              1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/>
+              1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/>
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>筛查结果</h5>
+            <p>
+              1、空腹血糖 7.0mmol/L<br/>
+              2、餐后两小时血糖OGTT<br/>
+              3、糖化血红蛋白：7.0%<br/>
+            </p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="item" onclick="">
+          <span class="date">2019-09-11 &nbsp;筛查医生：黄小珊</span>
+          <h5><span class="max-hei">黄陂顿饭霍可可医院</span></h5>
+        </div>
+        <div class="showDetail" style="display:none;">
+          <div class="detailItem">
+            <h5>检查信息</h5>
+            <p>
+              <em>空腹末稍血糖</em>12.33 mmol/L<br/>
+              <em>空腹静脉血糖</em>0.9 mmol/L<br/>
+              <em>DGTT2h静脉血糖</em>0.1 mmol/L<br/>
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>糖尿病危险因素</h5>
+            <p>
+              1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/>
+              1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/>
+              1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/>
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>筛查结果</h5>
+            <p>
+              1、空腹血糖 7.0mmol/L<br/>
+              2、餐后两小时血糖OGTT<br/>
+              3、糖化血红蛋白：7.0%<br/>
+            </p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="have-data-wrap" style="padding-top: 1.4rem; display: none;">
+    <p class="border-top"></p>
+    <ul class="followUpReportList">
+      <li class="showItem">
+        <div class="item" onclick="">
+          <span class="date">2019-09-11&nbsp;&nbsp;随访医生：黄小珊</span>
+          <h5><span class="max-hei">黄陂顿饭霍可可医院</span></h5>
+        </div>
+        <div class="showDetail" style="display:block;">
+          <div class="detailItem detailItemSpecial">
+            <p>
+              <em>随访方式</em>门诊<br/>
+              <em>随访状态</em>继续随访<br/>
+              <em>预约下次随访时间</em>2019-01-09<br/>
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>糖尿病临床症状</h5>
+            <p>
+              <span>1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/></span>
+              <span>1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/></span>
+              <span>1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/></span>
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>检查信息</h5>
+            <p>
+              1、空腹血糖 7.0mmol/L<br/>
+              2、餐后两小时血糖OGTT<br/>
+              3、糖化血红蛋白：7.0%<br/>
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>随访建议</h5>
+            <p>
+              建议多运动，多吃水果，每三个月随访一次
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>其他随访建议</h5>
+            <p>
+              其他
+            </p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="item" onclick="">
+          <span class="date">2019-09-11&nbsp;&nbsp;随访医生：黄小珊</span>
+          <h5><span class="max-hei">黄陂顿饭霍可可医院</span></h5>
+        </div>
+        <div class="showDetail" style="display:none;">
+          <div class="detailItem detailItemSpecial">
+            <p>
+              <em>随访方式</em>门诊<br/>
+              <em>随访状态</em>继续随访<br/>
+              <em>预约下次随访时间</em>2019-01-09<br/>
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>糖尿病临床症状</h5>
+            <p>
+              <span>1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/></span>
+              <span>1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/></span>
+              <span>1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/></span>
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>检查信息</h5>
+            <p>
+              1、空腹血糖 7.0mmol/L<br/>
+              2、餐后两小时血糖OGTT<br/>
+              3、糖化血红蛋白：7.0%<br/>
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>随访建议</h5>
+            <p>
+              建议多运动，多吃水果，每三个月随访一次
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>其他随访建议</h5>
+            <p>
+              其他
+            </p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="item" onclick="">
+          <span class="date">2019-09-11&nbsp;&nbsp;随访医生：黄小珊</span>
+          <h5><span class="max-hei">黄陂顿饭霍可可医院</span></h5>
+        </div>
+        <div class="showDetail" style="display:none;">
+          <div class="detailItem detailItemSpecial">
+            <p>
+              <em>随访方式</em>门诊<br/>
+              <em>随访状态</em>继续随访<br/>
+              <em>预约下次随访时间</em>2019-01-09<br/>
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>糖尿病临床症状</h5>
+            <p>
+              <span>1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/></span>
+              <span>1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/></span>
+              <span>1、高血压（收缩压>140和(或)舒张压>90mmHg)<br/></span>
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>检查信息</h5>
+            <p>
+              1、空腹血糖 7.0mmol/L<br/>
+              2、餐后两小时血糖OGTT<br/>
+              3、糖化血红蛋白：7.0%<br/>
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>随访建议</h5>
+            <p>
+              建议多运动，多吃水果，每三个月随访一次
+            </p>
+          </div>
+          <div class="detailItem">
+            <h5>其他随访建议</h5>
+            <p>
+              其他
+            </p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class='custom-nodata' style="display:none;">
+    <img src="../custom/images/nodata.png">
+    <p>暂无报告</p>
+  </div>
 </div>
 
-  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
-  <script type="text/javascript" src="../lib/js/flexible.js"></script>
-  <script type="text/javascript" src="../custom/js/native.js"></script>
-  <script type="text/javascript" src="../custom/js/common.js"></script>
-  <script src="../custom/js/api.js"></script>
+<script type="text/javascript" src="../lib/js/flexible.js"></script>
+<script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
+<script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+<script type="text/javascript" src="../custom/js/native.js"></script>
+<script type="text/javascript" src="../custom/js/common.js"></script>
+<script src="../custom/js/api.js"></script>
+<script>
+  FastClick.attach(document.body);
+  $(function () {
+    //判断当前是筛查页面还是随访页面
+    $('.tabWrap span').bind('click', function () {
+      $('.tabWrap span').removeClass();
+      $(this).addClass('current');
+      if ($(this).text().includes('随访报告')) {
+        $('.have-data-wrap:eq(0)').hide();
+        $('.have-data-wrap:eq(1)').show();
+      } else {
+        $('.have-data-wrap:eq(1)').hide();
+        $('.have-data-wrap:eq(0)').show();
+      }
+    });
+
+    //点击li标签收起伸展信息，li标签置顶
+    var _li = $('.followUpReportList li');
+    _li.bind('click', function () {
+      if ($(this).find('.showDetail').css('display') === 'block') {
+        $(this).find('.showDetail').slideUp(150);
+        $(this).removeClass();
+      } else {
+        _li.find('.showDetail').slideUp(150);
+        $(this).find('.showDetail').slideDown(150);
+        _li.removeClass();
+        $(this).addClass('showItem');
+        $('html,body').animate({scrollTop: $(this).find('.item').outerHeight(true) * $(this).index()}, 150);
+      }
+    })
+  })
+</script>
 
 </body>
 </html>

@@ -38,35 +38,35 @@
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="kedney4" value="3" hidden />
+          <input type="checkbox" name="" id="kedney4" value="4" hidden />
           <label for="kedney4" class="icon-check"></label>
           <span class="name">尿中泡沫增多或不易消退</span>
         </label>
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="kedney5" value="3" hidden />
+          <input type="checkbox" name="" id="kedney5" value="5" hidden />
           <label for="kedney5" class="icon-check"></label>
           <span class="name">反复眼睑或下肢浮肿</span>
         </label>
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="kedney6" value="3" hidden />
+          <input type="checkbox" name="" id="kedney6" value="6" hidden />
           <label for="kedney6" class="icon-check"></label>
           <span class="name">经常感到乏力、易疲劳</span>
         </label>
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="kedney7" value="3" hidden />
+          <input type="checkbox" name="" id="kedney7" value="7" hidden />
           <label for="kedney7" class="icon-check"></label>
           <span class="name">经常感到腰背酸痛，易抽筋</span>
         </label>
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="kedney8" value="3" hidden />
+          <input type="checkbox" name="" id="kedney8" value="10" hidden />
           <label for="kedney8" class="icon-check"></label>
           <span class="name">以上症状均无</span>
         </label>
@@ -96,21 +96,21 @@
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="eye4" value="3" hidden />
+          <input type="checkbox" name="" id="eye4" value="4" hidden />
           <label for="eye4" class="icon-check"></label>
           <span class="name">看东西出现重影</span>
         </label>
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="eye5" value="3" hidden />
+          <input type="checkbox" name="" id="eye5" value="5" hidden />
           <label for="eye5" class="icon-check"></label>
           <span class="name">看东西有闪光感</span>
         </label>
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="eye6" value="3" hidden />
+          <input type="checkbox" name="" id="eye6" value="10" hidden />
           <label for="eye6" class="icon-check"></label>
           <span class="name">以上症状均无</span>
         </label>
@@ -140,83 +140,129 @@
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="foot4" value="3" hidden />
+          <input type="checkbox" name="" id="foot4" value="4" hidden />
           <label for="foot4" class="icon-check"></label>
           <span class="name">有肾脏疾病</span>
         </label>
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="foot5" value="3" hidden />
+          <input type="checkbox" name="" id="foot5" value="5" hidden />
           <label for="foot5" class="icon-check"></label>
           <span class="name">有心血管疾病</span>
         </label>
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="foot6" value="3" hidden />
+          <input type="checkbox" name="" id="foot6" value="6" hidden />
           <label for="foot6" class="icon-check"></label>
           <span class="name">下肢出现水肿（足踝以下、膝关节以下、大腿以下、无）</span>
         </label>
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="foot7" value="3" hidden />
+          <input type="checkbox" name="" id="foot7" value="7" hidden />
           <label for="foot7" class="icon-check"></label>
           <span class="name">下肢或者足部存在畸形</span>
         </label>
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="foot8" value="3" hidden />
+          <input type="checkbox" name="" id="foot8" value="8" hidden />
           <label for="foot8" class="icon-check"></label>
           <span class="name">足部动脉搏动</span>
         </label>
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="foot9" value="3" hidden />
+          <input type="checkbox" name="" id="foot9" value="9" hidden />
           <label for="foot9" class="icon-check"></label>
           <span class="name">胫后动脉（内侧踝骨下方可触及）搏动</span>
         </label>
       </li>
       <li>
         <label class="custom_check_label">
-          <input type="checkbox" name="" id="foot10" value="3" hidden />
+          <input type="checkbox" name="" id="foot10" value="10" hidden />
           <label for="foot10" class="icon-check"></label>
           <span class="name">以上症状均无</span>
         </label>
       </li>
     </ul>
     <div class="custom-btm-fixed">
-        <span class="custom-btm-btn" onclick="">提交</span>
+        <span class="custom-btm-btn" onclick="submit()">提交</span>
     </div>
   </form>
 </div>
-
-  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
   <script type="text/javascript" src="../lib/js/flexible.js"></script>
+  <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
+  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
   <script type="text/javascript" src="../custom/js/native.js"></script>
   <script type="text/javascript" src="../custom/js/common.js"></script>
   <script src="../custom/js/api.js"></script>
   <script>
+    FastClick.attach(document.body);
+    var everyInput = $('ul li input'), riskType = '';
+    var lastInput = $('ul li:last-child input'), obj = {};
+
+    function submit() {
+      console.log(obj)
+      if(obj.hasOwnProperty('10')){
+        $.alert('您本次评估结果尚无糖尿病'+ riskType +'风险，请继续维持健康的生活方式，并定期体检。', function(){goBack()});
+      }else if($.isEmptyObject(obj)){
+        $.alert('请勾选符合您的选项');
+      }else{
+        $.alert('您本次评估结果具有糖尿病'+ riskType +'风险，建议您到居住地所属社区卫生服务中心进行并发症筛查，及早控制病情。', function(){goBack()});
+      }
+    }
+
+    function goBack() {
+      NativeFunc({
+        ACTION: "OPENURL",
+        PARAM: {
+          URL: nativeObj.htmlPath + '/riskAssessmentType.html'
+        }
+      });
+    }
+
     $(function () {
       var risk = getParams('risk');
-      console.log(typeof risk,risk);
       switch (risk) {
         case '1':
+          riskType = '肾病';
           $('.kidney').show();
           break;
         case '2':
+          riskType = '眼病';
           $('.eye').show();
           break;
         case '3':
+          riskType = '足病';
           $('.foot').show();
           break;
         default:
           break;
       }
+
+      everyInput.bind('click', function () {
+        if($(this).val() !== '10' && !obj[($(this).val())]){
+          obj[$(this).val()] = $(this).val();
+          if(obj.hasOwnProperty('10')){
+            delete obj['10'];
+            lastInput.prop('checked', false);
+          }
+        }else{
+          if($(this).prop('checked')){
+            everyInput.prop('checked', false);
+            $(this).prop('checked', true);
+            obj = {};
+            obj[$(this).val()] = $(this).val();
+          }else{
+            delete obj[$(this).val()];
+          }
+        }
+      })
     })
+
   </script>
 </body>
 </html>

@@ -13,7 +13,7 @@
 <body>
 <div class="MedicationReminder" style="display:block;">
     <div class="scroll-wrap">
-      <div class="weui-cell weui-cell_swiped">
+      <!--<div class="weui-cell weui-cell_swiped">
         <div class="weui-cell__bd">
           <div class="reminderListLeft" onClick=''>
             <span class="name">阿米详细讲究</span>
@@ -44,25 +44,74 @@
         <div class="weui-cell__ft">
           <a class="weui-swiped-btn delete-swipeout" href="javascript:"><i>删除</i></a>
         </div>
-      </div>
+      </div>-->
     </div>
     <div class="custom-btm-fixed">
-        <span class="custom-btm-btn" onclick="">添加提醒</span>
+        <span class="custom-btm-btn" onclick="addRemind()">添加提醒</span>
     </div>
 </div>
 
 <div class="custom-nodata nodataReminder" style="display:none;">
   <img src="../custom/images/drug_nodata.png" />
   <p>暂无用药提醒</p>
-  <p class="btnboxs" onClick=''><a class="btn">添加提醒</a></p>
+  <p class="btnboxs" onClick='addRemind()'><a class="btn">添加提醒</a></p>
 </div>
 
-  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
   <script type="text/javascript" src="../lib/js/flexible.js"></script>
+  <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
+  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
   <script type="text/javascript" src="../custom/js/native.js"></script>
   <script type="text/javascript" src="../custom/js/common.js"></script>
-  <script src="../custom/js/api.js"></script>
-
   <script src="../lib/js/jquery-weui.js"></script>
+  <script src="../custom/js/api.js"></script>
+  <script>
+    FastClick.attach(document.body);
+
+    function addRemind(){
+      NativeFunc({
+        ACTION: "OPENURL",
+        PARAM: {
+          URL: nativeObj.htmlPath + '/medicationReminderDrug.html'
+        }
+      });
+    }
+
+    $(function () {
+      var html = '';
+      for(var i=0; i<5; i++){
+        html += '<div class="weui-cell weui-cell_swiped">\n' +
+          '        <div class="weui-cell__bd">\n' +
+          '          <div class="reminderListLeft" onClick=\'\'>\n' +
+          '            <span class="name">阿米详细讲究</span>\n' +
+          '            <p class="daytime"><label>每天：</label><span>11:00</span><span>11:00</span></p>\n' +
+          '            <p><label>剂量：</label><span class="fc_orange">4ml</span></p>\n' +
+          '          </div>\n' +
+          '          <label for=' + "switchCP" + i +' class="weui-switch-cp">\n' +
+          '            <input id=' + "switchCP" + i +' class="weui-switch-cp__input" type="checkbox" checked="checked">\n' +
+          '            <div class="weui-switch-cp__box"></div>\n' +
+          '          </label>\n' +
+          '        </div>\n' +
+          '        <div class="weui-cell__ft">\n' +
+          '          <a class="weui-swiped-btn delete-swipeout" href="javascript:"><i>删除</i></a>\n' +
+          '        </div>\n' +
+          '      </div>';
+      }
+      $('.scroll-wrap').html(html);
+      //初始化删除
+      $('.weui-cell_swiped').swipeout('open');
+      $('.delete-swipeout').bind('click', function () {
+        $(this).parents('.weui-cell').remove();
+      });
+      $('.weui-switch-cp__input').bind('click', function () {
+        if($(this).prop('checked')){
+          console.log(111)
+
+        }
+      });
+    })
+
+
+  </script>
+
 </body>
 </html>

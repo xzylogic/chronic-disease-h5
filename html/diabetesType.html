@@ -13,7 +13,7 @@
 <body>
 <div class="riskAssessment riskAssessmentIndex" onClick=''>
   <div class="questionSelect">
-    <h4>请选择糖尿病的类型<span class="alink" onClick=''>历史评估</span></h4>
+    <h4>请选择糖尿病的类型<span class="alink" onClick='historyAssess()'>历史评估</span></h4>
     <ul class="listCheckbox">
       <!--<li class="checked">-->
           <!--<label class="custom_check_label">-->
@@ -47,12 +47,23 @@
   </div>
 </div>
 
-  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
   <script type="text/javascript" src="../lib/js/flexible.js"></script>
+  <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
+  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
   <script type="text/javascript" src="../custom/js/native.js"></script>
   <script type="text/javascript" src="../custom/js/common.js"></script>
   <script src="../custom/js/api.js"></script>
   <script>
+    FastClick.attach(document.body);
+    function historyAssess(){
+      NativeFunc({
+        ACTION: "OPENURL",
+        PARAM: {
+          URL: nativeObj.htmlPath + '/riskAssessmentHistoryIndex.html'
+        }
+      });
+    }
+
     $(function () {
       $('input[type="radio"]').bind('click', function () {
         if($(this).prop('checked')){

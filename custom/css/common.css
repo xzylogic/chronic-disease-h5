@@ -196,6 +196,9 @@ background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/200
   padding: 0.24rem 0.066667rem;
   background: #fff;
   text-align: center;
+  position: fixed;
+  z-index: 11;
+  width: 100%;
 }
 .tabWrap span{border:1px solid #0CB7F5;border-radius: 0.133333rem 0 0 0.133333rem;display: inline-block;width: 40%;height: 0.866667rem;line-height: 0.866667rem;text-align: center;color: #0CB7F5;font-size: 16px;}
 .tabWrap span.current{background-color:#0CB7F5;color: #fff;}

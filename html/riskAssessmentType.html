@@ -21,13 +21,15 @@
   </div>
 </div>
 
-  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
   <script type="text/javascript" src="../lib/js/flexible.js"></script>
+  <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
+  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
   <script type="text/javascript" src="../custom/js/native.js"></script>
   <script type="text/javascript" src="../custom/js/common.js"></script>
   <script src="../custom/js/api.js"></script>
   <script>
-    function kidneyDisease() {
+  FastClick.attach(document.body);
+  function kidneyDisease() {
       NativeFunc({
         ACTION: "OPENURL",
         PARAM: {

@@ -1,73 +1,56 @@
 // 接口基地址
-var ajaxRoot,fileRoot;
-if (document.location.host == 'h5.wdjky.com' || document.location.host == 'www.wdjky.com') {
-	ajaxRoot = '/gw/'; // 生产环境
-	fileRoot = '/healthcloud-file-public/'; // 文件上传基地址
- } else {
-	if (/wdjky.com/i.test(location.href)) {
-		ajaxRoot = '/gw-te/'; // 预发 测试 qyj-re.wdjky.com 实际上只要域名中有wdjky.com 就会匹配上
-		fileRoot = '/healthcloud-file-public-te/';
-	} else {
-		ajaxRoot = '/gw/'; // 本地代理/ip地址 如10.1.64.195
-		fileRoot = '/healthcloud-file-public/';
-	}
+var ajaxRoot;
+if (document.location.host === 'h5.wdjky.com' || document.location.host === 'www.wdjky.com') {
+  ajaxRoot = '/gw/'; // 生产环境
+} else {
+  if (/wdjky.com/i.test(location.href)) {
+    ajaxRoot = '/gw-te/'; // 预发 测试 qyj-re.wdjky.com 实际上只要域名中有wdjky.com 就会匹配上
+  } else {
+    ajaxRoot = '/gw/'; // 本地代理/ip地址 如10.1.64.195
+  }
 }
 
 //请求地址
-var ajaxUrl= {
-	// userGetTokenByAuthCode :"http://10.1.64.194/healthcloud-shop-api/api/common/get_uid",
-	userGetTokenByAuthCode : ajaxRoot + "shopUserGetTokenByAuthCode", // 根据code换token
-	indexBanner :ajaxRoot + "shopCommonBanner", // 首页banner
-	getAds:ajaxRoot + "shopCommonSecondAds",//小banner
-	expressArticles : ajaxRoot + "shopMallExpressList", // 首页快讯
-	specialArea:ajaxRoot + "shopGoodsNewPubList", // 首页专区
-	indexGoods : ajaxRoot + "shopGoodsClassifyList",
-	adressList: ajaxRoot + "shopAddressList", // 地址列表
-	updateAddress:ajaxRoot + 'shopAddressUpdate', // 更新地址
-	getRegion:ajaxRoot + "shopCommonRegion",//获取区域
-	addAddress:ajaxRoot + "shopAddreeAdd",//添加地址
-	addressDetail:ajaxRoot + "shopAddressDetail",//地址详情
-	expressDetail:ajaxRoot + "shopMallExpressDetail",//快讯详情
-	carList:ajaxRoot + "shopShopCarList",//购物车列表
-	deleteGoods:ajaxRoot + "shopShopCarDelete",//删除购物车商品
-	shopCarChangeNum:ajaxRoot + "shopCarChangeNum",
-	goodsList:ajaxRoot + "shopGoodsList",
-	shopShipTypeList:ajaxRoot + "shopShipTypeList",
-	commentList:ajaxRoot + "shopGoodsCommentList",
-	getGoodDetail:ajaxRoot + "shopGoodsDetail",
-	addToFav:ajaxRoot + "shopCollectAdd",
-	cancelFav:ajaxRoot + "shopCollectCancel",
-	getDefAddress: ajaxRoot + "shopAddressDefault", // 获取默认地址
-	createOrder:ajaxRoot + "shopOrderCreate",//创建订单
-	scanConsume:ajaxRoot +"payAgent",//万达付款????
-	queryPayStatus:ajaxRoot +"shopPaymentPayStatus",//支付状态查询???
-	sendPayStatus:ajaxRoot +"shopPaymentsCallback",
-	createPay:ajaxRoot +"shopPaymentsCreate",
-	getHadBuyNum:ajaxRoot + "shopGoodsHadBuyNum",//已购买数量
-	getCarNum:ajaxRoot + "shopCarGetNum",//购物车中该商品数量//待加接口
-	addToCar:ajaxRoot + "shopShopCarAdd",//加入购物车
-	isFav:ajaxRoot + "shopCollectHad",//是否收藏了
-	shopCollectList:ajaxRoot + "shopCollectList",//收藏列表
-	shopAddressDelete:ajaxRoot + "shopAddressDelete",
+var ajaxUrl = {
+  assessmentPredata: ajaxRoot + 'disease-assessment-predata',     //初始化数据
 
-	// 我的订单
-	orderList : ajaxRoot + 'shopOrderList', // 订单列表
-	orderDeail : ajaxRoot + 'shopOrderDetail', // 订单详情
-	orderCancel : ajaxRoot + 'shopOrderCancel', // 取消订单
-	orderRecv : ajaxRoot + 'shopOrderRecv', // 确认收货
-	orderDelete : ajaxRoot + 'shopOrderDelete', // 删除订单
-	invoiceAdd : ajaxRoot + 'shopInvoiceAdd', // 申请发票
-	invoiceDetail : ajaxRoot + 'shopInvoiceDetail', // 发票详情
-	commentAdd : ajaxRoot + 'shopCommentAdd', // 添加评论
-	commonRefund : ajaxRoot + 'shopCommonRefund', // 退货根据退货类型获取原因
-	refundAdd : ajaxRoot + 'shopRefundAdd', // 添加退款退货申请
-	refundList : ajaxRoot + 'shopRefundList', // 退款退货（售后）列表
-	refundDetail : ajaxRoot + 'shopRefundDetail', // 退款详情
-	refundCancel : ajaxRoot + 'shopRefundCancel', // 撤销退款申请
-	refundUpdate : ajaxRoot + 'shopRefundUpdate', // 修改退款退货申请
-	expressList : ajaxRoot + 'shopExpressList', // 物流公司列表
-	updateShip : ajaxRoot + 'shopRefundUpdateShip', // 提交退货物流
-	getFileId : ajaxRoot + 'shopFileGetFileId', // 获取文件fileId
-	getUrl : ajaxRoot + 'shopFileGetUrl', // 获取文件图片地址
-	uploadPicFile : fileRoot + 'api/ossFile/uploadPicFile' // 文件上传
+  remindList: ajaxRoot + 'disease-remind-list',     //用药提醒-获取用药提醒列表
+  medicineList: ajaxRoot + 'disease-medicine-list',     //用药提醒-获取药品列表
+  remindEnable: ajaxRoot + 'disease-remind-enable-or-disable',     //用药提醒-启用/禁用用药提醒
+  remindListCums: ajaxRoot + 'disease-remind-list-cums',     //用药提醒-获取常用药品列表
+  remindSave: ajaxRoot + 'disease-remind-save-and-update',     //用药提醒-保存用药提醒
+  remindDetail: ajaxRoot + 'disease-remind-detail',     //用药提醒-获取用药提醒详情
+  remindDelete: ajaxRoot + 'disease-remind-delete',     //用药提醒-删除用药提醒
+  remindDeleteCum: ajaxRoot + 'disease-remind-delete-cum',     //用药提醒-删除常用药品
+
+
+  assessmentAssess: ajaxRoot + 'disease-assessment-assess',     //评估
+  assessmentHistory: ajaxRoot + 'disease-assessment-history',     //评估历史
+  assessmentHistoryList: ajaxRoot + 'disease-assessment-history-list',     //风险评估-历史评估列表
+  assessmentRecent: ajaxRoot + 'disease-assessment-recent',     //获取用户最近的风险评估结果
+  assessment: ajaxRoot + 'disease-assessment',     //获取风险评估详情
+  assessmentCount: ajaxRoot + 'disease-assessment-count',     //风险评估人数
+  assessmentEye: ajaxRoot + 'disease-assessment-eye',     //风险评估-糖尿病眼疾症状评估
+  assessmentFoot: ajaxRoot + 'disease-assessment-foot',     //风险评估-糖尿病足风险评估
+  assessmentKidney: ajaxRoot + 'disease-assessment-kidney',     //风险评估-糖尿病肾病症状评估
+  assessmentHistoryNum: ajaxRoot + 'disease-assessment-history-num',     //风险评估-历史评估数量
+
+  reportNum: ajaxRoot + 'disease-report-num',     //慢病报告-统计报告数
+  reportScreening: ajaxRoot + 'disease-report-screening',     //慢病报告-筛查报告列表
+  reportInspectDetail: ajaxRoot + 'disease-report-inspect-detail',     //慢病报告-检查报告详情
+  reportInspect: ajaxRoot + 'disease-report-inspect',     //慢病报告-检查报告列表
+  reportFollow: ajaxRoot + 'disease-report-follow',     //慢病报告-随访报告列表
+
+
+  followPlan: ajaxRoot + 'disease-follow-plan-follow-up',     //随访计划-根据用户获取最近一条随访计划
+  doctorAdviceList: ajaxRoot + 'disease-doctor-advice-list',     //医生建议-医生建议详情
+  doctorAdviceDetail: ajaxRoot + 'disease-doctor-advice-detail',     //医生建议-医生建议列表
+
+
+  userGetTokenByAuthCode: ajaxRoot + 'userGetTokenByAuthCode',   //根据code换token
+
+  // 体征测量
+  iotV2HealthDataList: ajaxRoot + 'iotV2HealthDataList',   //血糖
+  // url: "/gw/iotV2HealthDataList?uid=" + localStorage.getItem('uid') + "&measure_type=glu&pgFlag=0",
+
 };
