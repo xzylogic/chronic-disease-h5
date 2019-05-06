@@ -79,7 +79,7 @@
       <span onClick='goReport()'><img src='../custom/images/icon5.png'/><br/>报告查看</span>
     </li>
     <li class="doctorAdvice">
-      <span onClick='goAdvice()'><img src='../custom/images/icon9.png'/><br/>医生建议</span>
+      <span onClick='goAdvice()'><em><img src='../custom/images/icon9.png'/></em><br/>医生建议</span>
     </li>
   </ul>
 </div>
@@ -169,9 +169,6 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    //获取随机字符串
-    var randomString = randomWord(true, 3, 40);
-
     var myDate = new Date();
     var date = myDate.toLocaleDateString();
     localStorage.setItem('date', date);
@@ -214,6 +211,7 @@
               localStorage.setItem('channelCode', tokenData.channelCode);
               localStorage.setItem('lightAppCode', tokenData.lightAppCode);
               localStorage.setItem('appid', tokenData.appid);
+              localStorage.setItem('accountId', tokenData.accountId);
               pageData = {
                 netToken: tokenData.token,
                 uid: tokenData.uid,
@@ -222,6 +220,7 @@
               };
               resolve();
             } else {
+              hideMyloading();
               pageData = {
                 netToken: localStorage.getItem('netToken'),
                 uid: localStorage.getItem('uid'),
@@ -230,7 +229,6 @@
               };
               if (!pageData.netToken) {
                 $.toast(data.msg || '请求错误', 'text');
-                reject(data.msg || '请求错误', 'text');
               }else{
                 resolve();
               }
@@ -248,7 +246,7 @@
     function getBloodGlucose(){
       return new Promise(function (resolve, reject) {
         $.ajax({
-          url: ajaxUrl.iotV2HealthDataList + '?measure_type=glu&pgFlag=0&uid=' + pageData.uid,
+          url: ajaxUrl.bloodGlucoseRecord + '?uid=' + pageData.uid + '&accountId=' + localStorage.getItem('accountId'),
           type: "GET",
           // contentType: 'application/json; charset=utf-8',
           beforeSend: function (request) {
@@ -256,19 +254,16 @@
             request.setRequestHeader('channelCode', pageData.channelCode);
             request.setRequestHeader('lightAppCode', pageData.lightAppCode);
             request.setRequestHeader('appid', localStorage.getItem('appid'));
+            request.setRequestHeader('request-id', randomWord(true));
             request.setRequestHeader('timestamp', new Date().getTime());
           },
           success: function (data) {
-            console.log(data);
-            // data = JSON.parse(data) || data;
-            // if (data.code === 0 && (data.data.content && data.data.content.length > 0)) {
-            //   $('.doctorAdvice').css('color', 'red');
-            //   hideMyloading();
-            // } else {
-            //   hideMyloading();
-            //   $.toast(data.msg || "创建支付信息接口出错", 'text');
-            // }
-            resolve('获取血糖记录');
+            console.log('获取血糖',data);
+            if(data.code === 0){
+              resolve(data.data);
+            }else{
+              $.toast(data.msg || '请求错误~', 'text');
+            }
           },
           error: function (err) {
             hideMyloading();
@@ -280,22 +275,26 @@
 
     // 获取医生建议
     function getDoctorAdvice(){
-      console.log(randomString)
       return new Promise(function (resolve, reject) {
         $.ajax({
-          url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid,
+          url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=3a24cb5b173e4d6597f62a95d04e3340',
+          // url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid,
           type: "GET",
           beforeSend: function (request) {
             request.setRequestHeader('token', pageData.netToken);
             request.setRequestHeader('channelCode', pageData.channelCode);
             request.setRequestHeader('lightAppCode', pageData.lightAppCode);
             request.setRequestHeader('appid', localStorage.getItem('appid'));
-            request.setRequestHeader('request-id', randomString);
+            request.setRequestHeader('request-id', randomWord(true));
             request.setRequestHeader('timestamp', new Date().getTime());
           },
           success: function (data) {
-            console.log('advice:',data);
-            resolve('获取医生建议列表');
+            console.log('医生建议:',data);
+            if(data.code === 0){
+              resolve(data.data);
+            }else{
+              $.toast(data.msg || '请求错误~', 'text');
+            }
             // data = JSON.parse(data) || data;
             // if (data.code === 0 && (data.data.content && data.data.content.length > 0)) {
             //   $('.doctorAdvice').css('color', 'red');
@@ -316,6 +315,9 @@
     pro().then(function () {
       return Promise.all([getBloodGlucose(), getDoctorAdvice()])
     }).then(function (res) {
+      if(res[1].more){
+        $('.doctorAdvice em').addClass('redDot');
+      }
       hideMyloading();
       console.log(res);
     }).catch(function (err) {

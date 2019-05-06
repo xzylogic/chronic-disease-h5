@@ -57,6 +57,26 @@
   <p class="btnboxs" onClick='addRemind()'><a class="btn">添加提醒</a></p>
 </div>
 
+  <script type="text/template" id="drugRemindList-Temp">
+    <div class="weui-cell weui-cell_swiped">
+      <div class="weui-cell__bd">
+        <div class="reminderListLeft">
+          <span class="name">{0}</span>
+          <p class="daytime"><label>每天：</label><span>{1}</span></p>
+          <!--<p class="daytime"><label>每天：</label><span>11:00</span><span>11:00</span></p>-->
+          <p><label>剂量：</label><span class="fc_orange">{2}</span></p>
+          <!--<p><label>剂量：</label><span class="fc_orange">4ml</span></p>-->
+        </div>
+        <label for="switchCP1" class="weui-switch-cp">
+          <input id="switchCP1" class="weui-switch-cp__input" type="checkbox" checked="checked">
+          <div class="weui-switch-cp__box"></div>
+        </label>
+      </div>
+      <div class="weui-cell__ft">
+        <a class="weui-swiped-btn delete-swipeout" href="javascript:"><i>删除</i></a>
+      </div>
+    </div>
+  </script>
   <script type="text/javascript" src="../lib/js/flexible.js"></script>
   <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
   <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
@@ -67,36 +87,57 @@
   <script>
     FastClick.attach(document.body);
 
+    var id = '';
     function addRemind(){
       NativeFunc({
         ACTION: "OPENURL",
         PARAM: {
-          URL: nativeObj.htmlPath + '/medicationReminderDrug.html'
+          URL: nativeObj.htmlPath + '/medicationReminderDrug.html?id=' + id
         }
       });
     }
 
     $(function () {
-      var html = '';
-      for(var i=0; i<5; i++){
-        html += '<div class="weui-cell weui-cell_swiped">\n' +
-          '        <div class="weui-cell__bd">\n' +
-          '          <div class="reminderListLeft" onClick=\'\'>\n' +
-          '            <span class="name">阿米详细讲究</span>\n' +
-          '            <p class="daytime"><label>每天：</label><span>11:00</span><span>11:00</span></p>\n' +
-          '            <p><label>剂量：</label><span class="fc_orange">4ml</span></p>\n' +
-          '          </div>\n' +
-          '          <label for=' + "switchCP" + i +' class="weui-switch-cp">\n' +
-          '            <input id=' + "switchCP" + i +' class="weui-switch-cp__input" type="checkbox" checked="checked">\n' +
-          '            <div class="weui-switch-cp__box"></div>\n' +
-          '          </label>\n' +
-          '        </div>\n' +
-          '        <div class="weui-cell__ft">\n' +
-          '          <a class="weui-swiped-btn delete-swipeout" href="javascript:"><i>删除</i></a>\n' +
-          '        </div>\n' +
-          '      </div>';
-      }
-      $('.scroll-wrap').html(html);
+      //获取用药提醒列表
+      $.ajax({
+        url: ajaxUrl.remindList + '?flag=0&userId=' + localStorage.getItem('uid'),
+        type: "GET",
+        beforeSend: function (request) {
+          request.setRequestHeader('token', localStorage.getItem('netToken'));
+          request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+          request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+          request.setRequestHeader('appid', localStorage.getItem('appid'));
+          request.setRequestHeader('request-id', randomWord(true));
+          request.setRequestHeader('timestamp', new Date().getTime());
+        },
+        success: function (data) {
+          if(data.code === 0){
+            console.log('获取用药提醒列表',data.data);
+            var html = '';
+            var temp = $('#drugRemindList-Temp').html();
+            data.data.content.length > 0 ? data.data.content.map(function (res) {
+              id = res.id;
+              var drugName = '', drugTime = '', dosage = '';
+              res.remindItems.map(function (items) {
+                drugName += items.name + ' ';
+                dosage += items.specification + ' ';
+              });
+              res.remindTimes.map(function (times) {
+                drugTime += times.remindTime + ' ';
+              });
+              html += temp.format(drugName, drugTime, specification);
+            }) : ($('.custom-nodata').show(), $('.custom-btm-fixed').hide());
+            $('.scroll-wrap').html(html);
+          }else{
+            $.toast(data.msg || '请求错误', 'text');
+          }
+        },
+        error: function (err) {
+          hideMyloading();
+          console.log(err);
+        }
+      });
+
       //初始化删除
       $('.weui-cell_swiped').swipeout('open');
       $('.delete-swipeout').bind('click', function () {
