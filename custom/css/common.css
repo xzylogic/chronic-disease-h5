@@ -21,6 +21,7 @@ img[src=""],img:not([src]){opacity:0;}
 .weui-navbar__item:after{display: none;}
 .weui-navbar__item.weui-bar__item--on:before{content: " ";position: absolute;left: 0;
     top: 0;bottom: 0;display:block;width:100%;border-bottom: 2px solid #0cb7f5;}
+.weui-dialog{border-radius: 0.266667rem; }
 .weui-dialog .weui-dialog__btn.default, .weui-toast .weui-dialog__btn.default{color: #999 !important;}
 .mescroll-empty .empty-icon{width: 30% !important;}
 /*页面公用样式*/
@@ -106,7 +107,7 @@ background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/200
 .custom_check_label .name{display: inline-block;vertical-align: middle;color: #999;font-size: 14px;}
 .custom-btm-fixed{position: absolute;bottom:0;left:0;width: 100%;text-align: center;}
 .custom-btm-fixed-white{background-color: #fff;border-top: 1px solid #efefef;}
-.custom-btm-btn{width: 92%;margin:0.266667rem auto;background: #0CB7F5;border-radius: 0.106667rem;height: 1.173333rem;line-height: 1.173333rem;color: #fff;text-align: center;font-size: 16px;display: inline-block;}
+.custom-btm-btn{width: 92%;margin:0.266667rem auto;background: #0CB7F5;border-radius: 0.106667rem;height: 1.173333rem;line-height: 1.173333rem;color: #fff;text-align: center;font-size: 16px;display: inline-block;cursor: pointer;}
 .custom-btm-graybtn{color: #fff;background-color:#ccc;}
 .custom-btm-fixed2 .custom-btm-btn{width: 43%;margin:0.266667rem .2rem;}
 /*无数据结构*/
@@ -131,6 +132,7 @@ background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/200
 	font-size: 14px;
 	display: inline-block;
 	padding: 0.133333rem 0.4rem;
+  cursor: pointer;
 }
 /*搜索栏*/
 .search-top{position: relative;width: 100%;padding: 0.266667rem 0.4rem;box-sizing: border-box;}

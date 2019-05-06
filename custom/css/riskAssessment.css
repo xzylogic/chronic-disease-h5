@@ -32,7 +32,7 @@
 .riskAssessment .listCheckbox .custom_check_label .icon-check{margin-top: 4px;}
 .riskAssessment .listCheckbox li.checked{background-color: #f9f9f9;}
 .riskAssessment .listCheckbox .custom_check_label{display: block;padding:0.4rem 0 .4rem 0.933333rem;}
-.riskAssessment .listCheckbox .custom_check_label input[type="checkbox"] .icon-check{background-image: url(../images/checkbox.png);margin-right: 0.4rem;vertical-align: text-top;margin-top: .07rem;}
+.riskAssessment .listCheckbox .custom_check_label input[type="checkbox"] + .icon-check{background-image: url(../images/checkbox.png);margin-right: 0.4rem;vertical-align: text-top;}
 .riskAssessment .listCheckbox .custom_check_label input[type="checkbox"]:checked + .icon-check{
   background-image: url(../images/sel_checkbox.png);
 }
