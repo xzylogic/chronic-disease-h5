@@ -14,10 +14,10 @@
 <div class="riskAssessment riskAssessmentType">
   <div class="questionSelectType">
     <ul>
-        <li class="typeItem0"><img src='../custom/images/riskicon0.png' /><br/>风险评估<span>（1份）</span></li>
-        <li class="typeItem1"><img src='../custom/images/riskicon1.png' /><br/>糖尿病肾病症状风险评估<span>（2份）</span></li>
-        <li class="typeItem2"><img src='../custom/images/riskicon2.png' /><br/>糖尿病眼病症状风险评估<span>（3份）</span></li>
-        <li class="typeItem3"><img src='../custom/images/riskicon3.png' /><br/>糖尿病足病症状风险评估<span>（4份）</span></li>
+        <li class="typeItem0"><img src='../custom/images/riskicon0.png' /><br/>风险评估（<span></span>份）</li>
+        <li class="typeItem1"><img src='../custom/images/riskicon1.png' /><br/>糖尿病肾病症状风险评估（<span></span>份）</li>
+        <li class="typeItem2"><img src='../custom/images/riskicon2.png' /><br/>糖尿病眼病症状风险评估（<span></span>份）</li>
+        <li class="typeItem3"><img src='../custom/images/riskicon3.png' /><br/>糖尿病足病症状风险评估（<span></span>份）</li>
     </ul>
   </div>
 </div>
@@ -31,25 +31,66 @@
   <script>
     FastClick.attach(document.body);
     $(function () {
+      showMyloading();
+      $.ajax({
+        url: ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340',
+        // url: ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid'),
+        type: "GET",
+        beforeSend: function (request) {
+          request.setRequestHeader('token', localStorage.getItem('netToken'));
+          request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+          request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+          request.setRequestHeader('appid', localStorage.getItem('appid'));
+          request.setRequestHeader('request-id', randomWord(true));
+          request.setRequestHeader('timestamp', new Date().getTime());
+        },
+        success: function (data) {
+          if(data.code === 0){
+            var dataList = data.data;
+            if(dataList.assessmentNum > 0){
+              $('.questionSelectType span:eq(0)').text(dataList.assessmentNum);
+            }else{
+              $('.questionSelectType li:eq(0)').hide();
+            }
+            if(dataList.eyeNum > 0){
+              $('.questionSelectType span:eq(1)').text(dataList.eyeNum);
+            }else{
+              $('.questionSelectType li:eq(1)').hide();
+            }
+            if(dataList.footNum > 0){
+              $('.questionSelectType span:eq(2)').text(dataList.footNum);
+            }else{
+              $('.questionSelectType li:eq(2)').hide();
+            }
+            if(dataList.kidneyNum > 0){
+              $('.questionSelectType span:eq(3)').text(dataList.kidneyNum);
+            }else{
+              $('.questionSelectType li:eq(3)').hide();
+            }
+          }
+          hideMyloading();
+        },
+        error: function (err) {
+          hideMyloading();
+          console.log(err);
+        }
+      });
       $('ul li').bind('click', function () {
-        console.log($(this).previousSibling)
-
+        // console.log('=====', $(this).previousSibling);
         var tiskText = $(this).find('span').parent().contents().filter(function(){
               return this.nodeType === 3;
             }).text();
         switch (tiskText) {
-          case '风险评估':
+          case '风险评估（份）':
             console.log('跳转到健康云风险评估历史记录列表');
+            // NativeFunc({
+            //   ACTION: "OPENURL",
+            //   PARAM: {
+            //     URL: nativeObj.htmlPath + '/riskAssessmentHistoryList.html?text=1'
+            //   }
+            // });
             break;
-          case '糖尿病肾病症状风险评估':
-            NativeFunc({
-              ACTION: "OPENURL",
-              PARAM: {
-                URL: nativeObj.htmlPath + '/riskAssessmentHistoryList.html?text=1'
-              }
-            });
-            break;
-          case '糖尿病眼病症状风险评估':
+          case '糖尿病肾病症状风险评估（份）':
             NativeFunc({
               ACTION: "OPENURL",
               PARAM: {
@@ -57,11 +98,19 @@
               }
             });
             break;
-          case '糖尿病足病症状风险评估':
+          case '糖尿病眼病症状风险评估（份）':
             NativeFunc({
               ACTION: "OPENURL",
               PARAM: {
                 URL: nativeObj.htmlPath + '/riskAssessmentHistoryList.html?text=3'
+              }
+            });
+            break;
+          case '糖尿病足病症状风险评估（份）':
+            NativeFunc({
+              ACTION: "OPENURL",
+              PARAM: {
+                URL: nativeObj.htmlPath + '/riskAssessmentHistoryList.html?text=4'
               }
             });
             break;

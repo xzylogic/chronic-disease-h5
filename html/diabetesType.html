@@ -13,7 +13,7 @@
 <body>
 <div class="riskAssessment riskAssessmentIndex" onClick=''>
   <div class="questionSelect">
-    <h4>请选择糖尿病的类型<span class="alink" onClick='historyAssess()'>历史评估</span></h4>
+    <h4>请选择糖尿病的类型<span class="alink" onClick='historyAssess()' style="display: none;">历史评估</span></h4>
     <ul class="listCheckbox">
       <!--<li class="checked">-->
           <!--<label class="custom_check_label">-->
@@ -102,7 +102,34 @@
           //     break;
           // }
         }
-      })
+      });
+
+      $.ajax({
+        url: ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340',
+        // url: ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid'),
+        type: "GET",
+        beforeSend: function (request) {
+          request.setRequestHeader('token', localStorage.getItem('netToken'));
+          request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+          request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+          request.setRequestHeader('appid', localStorage.getItem('appid'));
+          request.setRequestHeader('request-id', randomWord(true));
+          request.setRequestHeader('timestamp', new Date().getTime());
+        },
+        success: function (data) {
+          console.log(data);
+          var datas = data.data;
+          if(data.code === 0){
+            if(datas.assessmentNum > 0 || datas.eyeNum > 0 || datas.footNum > 0 || datas.kidneyNum > 0){
+              $('.alink').show();
+            }
+          }
+        },
+        error: function (err) {
+          hideMyloading();
+          console.log(err);
+        }
+      });
     })
   </script>
 

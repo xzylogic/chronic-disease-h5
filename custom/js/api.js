@@ -14,38 +14,37 @@ if (document.location.host === 'h5.wdjky.com' || document.location.host === 'www
 var ajaxUrl = {
   assessmentPredata: ajaxRoot + 'disease-assessment-predata',     //初始化数据
 
-  remindEnable: ajaxRoot + 'disease-remind-enable-or-disable',     //用药提醒-启用/禁用用药提醒
   remindDetail: ajaxRoot + 'disease-remind-detail',     //用药提醒-获取用药提醒详情
-  remindDelete: ajaxRoot + 'disease-remind-delete',     //用药提醒-删除用药提醒
 
 
+  assessmentHistory: ajaxRoot + 'disease-assessment-history',     //评估历史
 
   assessmentAssess: ajaxRoot + 'disease-assessment-assess',     //评估
-  assessmentHistory: ajaxRoot + 'disease-assessment-history',     //评估历史
-  assessmentHistoryList: ajaxRoot + 'disease-assessment-history-list',     //风险评估-历史评估列表
+
   assessmentRecent: ajaxRoot + 'disease-assessment-recent',     //获取用户最近的风险评估结果
   assessment: ajaxRoot + 'disease-assessment',     //获取风险评估详情
   assessmentCount: ajaxRoot + 'disease-assessment-count',     //风险评估人数
   assessmentEye: ajaxRoot + 'disease-assessment-eye',     //风险评估-糖尿病眼疾症状评估
   assessmentFoot: ajaxRoot + 'disease-assessment-foot',     //风险评估-糖尿病足风险评估
   assessmentKidney: ajaxRoot + 'disease-assessment-kidney',     //风险评估-糖尿病肾病症状评估
-  assessmentHistoryNum: ajaxRoot + 'disease-assessment-history-num',     //风险评估-历史评估数量
 
 
-  reportNum: ajaxRoot + 'disease-report-num',     //慢病报告-统计报告数
   reportInspectDetail: ajaxRoot + 'disease-report-inspect-detail',     //慢病报告-检查报告详情
   reportInspect: ajaxRoot + 'disease-report-inspect',     //慢病报告-检查报告列表
 
   doctorAdviceList: ajaxRoot + 'disease-doctor-advice-list',     //医生建议-医生建议详情
 
 
-
-
-
-
-
   // 已使用接口
   bloodGlucoseRecord: ajaxRoot + 'iot-chronic-disease-index-stat',     //首页血糖获取
+
+  assessmentHistoryList: ajaxRoot + 'disease-assessment-history-list',     //风险评估-历史评估列表
+  assessmentHistoryNum: ajaxRoot + 'disease-assessment-history-num',     //风险评估-历史评估数量
+
+
+
+  remindEnable: ajaxRoot + 'disease-remind-enable-or-disable',     //用药提醒-启用/禁用用药提醒
+  remindDelete: ajaxRoot + 'disease-remind-delete',     //用药提醒-删除用药提醒
 
   remindList: ajaxRoot + 'disease-remind-list',     //用药提醒-获取用药提醒列表
 
@@ -57,6 +56,7 @@ var ajaxUrl = {
 
   followPlan: ajaxRoot + 'disease-follow-plan-follow-up',     //随访计划-根据用户获取最近一条随访计划
 
+  reportNum: ajaxRoot + 'disease-report-num',     //慢病报告-统计报告数
   reportScreening: ajaxRoot + 'disease-report-screening',     //慢病报告-筛查报告列表
   reportFollow: ajaxRoot + 'disease-report-follow',     //慢病报告-随访报告列表
 
