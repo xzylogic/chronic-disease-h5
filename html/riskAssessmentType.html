@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>风险评估</title>
+  <link rel="stylesheet" type="text/css" href="../lib/css/weui.min.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/css/jquery-weui.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/riskAssessment.css" />
+
+</head>
+
+<body>
+<div class="riskAssessment riskAssessmentType">
+  <div class="questionSelectType">
+    <ul>
+        <li class="typeItem1" onClick='kidneyDisease()'><img src='../custom/images/riskicon1.png' /><br/>糖尿病肾病症状风险评估</li>
+        <li class="typeItem2" onClick='eyeDisease()'><img src='../custom/images/riskicon2.png' /><br/>糖尿病眼病症状风险评估</li>
+        <li class="typeItem3" onClick='footDisease()'><img src='../custom/images/riskicon3.png' /><br/>糖尿病足病症状风险评估</li>
+    </ul>
+  </div>
+</div>
+
+  <script type="text/javascript" src="../lib/js/flexible.js"></script>
+  <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
+  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../custom/js/native.js"></script>
+  <script type="text/javascript" src="../custom/js/common.js"></script>
+  <script src="../custom/js/api.js"></script>
+  <script>
+  FastClick.attach(document.body);
+  function kidneyDisease() {
+      NativeFunc({
+        ACTION: "OPENURL",
+        PARAM: {
+          URL: nativeObj.htmlPath + '/riskAssessmentQuestions.html?risk=1'
+        }
+      });
+    }
+
+    function eyeDisease() {
+      NativeFunc({
+        ACTION: "OPENURL",
+        PARAM: {
+          URL: nativeObj.htmlPath + '/riskAssessmentQuestions.html?risk=2'
+        }
+      });
+    }
+
+    function footDisease() {
+      NativeFunc({
+        ACTION: "OPENURL",
+        PARAM: {
+          URL: nativeObj.htmlPath + '/riskAssessmentQuestions.html?risk=3'
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

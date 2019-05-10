@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>随访计划</title>
+  <link rel="stylesheet" type="text/css" href="../lib/css/weui.min.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/css/jquery-weui.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/followUp.css" />
+
+</head>
+
+<body>
+<div class="followUp">
+  <ul class="list">
+      <!--<li>
+        <p class="top">
+          <label><img src='../custom/images/followup.png' />随访频度</label><span>六个月一次 | 每年至少2次</span>
+        </p>
+        <div class="con">
+          <span class="time timeOver">已过期</span>
+          <p class="clearfix"><label>建议随访时间</label><span>2018-11-09 到 2019-09-19</span></p>
+          <p class="clearfix"><label>随访医生　　</label><span>黄小民</span></p>
+          <p class="clearfix"><label>所属医疗机构</label><span>黄陂的局势的繁华医院</span></p>
+        </div>
+      </li>-->
+    </ul>
+    <div class='custom-nodata' style="display:none;">
+      <img src="../custom/images/nodata.png">
+      <p>暂无随访计划</p>
+    </div>
+</div>
+
+  <script type="text/javascript" src="../lib/js/flexible.js"></script>
+  <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
+  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../custom/js/native.js"></script>
+  <script type="text/javascript" src="../custom/js/common.js"></script>
+  <script src="../custom/js/api.js"></script>
+  <script>
+    FastClick.attach(document.body);
+    showMyloading();
+    $.ajax({
+      url: ajaxUrl.followPlan + '?cardType=01&cardNumber=310108198208190030&registerId=' + localStorage.getItem('uid'),
+      type: "GET",
+      beforeSend: function (request) {
+        request.setRequestHeader('token', localStorage.getItem('netToken'));
+        request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+        request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+        request.setRequestHeader('appid', localStorage.getItem('appid'));
+        request.setRequestHeader('request-id', randomWord(true));
+        request.setRequestHeader('timestamp', new Date().getTime());
+      },
+      success: function (data) {
+        // console.log('随访计划:',data);
+        if(data.code === 0){
+          var dataList = data.data, followNum = '';
+          switch (dataList.followCrowedType) {
+            case '1':
+              followNum = '六个月一次 | 每年至少2次';
+              break;
+            case '2':
+              return;
+            case '3':
+              followNum = '三个月一次 | 每年至少4次';
+              break;
+            case '4':
+              return;
+            default:
+              return;
+          }
+
+          var html = '<li>\n' +
+            '           <p class="top">\n' +
+            '             <label><img src=\'../custom/images/followup.png\' />随访频度</label><span>'+ followNum +'</span>\n' +
+            '           </p>\n' +
+            '           <div class="con">\n' +
+            '             <span class="time"></span>\n' +
+            '             <p class="clearfix"><label>建议随访时间</label><span>'+ dataList.followDate +'</span></p>\n' +
+            '             <p class="clearfix"><label>随访医生　　</label><span>'+ dataList.doctorName +'</span></p>\n' +
+            '             <p class="clearfix"><label>所属医疗机构</label><span>'+ dataList.hospitalName +'</span></p>\n' +
+            '           </div>\n' +
+            '         </li>';
+          $('.list').html(html);
+
+          if(dataList.overdueFlag){
+            $('.time').text('已过期').addClass('timeOver');
+            $.modal({
+              title: "",
+              text: "您的随访已过期，请尽快到所属医疗机构随访",
+              buttons: [
+                { text: "好的"},
+              ]
+            });
+          }
+        }else{
+          $.toast(data.msg || '请求错误', 'text');
+        }
+        hideMyloading();
+      },
+      error: function (err) {
+        hideMyloading();
+        console.log(err);
+      }
+    });
+  </script>
+
+</body>
+</html>

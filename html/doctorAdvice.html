@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>医生建议</title>
+  <link rel="stylesheet" type="text/css" href="../lib/css/weui.min.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/css/jquery-weui.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/doctorAdvice.css" />
+</head>
+
+<body>
+<div class="doctorAdviceBox">
+  <div style="position: absolute; width: 100%; z-index: 11; top: 0;">
+    <div class="doctorMes clearfix" style="display:block;">
+      <span class="photo"><img src="../custom/images/photo.jpg" /><!--  class="default" --></span>
+      <div class="mes">
+        <h3>签约医生：黄晓明</h3>
+        <p>所在单位：上海黄埔的社区中心</p>
+      </div>
+    </div>
+    <div class="tabWrap" style="position: relative;">
+      <span class="current">血糖异常</span><span>血压异常</span>
+    </div>
+    <p class="border-top"></p>
+  </div>
+  <div class="main" style="position: absolute; top: 4.7rem; overflow: auto; height: 100%; margin-bottom: -1.6rem; margin-top: 1px;">
+    <div class='custom-nodata' style="display:none;">
+      <img src="../custom/images/nodata.png">
+      <p>暂无建议</p>
+    </div>
+    <div class="have-data-box" style="height:100%; overflow:auto;">
+      <!--显示下拉标签-->
+      <div class="weui-pull-to-refresh__layer pull-refresh-loading">
+        <div class='weui-pull-to-refresh__arrow'></div>
+        <div class='weui-pull-to-refresh__preloader'></div>
+        <div class="down">下拉刷新</div>
+        <div class="up">释放刷新</div>
+        <div class="refresh"></div>
+        <span id="last-Time"></span>
+      </div>
+      <ul class="newadviceList">
+        <!--<li>-->
+            <!--<p><label>测量时间</label><span>2017-09-10&nbsp;&nbsp;&nbsp;&nbsp;早晨</span></p>-->
+            <!--<p><label>血糖异常</label><span><em class="abnormal">10.21<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></p>-->
+            <!--<p><label>干预时间</label><span>2019-09-12</span></p>-->
+            <!--<p><label>医生建议</label><span>请注意到医院检查</span></p>-->
+        <!--</li>-->
+      </ul>
+      <div id="load-more" class="weui-loadmore" style="display: none;">
+        <i class="weui-loading"></i>
+        <span class="weui-loadmore__tips">正在加载</span>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/template" id="dovtorAdvice-Temp">
+    <li>
+      <p><label>测量时间</label><span>{0}&nbsp;&nbsp;&nbsp;&nbsp;{1}</span></p>
+      <p><label>{7}</label><span><em class="{5}">{2}<img src="{6}"></em>&nbsp;&nbsp;mmol/L</span></p>
+      <p><label>干预时间</label><span>{3}</span></p>
+      <p><label>医生建议</label><span>{4}</span></p>
+    </li>
+  </script>
+  <script type="text/javascript" src="../lib/js/flexible.js"></script>
+  <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
+  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../lib/js/jquery-weui.js"></script>
+  <script type="text/javascript" src="../custom/js/native.js"></script>
+  <script type="text/javascript" src="../custom/js/common.js"></script>
+  <script src="../custom/js/api.js"></script>
+  <script>
+    FastClick.attach(document.body);
+    $(function () {
+      showMyloading();
+      // 获取医生建议
+      function getDoctorAdvice(page){
+        return new Promise(function (resolve, reject) {
+          $.ajax({
+            url: ajaxUrl.doctorAdviceDetail + '?flag='+ page +'&uid=3a24cb5b173e4d6597f62a95d04e3340',
+            // url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid,
+            type: "GET",
+            beforeSend: function (request) {
+              request.setRequestHeader('token', localStorage.getItem('netToken'));
+              request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+              request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+              request.setRequestHeader('appid', localStorage.getItem('appid'));
+              request.setRequestHeader('request-id', randomWord(true));
+              request.setRequestHeader('timestamp', new Date().getTime());
+            },
+            success: function (data) {
+              if(data.code === 0){
+                resolve(data.data);
+              }else{
+                $.toast(data.msg || '请求错误', 'text');
+              }
+              hideMyloading();
+            },
+            error: function (err) {
+              hideMyloading();
+              console.log(err);
+            }
+          });
+        });
+      }
+
+      var html = '';
+      var adviceData = {
+        pageStatus : '血糖异常',
+        dataList : $('.have-data-box'),
+        loading : false,   //上拉加载时防止多次加载
+        moreData : false,  //是否有更多数据
+        page: 0,  //页数
+      };
+
+      indexDoctorAdvice();
+      function indexDoctorAdvice(page = 0){
+        getDoctorAdvice(page).then(function (res) {
+          // console.log(res);
+          adviceData.moreData = res.more;
+          var temp = $('#dovtorAdvice-Temp').html();
+          if(page === 0 && res.content.length === 0){
+            $('.custom-nodata').show();
+          }else{
+            res.content.length > 0 ? res.content.map(function (data) {
+              var bloodList = data.bloodGlucose_list[0];  //血糖
+              var pressureList = data.pressure_list[0];   //血压
+              var meal='', flagStatus = '', flagImg = '';
+              switch (adviceData.pageStatus) {
+                case '血糖异常':
+                  if(bloodList){
+                    switch(bloodList.testPeriod) {
+                      case "0":
+                        meal = '早餐前';
+                        break;
+                      case "1":
+                        meal = '早餐后';
+                        break;
+                      case "2":
+                        meal = '午餐前';
+                        break;
+                      case "3":
+                        meal = '午餐后';
+                        break;
+                      case "4":
+                        meal = '晚餐前';
+                        break;
+                      case "5":
+                        meal = '晚餐后';
+                        break;
+                      case "6":
+                        meal = '睡前';
+                        break;
+                      case "7":
+                        meal = '凌晨';
+                        break;
+                      default :
+                        meal = '随机';
+                        break;
+                    }
+                    switch (bloodList.flag) {
+                      case '1':
+                        flagStatus = 'abnormal';
+                        flagImg = '../custom/images/sup.png';
+                        break;
+                      case '2':
+                        flagStatus = 'abnormal';
+                        flagImg = '../custom/images/down-arrow1.png';
+                        break;
+                      default:
+                        break;
+                    }
+                    html += temp.format(bloodList.testTime, meal, bloodList.fpgValue, data.intervene_time, data.doctor_suggest, flagStatus, flagImg, adviceData.pageStatus);
+                  }
+                  break;
+                case '血压异常':
+                  if(pressureList){
+                    html += temp.format(pressureList.testTime, '', pressureList.diastolic, data.intervene_time, data.doctor_suggest, flagStatus, flagImg, adviceData.pageStatus);
+                  }
+                  break;
+                default:
+                  break;
+              }
+              $('.weui-loadmore').hide();
+              adviceData.loading = false;
+            }) : '';
+            $('.newadviceList').html(html);
+          }
+        }).catch(function (err) {
+          hideMyloading();
+          console.log(err);
+        });
+      }
+
+      //下拉刷新
+      adviceData.dataList.pullToRefresh().on('pull-to-refresh', function () {
+        html = '';
+        adviceData.page = 0;
+        indexDoctorAdvice(0);
+        adviceData.dataList.pullToRefreshDone();
+      });
+
+      //上拉分页加载
+      adviceData.dataList.infinite(100).on("infinite", function () {
+        if(adviceData.moreData){
+          if(adviceData.loading) return;
+          adviceData.loading = true;
+          $('.weui-loadmore').show();
+          indexDoctorAdvice(adviceData.page++);
+        }
+      });
+
+      //判断当前是血糖页面还是血压页面
+      $('.tabWrap span').bind('click', function () {
+        showMyloading();
+        $('.tabWrap span').removeClass();
+        $(this).addClass('current');
+        if ($(this).text().includes('血压异常')) {
+          adviceData.pageStatus = '血压异常';
+        } else {
+          adviceData.pageStatus = '血糖异常';
+        }
+        html = '';
+        $('.newadviceList').html('');
+        adviceData.page = 0;
+        indexDoctorAdvice(0);
+      });
+    })
+  </script>
+</body>
+</html>

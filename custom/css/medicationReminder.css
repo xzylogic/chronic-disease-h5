@@ -1,0 +1,220 @@
+.weui-swiped-btn{font-size: 18px;background-color: #FE3A32;width: 2.266667rem;padding:0;text-align: center;height: 100%;display: table;}
+.weui-swiped-btn i{display: table-cell;vertical-align: middle;line-height: normal;}
+.weui-switch-cp{position: absolute;top:50%;right: .4rem;margin-top: -16px;}
+.weui-switch-cp__input:checked~.weui-switch-cp__box, .weui-switch:checked{border-color: #0CB7F5;background-color:#0CB7F5;}
+.fc_orange {
+  color: #FFA73B;
+}
+.nodataReminder .btnboxs{padding-top: 0.4rem;}
+.nodataReminder .btnboxs .btn{
+      display: inline-block;
+      border-color: #0CB7F5;
+      border-radius: 0.106667rem;
+      color: #0CB7F5;
+      font-size: 16px;
+      height: 0.8rem;
+      line-height: 0.8rem;
+      padding: 0 0.4rem;
+      background-color: #f4f4f4;
+}
+
+.pickerInsert {
+  position: absolute;
+  top: 1.2rem;
+  left: 0.4rem;
+  right: 0.4rem;
+  z-index: 10;
+  padding-top: 0.2rem;
+  background-color: #fff;
+}
+.pickerInsert input {
+  border: 1PX solid #fcfcfc;
+  background: #F2F2F2;
+  border-radius: 0.093333rem;
+  width: 100%;
+  height: 0.933333rem;
+  line-height: 0.933333rem;
+  padding: 0.133333rem 0.333333rem 0;
+}
+
+.MedicationReminder {
+  background-color: #f4f4f4;
+}
+.MedicationReminder .reminderListLeft {
+  padding: 0.4rem;
+  width: 6.666666rem;
+  box-sizing: border-box;
+}
+.MedicationReminder .reminderListLeft .name {
+  font-size: 18px;
+}
+.MedicationReminder .reminderListLeft p {
+  padding-top: 0.1rem;
+  color: #999;
+  font-size: 14px;
+  line-height: 0.666667rem;
+}
+.MedicationReminder .reminderListLeft p label {
+  display: inline-block;
+  min-width: 1.2rem;
+  white-space: nowrap;
+}
+.MedicationReminder .reminderListLeft p.daytime span {
+  display: inline-block;
+  margin-right: 0.4rem;
+}
+.MedicationReminder .reminderListLeft p.daytime span:nth-child(6) {
+  margin-left: 1.2rem;
+}
+.MedicationReminder .mainCon .hide {
+  display: none;
+}
+.mySelectDrug{display: inline-block;width: 85%;vertical-align: middle;margin-top: -4px;}
+.myTextareaBox{background-color: #fff;padding:.2rem .4rem;}
+.myTextareaBox textarea{font-size: 14px;}
+.MedicationReminder .listAdd li, .MedicationReminder .listDrugTime li {
+  border-top: 1PX solid #dcdcdc;
+  height: 1.173333rem;
+  line-height: 1.173333rem;
+  position: relative;
+  padding: 0 0.4rem;
+  background: #fff;
+  font-size: 16px;
+}
+.MedicationReminder .listAdd li .r, .MedicationReminder .listDrugTime li .r {
+  position: absolute;
+  right: 0.46666rem;
+  top: 0;
+}
+.MedicationReminder .listAdd li .r p, .MedicationReminder .listDrugTime li .r p {
+  display: inline-block;
+}
+.MedicationReminder .listAdd li .r .itext, .MedicationReminder .listDrugTime li .r .itext {
+  text-align: center;
+  border: 0;
+  width: 2.0rem;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  display: inline-block;
+  font-size: 16px;
+  color: #333;
+  padding: 0 0.133333rem;
+  background-color: #f4f4f4;
+  border-radius: 0.133333rem;
+  margin-right: 5px;
+  margin-top: -4px;
+  vertical-align: middle;
+}
+.MedicationReminder .listAdd li .r .itext:focus, .MedicationReminder .listDrugTime li .r .itext:focus {
+  text-align: center;
+}
+.MedicationReminder .listAdd li .r .itext::-webkit-input-placeholder, .MedicationReminder .listDrugTime li .r .itext::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #888;
+}
+.MedicationReminder .listAdd li .r .itext:-moz-placeholder, .MedicationReminder .listDrugTime li .r .itext:-moz-placeholder {
+  color: #888;
+}
+.MedicationReminder .listAdd li .r .itext::-moz-placeholder, .MedicationReminder .listDrugTime li .r .itext::-moz-placeholder {
+  color: #888;
+}
+.MedicationReminder .listAdd li .r .itext:-ms-input-placeholder, .MedicationReminder .listDrugTime li .r .itext:-ms-input-placeholder {
+  color: #888;
+}
+.MedicationReminder .listAdd li .r img, .MedicationReminder .listDrugTime li .r img {
+  width: 0.213333rem;
+  height: 0.4rem;
+  margin-left: 0.266667rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+.MedicationReminder .listAdd li .r img.icoDelete, .MedicationReminder .listDrugTime li .r img.icoDelete {
+  width: 0.533333rem;
+  height: 0.533333rem;
+}
+.MedicationReminder .listAdd .liDrug .r, .MedicationReminder .listDrugTime .liDrug .r {
+  width: 6.666667rem;
+  padding-right: 0.4rem;
+  overflow: hidden;
+  text-align: right;
+}
+.MedicationReminder .listAdd .liDrug .r .rarrow, .MedicationReminder .listDrugTime .liDrug .r .rarrow {
+  position: absolute;
+  right: 0;
+  top: 0.4rem;
+}
+.MedicationReminder .listDrugTime li:last-child {
+  border-bottom: 1PX solid #dcdcdc;
+}
+.MedicationReminder .listDrugTime img.icoClock {
+  width: 0.48rem;
+  height: 0.48rem;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.2rem;
+}
+.MedicationReminder .listDrugTime .time {
+  vertical-align: middle;
+  padding-top: 2PX;
+}
+.MedicationReminder .listCommonDrug {
+  background: #fff;
+  padding: 0.133333rem;
+}
+.MedicationReminder .listCommonDrug li {
+  padding: 0.133333rem;
+  float: left;
+}
+.MedicationReminder .listCommonDrug li span {
+  display: block;
+  position: relative;
+  padding: 0 0.266667rem;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  background: #F9F9F9;
+  border: 1PX solid #DDD;
+  border-radius: 0.08rem;
+}
+.MedicationReminder .listCommonDrug li span em {
+  display: none;
+  position: absolute;
+  right: -0.2rem;
+  top: -0.2rem;
+  background: url(../images/close.png) no-repeat;
+  background-size: contain;
+  width: 0.48rem;
+  height: 0.48rem;
+}
+.MedicationReminder .listCommonDrug li span.choosed em {
+  display: block;
+}
+.MedicationReminder .mTitle {
+  height: 1.173333rem;
+  line-height: 1.173333rem;
+  padding-left: 0.4rem;
+  font-size: 16px;
+  font-weight: normal;
+  color: #666;
+}
+.MedicationReminder .addTimeBtn {
+  text-align: center;
+  background: #fff;
+  height: 1.173333rem;
+  line-height: 1.173333rem;
+  font-size: 16px;
+  color: #0CB7F5;
+}
+.MedicationReminder .addTimeBtn img {
+  width: 0.533333rem;
+  height: 0.533333rem;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.4rem;
+  position: relative;
+  top: -2px;
+}
+
+.mySelect .otherDrugIpt{position: absolute;bottom:169px;left:0;z-index: 1000;width: 100%;background: #fff;padding:10px 15px;box-sizing: border-box;}
+.mySelect .otherDrugIpt input{background: #eee;color: #666;width: 100%;border:0;border-radius: 5px;height: 35px;line-height: 35px;padding:0 0.3rem;box-sizing: border-box;}
+.mySelect .ios-select-widget-box header.iosselect-header{margin-bottom: 50px;}
+.mySelect .iosselect-header,.mySelect .iosselect-header a{line-height: 50px !important;height: 50px !important;}

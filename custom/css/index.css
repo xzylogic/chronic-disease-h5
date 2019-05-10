@@ -1,0 +1,252 @@
+.homeBox {
+  background: #fff;
+  font-size: 14px;
+}
+.homeBox .am-list-item img {
+  vertical-align: top;
+  margin-right: 0.133333rem;
+}
+.homeBox .am-list-body, .homeBox .am-list-body:after {
+  border: 0 !important;
+}
+.homeBox .am-list-item .am-list-line {
+  padding-right: 0.266667rem !important;
+}
+.homeBox .am-wingblank {
+  margin: 0 !important;
+}
+.homeBox .am-list-item .am-list-line .am-list-content {
+  line-height: 0.586667rem;
+  color: #333;
+}
+.homeBox em {
+  font-style: normal;
+}
+.homeBox .topBg {
+  background: #42A3FC url(../images/topbg.png) no-repeat center 0;
+  background-size: 100%;
+  position: relative;
+  width: 100%;
+  height: 6.56rem;
+  border-bottom: 0.266667rem solid #f4f4f4;
+  overflow: hidden;
+}
+.homeBox .iconHelp {
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+  text-align: left;
+  z-index: 10;
+}
+.homeBox .iconHelp img {
+  width: 0.533333rem;
+  height: 0.533333rem;
+}
+.homeBox .toplink {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  text-align: right;
+  z-index: 10;
+}
+.homeBox .toplink span {
+  color: #fff;
+  border: 1PX solid #fff;
+  display: block;
+  padding: 0 0.4rem;
+  border-radius: 0.4rem;
+  height: 0.746667rem;
+}
+.homeBox .toplink span em {
+  display: inline-block;
+  line-height: 0;
+  vertical-align: text-top;
+  padding-top: 0.32rem;
+}
+.homeBox .riskDataWrap {
+  padding-top: 0.533333rem;
+  text-align: center;
+}
+.homeBox .riskDataWrap .circleCon {
+  width: 3.133333rem;
+  height: 3.133333rem;
+  margin: 0 auto;
+  border: 0.133333rem solid #D0EFFA;
+  border-radius: 50%;
+  background: #fff;
+  color: #0CB7F5;
+}
+.homeBox .riskDataWrap .circleCon strong {
+  font-size: 18px;
+  display: block;
+  width: 100%;
+  line-height: normal;
+  font-family: "PingFangSC-Regular";
+  margin-top: 0.506667rem;
+  font-weight: normal;
+}
+.homeBox .riskDataWrap .circleCon em {
+  font-size: 14px;
+  display: inline-block;
+  width: 100%;
+  font-weight: normal;
+}
+.homeBox .riskDataWrap .circleCon em.no {
+  font-size: 12px;
+  white-space: nowrap;
+}
+.homeBox .riskDataWrap .circleCon span {
+  display: block;
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 0.066667rem;
+  margin-top: 0.166667rem;
+  border-top: 1PX solid #D0EFFA;
+}
+.homeBox .riskDataWrap .circleCon span em{display: inline-block;font-size: 24px;vertical-align: middle;width: auto;}
+.homeBox .riskDataWrap .circleCon span i {
+  display: none;
+  width: 0.24rem;
+  height: 0.32rem;
+  vertical-align: middle;
+  margin-left: 0.106667rem;
+}
+.homeBox .riskDataWrap .circleCon span i.up {
+  background: url(../images/up.png) no-repeat;
+  background-size: contain;
+  display: inline-block;
+}
+.homeBox .riskDataWrap .circleCon span i.down {
+  background: url(../images/down.png) no-repeat;
+  background-size: contain;
+  display: inline-block;
+}
+.homeBox .riskDataWrap ul {
+  padding: 0.366667rem 0 0;
+  font-size: 0;
+}
+.homeBox .riskDataWrap ul li {
+  display: inline-block;
+  width: 33.33%;
+  color: #fff;
+  padding-top: 0.066667rem;
+  position: relative;
+  font-size: 14px;
+}
+.homeBox .riskDataWrap ul li span {
+  font-size: 24px;
+  color: #fff;
+  padding: 0.066667rem 0;
+  display: inline-block;
+  width: 100%;
+}
+.homeBox .riskDataWrap ul li span strong {
+  font-size: 20px;
+  font-weight: normal;
+}
+.homeBox .riskDataWrap ul li em {
+  font-size: 14px;
+}
+.homeBox .riskDataWrap ul li .line {
+  position: absolute;
+  right: 0;
+  top: 0.666667rem;
+  height: 0.8rem;
+  border-right: 1PX dotted #fff;
+}
+.homeBox .riskDataWrap .resultTxt {
+  font-size: 12px;
+  padding: 0.666667rem 10% 0.4rem 10%;
+  color: #666;
+}
+.homeBox .riskDataWrap .resultTxt.danger {
+  color: #FF7768;
+}
+.homeBox .riskDataWrap .riskDataCircleCon {
+  border-color: #ffe0e0;
+  color: #FF7768;
+}
+.homeBox .riskDataWrap .riskDataCircleCon span {
+  border-color: #ffe0e0;
+}
+
+.homeBox .riskDataWrap .nodataCircleCon {
+  border-color: #eee;
+  color: #999;
+}
+.homeBox .riskDataWrap .nodataCircleCon span {
+  border: 0;
+}
+.homeBox .riskDataWrap .nodataCircleCon strong {
+  display: inline-block;
+  margin-top: 0.7rem;
+  height: 0.853333rem;
+  background: url(../images/add.png) no-repeat center center;
+  background-size: contain;
+}
+.homeBox .homeUl {
+  margin: 0 auto;
+  overflow: hidden;
+  font-size: 16px;
+  width: 92%;
+}
+.homeBox .homeUl li {
+  float: left;
+  width: 50%;
+  text-align: center;
+  margin: 0.6rem 0;
+  overflow: hidden;
+}
+.homeBox .homeUl li .redDot{display: inline-block;position: relative;}
+.homeBox .homeUl li .redDot:before{display: block;content: '';background: #e46c6c;width: 0.3rem;height: 0.3rem;border-radius: 50%;position: absolute;top:0;right:0;}
+.homeBox .homeUl li span {
+  display: inline-block;
+  width: 99%;
+  height: 2.0rem;
+}
+.homeBox .homeUl li img {
+  vertical-align: middle;
+  width: 1.173333rem;
+  height: 1.173333rem;
+  margin-right: 0.266667rem;
+}
+.homeBox .homeUl li:nth-of-type(odd) span {
+  border-right: 1PX dotted #ddd;
+}
+.homeBox .homeUl1 span {
+  padding-top: 0.533333rem;
+}
+.homeBox .homeUl1 li {
+  margin: 0.266667rem 0;
+}
+
+.homeBox .homeUl2 li img {
+  margin-bottom: 0.266667rem;
+  margin-right: 0;
+}
+.homeBox .homeUl2 li:nth-child(1), .homeBox .homeUl2 li:nth-child(2) {
+  border-bottom: 1PX dotted #ddd;
+  padding-bottom: 0.533333rem;
+  margin-bottom: 0;
+}
+
+.moreUl {
+  padding: 1.066667rem 0;
+}
+.moreUl li {
+  float: left;
+  width: 33%;
+  text-align: center;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.moreUl li img {
+  width: 1.173333rem;
+  height: 1.173333rem;
+  margin-bottom: 0.266667rem;
+}
+
+@media screen and (max-width: 320px) {
+.homeBox .riskDataWrap .circleCon strong{font-size: 16px;margin-top: 0.3rem;}
+.homeBox .riskDataWrap .circleCon span em{line-height: normal;}
+}

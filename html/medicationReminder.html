@@ -1,0 +1,235 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>用药提醒</title>
+  <link rel="stylesheet" type="text/css" href="../lib/css/weui.min.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/css/jquery-weui.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/medicationReminder.css" />
+
+</head>
+
+<body>
+<div class="MedicationReminder" style="display:block;">
+    <div class="scroll-wrap">
+      <!--<div class="weui-cell weui-cell_swiped">
+        <div class="weui-cell__bd">
+          <div class="reminderListLeft" onClick=''>
+            <span class="name">阿米详细讲究</span>
+            <p class="daytime"><label>每天：</label><span>11:00</span><span>11:00</span></p>
+            <p><label>剂量：</label><span class="fc_orange">4ml</span></p>
+          </div>
+          <label for="switchCP1" class="weui-switch-cp">
+            <input id="switchCP1" class="weui-switch-cp__input" type="checkbox" checked="checked">
+            <div class="weui-switch-cp__box"></div>
+          </label>
+        </div>
+        <div class="weui-cell__ft">
+          <a class="weui-swiped-btn delete-swipeout" href="javascript:"><i>删除</i></a>
+        </div>
+      </div>
+      <div class="weui-cell weui-cell_swiped">
+        <div class="weui-cell__bd">
+          <div class="reminderListLeft" onClick=''>
+            <span class="name">阿米详细讲究</span>
+            <p class="daytime"><label>每天：</label><span>11:00</span><span>11:00</span></p>
+            <p><label>剂量：</label><span class="fc_orange">4ml</span></p>
+          </div>
+          <label for="switchCP2" class="weui-switch-cp">
+            <input id="switchCP2" class="weui-switch-cp__input" type="checkbox" checked="checked">
+            <div class="weui-switch-cp__box"></div>
+          </label>
+        </div>
+        <div class="weui-cell__ft">
+          <a class="weui-swiped-btn delete-swipeout" href="javascript:"><i>删除</i></a>
+        </div>
+      </div>-->
+    </div>
+    <div class="custom-btm-fixed" style="display: none;">
+        <span class="custom-btm-btn" onclick="addRemind()">添加提醒</span>
+    </div>
+</div>
+
+<div class="custom-nodata nodataReminder" style="display:none;">
+  <img src="../custom/images/drug_nodata.png" />
+  <p>暂无用药提醒</p>
+  <p class="btnboxs" onClick='addRemind()'><a class="btn">添加提醒</a></p>
+</div>
+
+  <script type="text/template" id="drugRemindList-Temp">
+    <div class="weui-cell weui-cell_swiped">
+      <div class="weui-cell__bd">
+        <div class="reminderListLeft">
+          <span class="name">{0}</span>
+          <p class="daytime"><label>每天：</label><span>{1}</span></p>
+          <!--<p class="daytime"><label>每天：</label><span>11:00</span><span>11:00</span></p>-->
+          <p><label>剂量：</label><span class="fc_orange">{2}</span></p>
+          <!--<p><label>剂量：</label><span class="fc_orange">4ml</span></p>-->
+        </div>
+        <label for="{3}" class="weui-switch-cp">
+          <input id="{3}" class="weui-switch-cp__input" type="checkbox" {5} data-id="{4}">
+          <div class="weui-switch-cp__box"></div>
+        </label>
+      </div>
+      <div class="weui-cell__ft">
+        <a class="weui-swiped-btn delete-swipeout" href="javascript:" data-id="{4}"><i>删除</i></a>
+      </div>
+    </div>
+  </script>
+  <script type="text/javascript" src="../lib/js/flexible.js"></script>
+  <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
+  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../custom/js/native.js"></script>
+  <script type="text/javascript" src="../custom/js/common.js"></script>
+  <script src="../lib/js/jquery-weui.js"></script>
+  <script src="../custom/js/api.js"></script>
+  <script>
+    FastClick.attach(document.body);
+
+    setTimeout(function () {
+      nativeObj.RegisterFun(function () {
+        getRemindList();
+      })
+    }, 100);
+
+    function addRemind(){
+      NativeFunc({
+        ACTION: "OPENURL",
+        PARAM: {
+          URL: nativeObj.htmlPath + '/medicationReminderDrug.html'
+        }
+      });
+    }
+
+    // 获取用药提醒列表
+    getRemindList();
+    function getRemindList() {
+      $.ajax({
+        url: ajaxUrl.remindList + '?flag=0&userId=' + localStorage.getItem('uid'),
+        type: "GET",
+        beforeSend: function (request) {
+          request.setRequestHeader('token', localStorage.getItem('netToken'));
+          request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+          request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+          request.setRequestHeader('appid', localStorage.getItem('appid'));
+          request.setRequestHeader('request-id', randomWord(true));
+          request.setRequestHeader('timestamp', new Date().getTime());
+        },
+        success: function (data) {
+          if(data.code === 0){
+            console.log('获取用药提醒列表',data.data);
+            var html = '';
+            var temp = $('#drugRemindList-Temp').html();
+            $('.custom-btm-fixed').show();
+            data.data.content.length > 0 ? data.data.content.map(function (res, i) {
+              // console.log(i)
+              var drugName = '', drugTime = '', dosage = '';
+              var drugFlag = (res.delFlag === '0' ? 'checked' : '');
+              res.remindItems.map(function (items) {
+                drugName += items.brand + ' ' + items.specification + '';
+                dosage += items.dose + items.unit + ' ';
+              });
+              res.remindTimes.map(function (times) {
+                drugTime += times.remindTime + ' ';
+              });
+              html += temp.format(drugName, drugTime, dosage, 'switchCP' + i, res.id, drugFlag);
+            }) : ($('.custom-nodata').show(), $('.custom-btm-fixed').hide());
+            $('.scroll-wrap').html(html);
+
+            //初始化删除
+            $('.weui-cell_swiped').swipeout('open').bind('click', function () {
+              console.log($(this).find('.daytime').text())
+
+            });
+            $('.delete-swipeout').bind('click', function () {
+              showMyloading();
+              deleteRemind($(this).attr('data-id'), $(this).parents('.weui-cell'));
+            });
+            $('.weui-switch-cp__input').bind('click', function () {
+              // console.log($(this).attr('data-id'));
+              showMyloading();
+              remindEnable($(this).attr('data-id'));
+            });
+          }else{
+            $.toast(data.msg || '请求错误', 'text');
+          }
+        },
+        error: function (err) {
+          hideMyloading();
+          console.log(err);
+        }
+      });
+    }
+
+    //启用、禁用用药提醒
+    function remindEnable(id) {
+      $.ajax({
+        url: ajaxUrl.remindEnable,
+        type: "POST",
+        data: JSON.stringify({id: id}),
+        contentType: 'application/json; charset=utf-8',
+        beforeSend: function (request) {
+          request.setRequestHeader('token', localStorage.getItem('netToken'));
+          request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+          request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+          request.setRequestHeader('appid', localStorage.getItem('appid'));
+          request.setRequestHeader('request-id', randomWord(true));
+          request.setRequestHeader('timestamp', new Date().getTime());
+        },
+        success: function (data) {
+          if(data.code === 0){
+            console.log('修改状态成功', data);
+            // $.toast(data.msg || '修改状态成功', 'text');
+          }else{
+            $.toast(data.msg || '请求错误', 'text');
+          }
+          hideMyloading();
+        },
+        error: function (err) {
+          hideMyloading();
+          console.log(err);
+        }
+      });
+    }
+
+    //删除用药提醒
+    function deleteRemind(id, removeRemind) {
+      $.ajax({
+        url: ajaxUrl.remindDelete,
+        type: "POST",
+        data: JSON.stringify({id: id}),
+        contentType: 'application/json; charset=utf-8',
+        beforeSend: function (request) {
+          request.setRequestHeader('token', localStorage.getItem('netToken'));
+          request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+          request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+          request.setRequestHeader('appid', localStorage.getItem('appid'));
+          request.setRequestHeader('request-id', randomWord(true));
+          request.setRequestHeader('timestamp', new Date().getTime());
+        },
+        success: function (data) {
+          if(data.code === 0){
+            console.log('删除成功', data);
+            removeRemind.remove();
+            if($('.weui-cell_swiped').length === 0){
+              $('.custom-btm-fixed').hide();
+              $('.custom-nodata').show();
+            }
+            // $.toast(data.msg || '删除成功', 'text');
+          }else{
+            $.toast(data.msg || '请求错误', 'text');
+          }
+          hideMyloading();
+        },
+        error: function (err) {
+          hideMyloading();
+          console.log(err);
+        }
+      });
+    }
+
+  </script>
+
+</body>
+</html>

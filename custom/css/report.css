@@ -1,0 +1,57 @@
+.reportBox {
+  min-height: 100vh;
+}
+.followUpReportList li{border-bottom: 1px solid #ddd;}
+.reportBox .item{background: #fff;padding:0.4rem 0.4rem .1rem;position: relative;}
+.reportBox .item:after{content: " ";display: inline-block;position: absolute;top:50%;right: .4rem;background: url(../images/darrow.png);width: 0.4rem;height: 0.213333rem;margin-top:-0.106667rem;background-size: contain;}
+.reportBox .showItem .item:after{background-image: url(../images/uparrow.png)}
+.reportBox .showItem,.followUpReportList li:last-child{border:0;}
+.reportBox .item .date {
+  font-size: 14px;
+  color: #999;
+  display: inline-block;
+  margin-bottom: 0.2rem;
+}
+.reportBox .item h5 {
+  display: inline-block;
+  width: 8.266667rem;
+  overflow: hidden;
+  font-weight: normal;
+  font-size: 16px;
+}
+.reportBox .item h5 span {
+  display: inline-block;
+  width: 100%;
+}
+.reportBox .showDetail .detailItem {
+  width: 92%;
+  margin: 0.266667rem auto;
+  background: #fff url(../images/advicebg.png) no-repeat;
+  background-size: 100%;
+  padding: 0 0.4rem;
+  box-sizing: border-box;
+}
+.reportBox .showDetail .detailItem h5 {
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1.173333rem;
+  border-bottom: 1PX dashed #ddd;
+}
+.reportBox .showDetail .detailItem p {
+  font-size: 14px;
+  padding: 0.266667rem 0;
+  line-height: 0.773333rem;
+  color: #666;
+  text-align: justify;
+}
+.reportBox .showDetail .detailItem p em {
+  display: inline-block;
+  width: 4.0rem;
+  color: #999;
+  font-style: normal;
+  text-align: left;
+}
+.reportBox .showDetail .detailItemSpecial{background: #fff;}
+.reportBox .showDetail .detailItemSpecial p{text-align: right;}
+.reportBox .showDetail .detailItemSpecial p em{float: left;}
+

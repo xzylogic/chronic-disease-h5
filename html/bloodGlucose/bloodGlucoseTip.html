@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+    <title>血糖提醒</title>
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/tip.css"/>
+    <script type="text/javascript" src="../../js/flexible.js"></script>
+</head>
+<body>
+<div class="wrap">
+    <div class="normal displaynone">
+        <div><img src="../../images/xuetangzhengchang.png" alt=""/></div>
+        <div class="title">您的<span class="timeDot">早餐前</span>血糖为</div>
+        <div class="value"></div>
+        <div class="tip">超赞哦！血糖控制很好，继续保持！</div>
+    </div>
+   <div class="abnormal displaynone">
+       <div><img src="../../images/xuetangyichang.png" alt=""/></div>
+       <div class="title">您的<span class="timeDot">早餐前</span>血糖为</div>
+       <div class="value colorred">13.5mmol/L</div>
+       <div class="tip alignleft"></div>
+   </div>
+    <div class="known-btn">知道了</div>
+</div>
+<script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../js/native.js"></script>
+<script>
+    $(function () {
+        var val=getParams('val');
+        var time=getParams('time');
+        var timeDot=Number(time);
+        var timeDotArr=["早餐前","早餐后","午餐前","午餐后","晚餐前","晚餐后","睡前","凌晨"]
+        $(".timeDot").html(timeDotArr[timeDot])
+
+        if(time==0||time==2||time==4){
+            if(val<=7&&val>=4.4){
+                $(".normal").show();
+                $(".normal .value").text(val+"mmol/L")
+            }else if(val<=13.9&&val>7){
+                $(".abnormal").show();
+                $(".abnormal .value").text(val+"mmol/L")
+                $(".abnormal .tip").text("亲，您的血糖高了，管住嘴，迈开腿了吗？增加血糖监测次数，调整运动，饮食，生活方式，必要时调整药物剂量，如有不适请及时就诊")
+            }
+        }else{
+            if(val<=10&&val>=4.4){
+                $(".normal").show();
+                $(".normal .value").text(val+"mmol/L")
+            }else if(val<=13.9&&val>10){
+                $(".abnormal").show();
+                $(".abnormal .value").text(val+"mmol/L")
+                $(".abnormal .tip").text("亲，您的血糖高了，管住嘴，迈开腿了吗？增加血糖监测次数，调整运动，饮食，生活方式，必要时调整药物剂量，如有不适请及时就诊")
+            }
+        }
+        if(val<=16.7&&val>13.9){
+            $(".abnormal").show();
+            $(".abnormal .value").text(val+"mmol/L")
+            $(".abnormal .tip").text("亲，您的血糖偏高,可能会出现尿酮体哦!注意增加血糖监测次数,如不能自行纠正,及时就医")
+        }else if(val>16.7){
+            $(".abnormal").show();
+            $(".abnormal .value").text(val+"mmol/L")
+            $(".abnormal .tip").text("亲，您的血糖过高,持续的高血糖容易出现酮症酸中毒或糖尿病急症,建议就医")
+        }else if(val>3.9&&val<4.4){
+            $(".abnormal").show();
+            $(".abnormal .value").text(val+"mmol/L")
+            $(".abnormal .tip").text("亲，血糖低于目标值,要警惕低血糖哦!")
+        }else if(val>2.8&&val<=3.9){
+            $(".abnormal").show();
+            $(".abnormal .value").text(val+"mmol/L")
+            $(".abnormal .tip").text("亲，低血糖啦,赶紧进食200ml果汁或半个馒头,15分钟复测血糖哦,如持续无缓解,及时就医!")
+        }else if(val<=2.8){
+            $(".abnormal").show();
+            $(".abnormal .value").text(val+"mmol/L")
+            $(".abnormal .tip").text("亲，您的血糖过低,建议进食和及时就医")
+        }
+        $(".known-btn").on("click",function () {
+            NativeFunc({
+                ACTION: "OPENURL",
+                PARAM: {
+                    URL:localStorage.getItem("requestUrl") +"/measurementHistory.html?from=1&isAdd=1"
+                }
+            }, function (response) {
+
+            })
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>糖尿病患者风险评估</title>
+  <link rel="stylesheet" type="text/css" href="../lib/css/weui.min.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/css/jquery-weui.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/common.css" />
+  <link rel="stylesheet" type="text/css" href="../custom/css/riskAssessment.css" />
+
+</head>
+
+<body>
+<div class="riskAssessment riskAssessmentHistory">
+  <ul class="historyList">
+      <!--<li class="listli">
+          <p><label>被评估人</label><span>傻傻</span></p>
+          <p><label>评估时间</label><span>2012-12-12 21:23:32</span></p>
+          <p><label>评估结果</label><span class="normal">无糖尿病风险</span></p>
+          <p class="p4">没啥课建议的挺好的啊</p>
+      </li>
+      <li class="listli">
+          <p><label>被评估人</label><span>傻傻</span></p>
+          <p><label>评估时间</label><span>2012-12-12 21:23:32</span></p>
+          <p><label>评估结果</label><span class="abnormal">有糖尿病风险</span></p>
+          <p class="p4">没啥课建议的挺好的啊</p>
+      </li>-->
+  </ul>
+</div>
+  <script type="text/template" id="riskAsses-Temp">
+    <li class="listli">
+      <p><label>被评估人</label><span>{0}</span></p>
+      <p><label>评估时间</label><span>{1}</span></p>
+      <p><label>评估结果</label><span class="{4}">{2}</span></p>
+      <p class="p4">{3}</p>
+    </li>
+  </script>
+  <script type="text/javascript" src="../lib/js/flexible.js"></script>
+  <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
+  <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../custom/js/native.js"></script>
+  <script type="text/javascript" src="../custom/js/common.js"></script>
+  <script src="../custom/js/api.js"></script>
+  <script>
+    FastClick.attach(document.body);
+
+    //获取历史评估列表
+    function getHistoryAssess(type){
+      showMyloading();
+      $.ajax({
+        url: ajaxUrl.assessmentHistoryList + '?flag=1&registerid=3a24cb5b173e4d6597f62a95d04e3340&type='+ type,
+        // url: ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid'),
+        type: "GET",
+        beforeSend: function (request) {
+          request.setRequestHeader('token', localStorage.getItem('netToken'));
+          request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+          request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+          request.setRequestHeader('appid', localStorage.getItem('appid'));
+          request.setRequestHeader('request-id', randomWord(true));
+          request.setRequestHeader('timestamp', new Date().getTime());
+        },
+        success: function (data) {
+          console.log(data);
+          if(data.code === 0){
+            var temp = $('#riskAsses-Temp').html();
+            var html = '';
+            data.data && data.data.content.length > 0 ? data.data.content.map(function (val) {
+              var ifAbnormal = '';
+              if(val.result === '0'){
+                ifAbnormal = 'normal';
+              }else{
+                ifAbnormal = 'abnormal';
+              }
+              html += temp.format(val.userName || '', val.time || '', val.resultDoc || '', val.advice || '', ifAbnormal);
+            }) : null;
+            $('.historyList').html(html);
+          }
+          hideMyloading();
+        },
+        error: function (err) {
+          hideMyloading();
+          console.log(err);
+        }
+      });
+    }
+
+    $(function () {
+      var text = getParams('text');
+      switch (text) {
+        case '1':
+          console.log(1);
+          getHistoryAssess(1);
+          break;
+          case '2':
+          console.log(2);
+          getHistoryAssess(2);
+          break;
+        case '3':
+          console.log(3);
+          getHistoryAssess(3);
+          break;
+        case '4':
+          console.log(4);
+          getHistoryAssess(4);
+          break;
+        default:
+          break;
+      }
+    });
+
+  </script>
+
+</body>
+</html>
