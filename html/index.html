@@ -162,12 +162,7 @@
 
   function goMeasure() {
     console.log('体征测量');
-    // NativeFunc({
-    //   ACTION: "OPENURL",
-    //   PARAM: {
-    //     URL: nativeObj.htmlPath + '/healthcloud-measure-web/bloodGlucoseAdd.html'
-    //   }
-    // });
+    location.href = nativeObj.htmlPath+ '/../../healthcloud-measure-web/html/index.html';
   }
 
   function goMedicine() {
@@ -208,33 +203,33 @@
 
   //以下三个函数跳转至体征测量相关页面
   function goPressure() {
-    if (/wdjky.com/i.test(location.href)) {
-      alert('https://qyj-re.wdjky.com/healthcloud-measure-web/html/bloodPressure/bloodPressureAdd.html');
-      location.href = 'https://qyj-re.wdjky.com/healthcloud-measure-web/html/bloodPressure/bloodPressureAdd.html';
-    } else {
-      alert('http://10.1.64.195/healthcloud-measure-web/html/bloodPressure/bloodPressureAdd.html');
-      location.href = 'http://10.1.64.195/healthcloud-measure-web/html/bloodPressure/bloodPressureAdd.html';
-    }
+    NativeFunc({
+      ACTION: "OPENURL",
+      PARAM: {
+        URL: nativeObj.htmlPath+ '/../../healthcloud-measure-web/html/bloodPressure/bloodPressureAdd.html'
+      }
+    });
+    // location.href = nativeObj.htmlPath+ '/../../healthcloud-measure-web/html/bloodPressure/bloodPressureAdd.html';
   }
 
   function goGly() {
-    if (/wdjky.com/i.test(location.href)) {
-      alert('https://qyj-re.wdjky.com/healthcloud-measure-web/html/hemoglobin/hemoglobinAdd.html');
-      location.href = 'https://qyj-re.wdjky.com/healthcloud-measure-web/html/hemoglobin/hemoglobinAdd.html';
-    } else {
-      alert('http://10.1.64.195/healthcloud-measure-web/html/hemoglobin/hemoglobinAdd.html');
-      location.href = 'http://10.1.64.195/healthcloud-measure-web/html/hemoglobin/hemoglobinAdd.html';
-    }
+    NativeFunc({
+      ACTION: "OPENURL",
+      PARAM: {
+        URL: nativeObj.htmlPath + '/../../healthcloud-measure-web/html/hemoglobin/hemoglobinAdd.html'
+      }
+    });
+    // location.href = nativeObj.htmlPath + '/../../healthcloud-measure-web/html/hemoglobin/hemoglobinAdd.html';
   }
 
   function goHeightWeight() {
-    if (/wdjky.com/i.test(location.href)) {
-      alert('https://qyj-re.wdjky.com/healthcloud-measure-web/html/BMI/bmiAdd.html');
-      location.href = 'https://qyj-re.wdjky.com/healthcloud-measure-web/html/BMI/bmiAdd.html';
-    } else {
-      alert('http://10.1.64.195/healthcloud-measure-web/html/BMI/bmiAdd.html');
-      location.href = 'http://10.1.64.195/healthcloud-measure-web/html/BMI/bmiAdd.html';
-    }
+    NativeFunc({
+      ACTION: "OPENURL",
+      PARAM: {
+        URL: nativeObj.htmlPath+ '/../../healthcloud-measure-web/html/BMI/bmiAdd.html'
+      }
+    });
+    // location.href = nativeObj.htmlPath+ '/../../healthcloud-measure-web/html/BMI/bmiAdd.html';
   }
 
   var pageData = {};
@@ -427,13 +422,13 @@
       $('.nodataCircleCon').show();
     }
     $('.circleCon').bind('click', function () {
-      if (/wdjky.com/i.test(location.href)) {
-        alert('https://qyj-re.wdjky.com/healthcloud-measure-web/html/bloodGlucose/bloodGlucoseAdd.html');
-        location.href = 'https://qyj-re.wdjky.com/healthcloud-measure-web/html/bloodGlucose/bloodGlucoseAdd.html';
-      } else {
-        alert('http://10.1.64.195/healthcloud-measure-web/html/bloodGlucose/bloodGlucoseAdd.html');
-        location.href = 'http://10.1.64.195/healthcloud-measure-web/html/bloodGlucose/bloodGlucoseAdd.html';
-      }
+      NativeFunc({
+        ACTION: "OPENURL",
+        PARAM: {
+          URL: nativeObj.htmlPath+ '/../../healthcloud-measure-web/html/bloodGlucose/bloodGlucoseAdd.html'
+        }
+      });
+      // location.href = nativeObj.htmlPath+ '/../../healthcloud-measure-web/html/bloodGlucose/bloodGlucoseAdd.html';
       // NativeFunc({
       //   ACTION: "OPENURL",
       //   PARAM: {
