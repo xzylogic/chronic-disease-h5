@@ -59,12 +59,12 @@
 
   <script type="text/template" id="drugRemindList-Temp">
     <div class="weui-cell weui-cell_swiped">
-      <div class="weui-cell__bd">
+      <div class="weui-cell__bd" data-medicineId="{7}" data-name="{8}">
         <div class="reminderListLeft">
           <span class="name">{0}</span>
           <p class="daytime"><label>每天：</label><span>{1}</span></p>
           <!--<p class="daytime"><label>每天：</label><span>11:00</span><span>11:00</span></p>-->
-          <p><label>剂量：</label><span class="fc_orange">{2}</span></p>
+          <p><label>剂量：</label><span class="fc_orange">{2}</span><span>{6}</span></p>
           <!--<p><label>剂量：</label><span class="fc_orange">4ml</span></p>-->
         </div>
         <label for="{3}" class="weui-switch-cp">
@@ -124,23 +124,39 @@
             $('.custom-btm-fixed').show();
             data.data.content.length > 0 ? data.data.content.map(function (res, i) {
               // console.log(i)
-              var drugName = '', drugTime = '', dosage = '';
+              var drugBrand = '', drugTime = '', dosage = '', drugUnit = '', drugMedicineId = '', drugName = '';
               var drugFlag = (res.delFlag === '0' ? 'checked' : '');
               res.remindItems.map(function (items) {
-                drugName += items.brand + ' ' + items.specification + '';
-                dosage += items.dose + items.unit + ' ';
+                drugBrand += items.brand + ' ' + items.specification;
+                dosage += items.dose;
+                drugUnit += items.unit;
+                drugMedicineId = items.medicineId;
+                drugName = items.name;
               });
               res.remindTimes.map(function (times) {
-                drugTime += times.remindTime + ' ';
+                var time1 = times.remindTime.split(':');
+                drugTime += time1[0] + ':' + time1[1] + ' ';
               });
-              html += temp.format(drugName, drugTime, dosage, 'switchCP' + i, res.id, drugFlag);
+              html += temp.format(drugBrand, drugTime, dosage, 'switchCP' + i, res.id, drugFlag, drugUnit, drugMedicineId, drugName);
             }) : ($('.custom-nodata').show(), $('.custom-btm-fixed').hide());
             $('.scroll-wrap').html(html);
 
             //初始化删除
-            $('.weui-cell_swiped').swipeout('open').bind('click', function () {
-              console.log($(this).find('.daytime').text())
-
+            $('.weui-cell_swiped').swipeout('open');
+            $('.weui-cell__bd').bind('click', function () {
+              console.log($(this).find('.daytime').text());
+              var brand = $(this).find('.name').text();
+              var dose = $(this).find('.fc_orange').text();
+              var time = $(this).find('.daytime').children('span').text();
+              var medicineId = $(this).attr('data-medicineId');
+              var name = $(this).attr('data-name');
+              console.log(brand,dose,time, medicineId, name);
+              NativeFunc({
+                ACTION: "OPENURL",
+                PARAM: {
+                  URL: nativeObj.htmlPath + '/medicationReminderDrug.html?brand='+brand+'&dose='+dose+'&time='+time
+                }
+              });
             });
             $('.delete-swipeout').bind('click', function () {
               showMyloading();

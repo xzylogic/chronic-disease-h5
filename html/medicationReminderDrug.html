@@ -351,7 +351,7 @@
   }
 
   //添加时间
-  addTimeHtml();
+  // addTimeHtml();
   function addTimeHtml(_timeObj) {
     //此行代码是  存储  时间的
     // !_timeObj ? (localStorage.getItem('timeObj') ? _timeObj = JSON.parse(localStorage.getItem('timeObj')) : false) : localStorage.setItem('timeObj', JSON.stringify(timeObj));
@@ -648,6 +648,22 @@
   }
 
   $(function () {
+    //单击用药提醒列表跳转至此页面时获取当前页面URL的参数
+    var urlBrand = decodeURI(getParams('brand')) || '', urlDose = decodeURI(getParams('dose')) || '', urlTime = decodeURI(getParams('time')) || '',
+        urlMedicineId = decodeURI(getParams('medicineId')) || '', urlName = decodeURI(getParams('name')) || '';
+    if(urlBrand){
+      var time1 = urlTime.split(' ');
+      time1.map(function (val) {
+        timeObj[val] = val;
+      });
+      drugDataName = urlName;
+      drugDataId = urlMedicineId;
+      $('#showDrug').text(urlBrand);
+      $('.itext').val(urlDose);
+      addTimeHtml(timeObj);
+    }
+    console.log(urlBrand,urlDose,urlTime);
+
     //判断当前是口服药页面还是胰岛素页面
     $('.tabWrap span').bind('click', function () {
       $('.tabWrap span').removeClass();
