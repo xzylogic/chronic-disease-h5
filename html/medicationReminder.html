@@ -59,8 +59,8 @@
 
   <script type="text/template" id="drugRemindList-Temp">
     <div class="weui-cell weui-cell_swiped">
-      <div class="weui-cell__bd" data-medicineId="{7}" data-name="{8}">
-        <div class="reminderListLeft">
+      <div class="weui-cell__bd">
+        <div class="reminderListLeft" data-medicineId="{7}" data-name="{8}">
           <span class="name">{0}</span>
           <p class="daytime"><label>每天：</label><span>{1}</span></p>
           <!--<p class="daytime"><label>每天：</label><span>11:00</span><span>11:00</span></p>-->
@@ -143,20 +143,56 @@
 
             //初始化删除
             $('.weui-cell_swiped').swipeout('open');
-            $('.weui-cell__bd').bind('click', function () {
-              console.log($(this).find('.daytime').text());
-              var brand = $(this).find('.name').text();
-              var dose = $(this).find('.fc_orange').text();
-              var time = $(this).find('.daytime').children('span').text();
-              var medicineId = $(this).attr('data-medicineId');
-              var name = $(this).attr('data-name');
-              console.log(brand,dose,time, medicineId, name);
-              NativeFunc({
-                ACTION: "OPENURL",
-                PARAM: {
-                  URL: nativeObj.htmlPath + '/medicationReminderDrug.html?brand='+brand+'&dose='+dose+'&time='+time
+            // $('.reminderListLeft').bind('click', function () {
+            //   console.log($(this).find('.daytime').text());
+            //   var brand = $(this).find('.name').text();
+            //   var dose = $(this).find('.fc_orange').text();
+            //   var time = $(this).find('.daytime').children('span').text();
+            //   var medicineId = $(this).attr('data-medicineId');
+            //   var name = $(this).attr('data-name');
+            //   console.log(brand,dose,time, medicineId, name);
+            //   NativeFunc({
+            //     ACTION: "OPENURL",
+            //     PARAM: {
+            //       URL: nativeObj.htmlPath + '/medicationReminderDrug.html?brand='+brand+'&dose='+dose+'&time='+time+'&medicineId='+medicineId+'&name='+name
+            //     }
+            //   });
+            // });
+            var longClick =0, timeOutEvent;
+            $('.weui-cell__bd').bind({
+              touchstart: function(e){
+                e.preventDefault();
+                longClick=0;//设置初始为0
+                timeOutEvent = setTimeout(function(){
+                  //此处为长按、滑动事件-----
+                  longClick=1;//假如长按，则设置为1
+                },200);
+              },
+              touchmove: function(e){
+                e.preventDefault();
+                clearTimeout(timeOutEvent);
+                timeOutEvent = 0;
+              },
+              touchend: function(e){
+                e.preventDefault();
+                clearTimeout(timeOutEvent);
+                if(timeOutEvent !== 0 && longClick === 0){
+                  //此处为点击事件
+                  var brand = $(this).find('.name').text();
+                  var dose = $(this).find('.fc_orange').text();
+                  var time = $(this).find('.daytime').children('span').text();
+                  var medicineId = $(this).attr('data-medicineId');
+                  var name = $(this).attr('data-name');
+                  // console.log(brand,dose,time, medicineId, name);
+                  NativeFunc({
+                    ACTION: "OPENURL",
+                    PARAM: {
+                      URL: nativeObj.htmlPath + '/medicationReminderDrug.html?brand='+brand+'&dose='+dose+'&time='+time+'&medicineId='+medicineId+'&name='+name
+                    }
+                  });
                 }
-              });
+                return false;
+              }
             });
             $('.delete-swipeout').bind('click', function () {
               showMyloading();
@@ -164,9 +200,10 @@
             });
             $('.weui-switch-cp__input').bind('click', function () {
               // console.log($(this).attr('data-id'));
-              showMyloading();
               remindEnable($(this).attr('data-id'));
             });
+
+            // ifClick();
           }else{
             $.toast(data.msg || '请求错误', 'text');
           }
@@ -180,6 +217,7 @@
 
     //启用、禁用用药提醒
     function remindEnable(id) {
+      showMyloading();
       $.ajax({
         url: ajaxUrl.remindEnable,
         type: "POST",
@@ -245,6 +283,10 @@
       });
     }
 
+    //区分点击和滑动
+    function ifClick() {
+      $(".reminderListLeft").bind();
+    }
   </script>
 
 </body>

@@ -104,6 +104,7 @@
         }
       });
 
+      showMyloading();
       $.ajax({
         url: ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340',
         // url: ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid'),
@@ -123,7 +124,10 @@
             if(datas.assessmentNum > 0 || datas.eyeNum > 0 || datas.footNum > 0 || datas.kidneyNum > 0){
               $('.alink').show();
             }
+          }else{
+            $.toast(data.msg || '请求错误~', 'text');
           }
+          hideMyloading();
         },
         error: function (err) {
           hideMyloading();

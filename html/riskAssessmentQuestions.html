@@ -205,7 +205,7 @@
     var lastInput = $('ul li:last-child input'), obj = {};
 
     function submit() {
-      console.log(obj)
+      // console.log(obj);
       if(obj.hasOwnProperty('10')){
         $.alert('您本次评估结果尚无糖尿病'+ riskType +'风险，请继续维持健康的生活方式，并定期体检。', function(){goBack()});
       }else if($.isEmptyObject(obj)){

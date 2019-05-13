@@ -654,6 +654,9 @@
     if(urlBrand){
       var time1 = urlTime.split(' ');
       time1.map(function (val) {
+        if(val === ''){
+          return;
+        }
         timeObj[val] = val;
       });
       drugDataName = urlName;
