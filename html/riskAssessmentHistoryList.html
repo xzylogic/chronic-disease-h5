@@ -11,8 +11,18 @@
 </head>
 
 <body>
-<div class="riskAssessment riskAssessmentHistory">
-  <ul class="historyList">
+<div class="riskAssessment riskAssessmentHistory" style="position: absolute; overflow: auto; height: 100%;">
+  <div class="have-data-box" style="height:100%; overflow:auto;">
+    <!--显示下拉标签-->
+    <div class="weui-pull-to-refresh__layer pull-refresh-loading">
+      <div class='weui-pull-to-refresh__arrow'></div>
+      <div class='weui-pull-to-refresh__preloader'></div>
+      <div class="down">下拉刷新</div>
+      <div class="up">释放刷新</div>
+      <div class="refresh"></div>
+      <span id="last-Time"></span>
+    </div>
+    <ul class="historyList">
       <!--<li class="listli">
           <p><label>被评估人</label><span>傻傻</span></p>
           <p><label>评估时间</label><span>2012-12-12 21:23:32</span></p>
@@ -25,7 +35,13 @@
           <p><label>评估结果</label><span class="abnormal">有糖尿病风险</span></p>
           <p class="p4">没啥课建议的挺好的啊</p>
       </li>-->
-  </ul>
+    </ul>
+    <div id="load-more" class="weui-loadmore" style="display: none;">
+      <i class="weui-loading"></i>
+      <span class="weui-loadmore__tips">正在加载</span>
+    </div>
+  </div>
+
 </div>
   <script type="text/template" id="riskAsses-Temp">
     <li class="listli">
@@ -38,18 +54,27 @@
   <script type="text/javascript" src="../lib/js/flexible.js"></script>
   <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
   <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+  <script type="text/javascript" src="../lib/js/jquery-weui.js"></script>
   <script type="text/javascript" src="../custom/js/native.js"></script>
   <script type="text/javascript" src="../custom/js/common.js"></script>
   <script src="../custom/js/api.js"></script>
   <script>
     FastClick.attach(document.body);
 
+    var html = '';
+    var historyData = {
+      pageStatus : '血糖异常',
+      dataList : $('.have-data-box'),
+      loading : false,   //上拉加载时防止多次加载
+      moreData : false,  //是否有更多数据
+      page: 1,  //页数
+    };
     //获取历史评估列表
-    function getHistoryAssess(type){
+    function getHistoryAssess(type, page){
       showMyloading();
       $.ajax({
-        url: ajaxUrl.assessmentHistoryList + '?flag=1&registerid=3a24cb5b173e4d6597f62a95d04e3340&type='+ type,
-        // url: ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid'),
+        url: ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=3a24cb5b173e4d6597f62a95d04e3340&type='+ type,
+        // url: ajaxUrl.assessmentHistory + '?flag='+ page +'registerid=' + localStorage.getItem('uid')&type='+ type,
         type: "GET",
         beforeSend: function (request) {
           request.setRequestHeader('token', localStorage.getItem('netToken'));
@@ -63,7 +88,9 @@
           console.log(data);
           if(data.code === 0){
             var temp = $('#riskAsses-Temp').html();
-            var html = '';
+            $('.weui-loadmore').hide();
+            historyData.moreData = data.data && data.data.more;
+            historyData.loading = false;
             data.data && data.data.content.length > 0 ? data.data.content.map(function (val) {
               var ifAbnormal = '';
               if(val.result === '0'){
@@ -74,6 +101,8 @@
               html += temp.format(val.userName || '', val.time || '', val.resultDoc || '', val.advice || '', ifAbnormal);
             }) : null;
             $('.historyList').html(html);
+          }else{
+            $.toast(data.msg || '请求错误~', 'text');
           }
           hideMyloading();
         },
@@ -86,26 +115,45 @@
 
     $(function () {
       var text = getParams('text');
-      switch (text) {
-        case '1':
-          console.log(1);
-          getHistoryAssess(1);
-          break;
-          case '2':
-          console.log(2);
-          getHistoryAssess(2);
-          break;
-        case '3':
-          console.log(3);
-          getHistoryAssess(3);
-          break;
-        case '4':
-          console.log(4);
-          getHistoryAssess(4);
-          break;
-        default:
-          break;
-      }
+      getHistoryAssess(text, historyData.page);
+      // switch (text) {
+      //   case '1':
+      //     historyData.type = 1;
+      //     getHistoryAssess(historyData.type, historyData.page);
+      //     break;
+      //   case '2':
+      //     historyData.type = 2;
+      //     getHistoryAssess(historyData.type, historyData.page);
+      //     break;
+      //   case '3':
+      //     historyData.type = 3;
+      //     getHistoryAssess(historyData.type, historyData.page);
+      //     break;
+      //   case '4':
+      //     historyData.type = 4;
+      //     getHistoryAssess(historyData.type, historyData.page);
+      //     break;
+      //   default:
+      //     break;
+      // }
+
+      //下拉刷新
+      historyData.dataList.pullToRefresh().on('pull-to-refresh', function () {
+        html = '';
+        historyData.page = 1;
+        getHistoryAssess(text, historyData.page);
+        historyData.dataList.pullToRefreshDone();
+      });
+
+      //上拉分页加载
+      historyData.dataList.infinite(100).on("infinite", function () {
+        if(historyData.moreData){
+          if(historyData.loading) return;
+          historyData.loading = true;
+          $('.weui-loadmore').show();
+          getHistoryAssess(text, historyData.page++);
+        }
+      });
     });
 
   </script>
