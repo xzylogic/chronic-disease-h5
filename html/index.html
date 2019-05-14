@@ -267,13 +267,14 @@
             localStorage.setItem('lightAppCode', tokenData.lightAppCode);
             localStorage.setItem('appid', tokenData.appid);
             localStorage.setItem('accountId', tokenData.accountId);
-            localStorage.setItem('requestUrl', nativeObj.htmlPath);
+            localStorage.setItem('requestUrl', nativeObj.htmlPath+'/../..');
             pageData = {
               netToken: tokenData.token,
               uid: tokenData.uid,
               channelCode: tokenData.channelCode,
               lightAppCode: tokenData.lightAppCode,
             };
+            console.log(localStorage.getItem('requestUrl'));
             resolve();
           } else {
             hideMyloading();
