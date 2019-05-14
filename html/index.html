@@ -141,6 +141,14 @@
     nativeObj.RegisterFun(function () {
       loadData();
     })
+    // nativeObj.RegisterFun(function (paramObj) {
+    //   switch (paramObj.ACTION) {
+    //     case "ACTIVEPAGE"://页面激活
+    //       //
+    //       break;
+    //   }
+    // });
+
   }, 100);
 
   function addMore() {
@@ -259,6 +267,7 @@
             localStorage.setItem('lightAppCode', tokenData.lightAppCode);
             localStorage.setItem('appid', tokenData.appid);
             localStorage.setItem('accountId', tokenData.accountId);
+            localStorage.setItem('requestUrl', nativeObj.htmlPath);
             pageData = {
               netToken: tokenData.token,
               uid: tokenData.uid,
