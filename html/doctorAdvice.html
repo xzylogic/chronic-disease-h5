@@ -24,11 +24,11 @@
     </div>
     <p class="border-top"></p>
   </div>
+  <div class='custom-nodata' style="display:none;">
+    <img src="../custom/images/nodata.png">
+    <p>暂无建议</p>
+  </div>
   <div class="main" style="position: absolute; top: 4.7rem; overflow: auto; height: 100%; margin-bottom: -1.6rem; margin-top: 1px;">
-    <div class='custom-nodata' style="display:none;">
-      <img src="../custom/images/nodata.png">
-      <p>暂无建议</p>
-    </div>
     <div class="have-data-box" style="height:100%; overflow:auto;">
       <!--显示下拉标签-->
       <div class="weui-pull-to-refresh__layer pull-refresh-loading">
@@ -76,6 +76,9 @@
       // 获取医生建议
       function getDoctorAdvice(page){
         return new Promise(function (resolve, reject) {
+          if(page === 0){
+            $('.weui-loadmore').hide();
+          }
           $.ajax({
             url: ajaxUrl.doctorAdviceDetail + '?flag='+ page +'&uid=3a24cb5b173e4d6597f62a95d04e3340',
             // url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid,
@@ -116,12 +119,14 @@
       indexDoctorAdvice();
       function indexDoctorAdvice(page = 0){
         getDoctorAdvice(page).then(function (res) {
-          // console.log(res);
+          console.log(res);
           adviceData.moreData = res.more;
           var temp = $('#dovtorAdvice-Temp').html();
           if(page === 0 && res.content.length === 0){
             $('.custom-nodata').show();
           }else{
+            $('.weui-loadmore').hide();
+            adviceData.loading = false;
             res.content.length > 0 ? res.content.map(function (data) {
               var bloodList = data.bloodGlucose_list[0];  //血糖
               var pressureList = data.pressure_list[0];   //血压
@@ -181,8 +186,6 @@
                 default:
                   break;
               }
-              $('.weui-loadmore').hide();
-              adviceData.loading = false;
             }) : '';
             $('.newadviceList').html(html);
           }
