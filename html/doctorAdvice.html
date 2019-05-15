@@ -11,7 +11,7 @@
 
 <body>
 <div class="doctorAdviceBox">
-  <div style="position: absolute; width: 100%; z-index: 11; top: 0;">
+  <div style="position: fixed; width: 100%; z-index: 11;">
     <div class="doctorMes clearfix" style="display:block;">
       <span class="photo"><img src="../custom/images/photo.jpg" /><!--  class="default" --></span>
       <div class="mes">
@@ -19,7 +19,7 @@
         <p>所在单位：上海黄埔的社区中心</p>
       </div>
     </div>
-    <div class="tabWrap" style="position: relative;">
+    <div class="tabWrap">
       <span class="current">血糖异常</span><span>血压异常</span>
     </div>
     <p class="border-top"></p>
@@ -28,8 +28,8 @@
     <img src="../custom/images/nodata.png">
     <p>暂无建议</p>
   </div>
-  <div class="main" style="position: absolute; top: 4.7rem; overflow: auto; height: 100%; margin-bottom: -1.6rem; margin-top: 1px;">
-    <div class="have-data-box" style="height:100%; overflow:auto;">
+  <div class="main">
+    <div class="have-data-box" style="position: fixed; height:100%; top: 4.7rem; overflow:auto;">
       <!--显示下拉标签-->
       <div class="weui-pull-to-refresh__layer pull-refresh-loading">
         <div class='weui-pull-to-refresh__arrow'></div>
@@ -39,7 +39,7 @@
         <div class="refresh"></div>
         <span id="last-Time"></span>
       </div>
-      <ul class="newadviceList">
+      <ul class="newadviceList" style="padding-bottom: 3.1rem;">
         <!--<li>-->
             <!--<p><label>测量时间</label><span>2017-09-10&nbsp;&nbsp;&nbsp;&nbsp;早晨</span></p>-->
             <!--<p><label>血糖异常</label><span><em class="abnormal">10.21<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></p>-->
@@ -47,7 +47,7 @@
             <!--<p><label>医生建议</label><span>请注意到医院检查</span></p>-->
         <!--</li>-->
       </ul>
-      <div id="load-more" class="weui-loadmore" style="display: none;">
+      <div id="load-more" class="weui-loadmore" style="display: none; margin-top: -3.1rem;">
         <i class="weui-loading"></i>
         <span class="weui-loadmore__tips">正在加载</span>
       </div>
@@ -72,13 +72,13 @@
   <script>
     FastClick.attach(document.body);
     $(function () {
-      showMyloading();
       // 获取医生建议
       function getDoctorAdvice(page){
+        showMyloading();
         return new Promise(function (resolve, reject) {
-          if(page === 0){
-            $('.weui-loadmore').hide();
-          }
+          // if(page === 0){
+          //   $('.weui-loadmore').hide();
+          // }
           $.ajax({
             url: ajaxUrl.doctorAdviceDetail + '?flag='+ page +'&uid=3a24cb5b173e4d6597f62a95d04e3340',
             // url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid,
@@ -224,6 +224,7 @@
           adviceData.pageStatus = '血糖异常';
         }
         html = '';
+        // $('.main').css({position: 'absolute', top: '4.7rem', height: '100%', marginTop: '1px'});
         $('.newadviceList').html('');
         adviceData.page = 0;
         indexDoctorAdvice(0);
