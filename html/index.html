@@ -371,15 +371,15 @@
       var html = '';
       var temp = $('.bloodData-Temp').html();
       var ifAbnormal = '', status = 'nodataCircleCon', noData = '';
-      if(res[0].glu && res[0].glu[0] && res[0].glu[0].isAbnormal){
-        switch (res[0].glu[0].isAbnormal) {
-          case '0':
+      if(res[0].glu && res[0].glu.isAbnormal){
+        switch (res[0].glu.isAbnormal) {
+          case 0:
             break;
-          case '1':
+          case 1:
             ifAbnormal = 'riskDataCircleCon';
             status = 'up';
             break;
-          case '2':
+          case 2:
             ifAbnormal = 'riskDataCircleCon';
             status = 'down';
             break;
@@ -388,7 +388,7 @@
         }
         // var aaa = "2019-03-01 09:00:00";
         // var oldTime = aaa.split(' ')[0];
-        var oldTime = res[0].glu[0].detectTime.split(' ')[0];
+        var oldTime = res[0].glu.detectTime.split(' ')[0];
         var getNowDate = new Date().toLocaleDateString().split('/');
         if(getNowDate[1] < 10){
           getNowDate[1] = '0' + getNowDate[1];
@@ -404,9 +404,9 @@
         if(difValue >= 2){
           $('.no').text('您'+ difValue +'天未测量血糖');
           noData = 'no';
-          res[0].glu[0].value = '';
+          res[0].glu.value = '';
         }
-        html += temp.format(res[0].glu[0].abnormal, res[0].glu[0].value, status, ifAbnormal, noData);
+        html += temp.format(res[0].glu.abnormal, res[0].glu.value, status, ifAbnormal, noData);
         $('.riskDataWrap').html(html);
       }
 
