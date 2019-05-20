@@ -374,7 +374,6 @@
       if(res[0].glu && res[0].glu.isAbnormal){
         switch (res[0].glu.isAbnormal) {
           case 0:
-            ifAbnormal = 'nodataCircleCon';
             break;
           case 1:
             ifAbnormal = 'riskDataCircleCon';
@@ -406,6 +405,7 @@
         if(difValue >= 2){
           res[0].glu.abnormal = '';
           res[0].glu.value = '';
+          ifAbnormal = 'nodataCircleCon';
           noData = 'no';
         }
         html += temp.format(res[0].glu.abnormal, res[0].glu.value, status, ifAbnormal, noData);
