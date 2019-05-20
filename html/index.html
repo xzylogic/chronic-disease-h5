@@ -419,7 +419,7 @@
         bindClick();
       }
 
-      $('.glyHe').text(res[0].ghb || '— —');
+      $('.glyHe').text(res[0].ghb+'%' || '— —');
       $('.bloodRate').text(res[0].gluComplianceRate || '— —');
       $('.ifQuelified').text(res[0].isQualified === '不显示' ? '— —' : res[0].isQualified);
       if(res[1].more){
