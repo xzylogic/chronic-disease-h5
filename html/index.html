@@ -371,7 +371,7 @@
       var html = '';
       var temp = $('#bloodData-Temp').html();
       var ifAbnormal = '', status = '', noData = '';
-      if(res[0].glu && res[0].glu.isAbnormal){
+      if(res[0].glu && res[0].glu.value){
         switch (res[0].glu.isAbnormal) {
           case 0:
             break;
