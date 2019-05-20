@@ -83,13 +83,13 @@
         switch (tiskText) {
           case '风险评估（份）':
             console.log('跳转到健康云风险评估历史记录列表');
-            $.toast('出现错误，请稍后再试~', 'text');
-            // NativeFunc({
-            //   ACTION: "OPENURL",
-            //   PARAM: {
-            //     URL: nativeObj.htmlPath + '/riskAssessmentHistoryList.html?text=1'
-            //   }
-            // });
+            // $.toast('出现错误，请稍后再试~', 'text');
+            NativeFunc({
+              ACTION: "OPENAPP",
+              PARAM: {
+                APP: 'com.wondersgroup.healthcloud.3101://user/chronic_assessment_history'
+              }
+            });
             break;
           case '糖尿病肾病症状风险评估（份）':
             NativeFunc({
