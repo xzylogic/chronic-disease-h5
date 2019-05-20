@@ -41,7 +41,7 @@
     FastClick.attach(document.body);
     showMyloading();
     $.ajax({
-      url: ajaxUrl.followPlan + '?cardType=01&cardNumber=310108198208190030&registerId=' + localStorage.getItem('uid'),
+      url: ajaxUrl.followPlan + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'), //310108198208190030
       type: "GET",
       beforeSend: function (request) {
         request.setRequestHeader('token', localStorage.getItem('netToken'));

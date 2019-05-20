@@ -80,7 +80,7 @@
           //   $('.weui-loadmore').hide();
           // }
           $.ajax({
-            url: ajaxUrl.doctorAdviceDetail + '?flag='+ page +'&uid=3a24cb5b173e4d6597f62a95d04e3340',
+            url: ajaxUrl.doctorAdviceDetail + '?flag='+ page +'&uid='+ localStorage.getItem('uid'),
             // url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid,
             type: "GET",
             beforeSend: function (request) {

@@ -106,8 +106,8 @@
 
       showMyloading();
       $.ajax({
-        url: ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340',
-        // url: ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid'),
+        // url: ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340',
+        url: ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid'),
         type: "GET",
         beforeSend: function (request) {
           request.setRequestHeader('token', localStorage.getItem('netToken'));

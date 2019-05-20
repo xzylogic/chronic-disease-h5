@@ -12,7 +12,7 @@
 
 <body>
 <div class="MedicationReminder" style="display:block;">
-    <div class="scroll-wrap">
+    <div class="scroll-wrap" style="padding-bottom: 1px;">
       <!--<div class="weui-cell weui-cell_swiped">
         <div class="weui-cell__bd">
           <div class="reminderListLeft" onClick=''>
@@ -161,7 +161,7 @@
             var longClick =0, timeOutEvent;
             $('.weui-cell__bd').bind({
               touchstart: function(e){
-                e.preventDefault();
+                // e.preventDefault();
                 longClick=0;//设置初始为0
                 timeOutEvent = setTimeout(function(){
                   //此处为长按、滑动事件-----
@@ -169,12 +169,12 @@
                 },200);
               },
               touchmove: function(e){
-                e.preventDefault();
+                // e.preventDefault();
                 clearTimeout(timeOutEvent);
                 timeOutEvent = 0;
               },
               touchend: function(e){
-                e.preventDefault();
+                // e.preventDefault();
                 clearTimeout(timeOutEvent);
                 if(timeOutEvent !== 0 && longClick === 0){
                   //此处为点击事件
