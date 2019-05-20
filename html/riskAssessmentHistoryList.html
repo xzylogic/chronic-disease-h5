@@ -73,8 +73,8 @@
     function getHistoryAssess(type, page){
       showMyloading();
       $.ajax({
-        url: ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=3a24cb5b173e4d6597f62a95d04e3340&type='+ type,
-        // url: ajaxUrl.assessmentHistory + '?flag='+ page +'registerid=' + localStorage.getItem('uid')&type='+ type,
+        // url: ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=3a24cb5b173e4d6597f62a95d04e3340&type='+ type,
+        url: ajaxUrl.assessmentHistory + '?flag='+ page +'&registerid=' + localStorage.getItem('uid') +'&type='+ type,
         type: "GET",
         beforeSend: function (request) {
           request.setRequestHeader('token', localStorage.getItem('netToken'));

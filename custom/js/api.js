@@ -16,9 +16,6 @@ var ajaxUrl = {
 
   remindDetail: ajaxRoot + 'disease-remind-detail',     //用药提醒-获取用药提醒详情
 
-
-  assessmentHistory: ajaxRoot + 'disease-assessment-history',     //评估历史
-
   assessmentAssess: ajaxRoot + 'disease-assessment-assess',     //评估
 
   assessmentRecent: ajaxRoot + 'disease-assessment-recent',     //获取用户最近的风险评估结果
@@ -37,6 +34,8 @@ var ajaxUrl = {
 
   // 已使用接口
   bloodGlucoseRecord: ajaxRoot + 'iot-chronic-disease-index-stat',     //首页血糖获取
+
+  assessmentHistory: ajaxRoot + 'disease-assessment-history',     //评估历史
 
   assessmentHistoryList: ajaxRoot + 'disease-assessment-history-list',     //风险评估-历史评估列表
   assessmentHistoryNum: ajaxRoot + 'disease-assessment-history-num',     //风险评估-历史评估数量

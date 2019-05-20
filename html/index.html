@@ -267,6 +267,7 @@
             localStorage.setItem('appid', tokenData.appid);
             localStorage.setItem('accountId', tokenData.accountId);
             localStorage.setItem('requestUrl', nativeObj.htmlPath+'/../../healthcloud-measure-web/html');
+            localStorage.setItem('idcard', tokenData.idcard || '');
             pageData = {
               netToken: tokenData.token,
               uid: tokenData.uid,
@@ -333,8 +334,8 @@
   function getDoctorAdvice(){
     return new Promise(function (resolve, reject) {
       $.ajax({
-        url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=3a24cb5b173e4d6597f62a95d04e3340',
-        // url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid,
+        // url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=3a24cb5b173e4d6597f62a95d04e3340',
+        url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid,
         type: "GET",
         beforeSend: function (request) {
           request.setRequestHeader('token', pageData.netToken);

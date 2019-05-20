@@ -345,36 +345,36 @@
     //获取筛查报告列表
     function getReportScreening() {
       //统计报告数
-      $.ajax({
-        url: ajaxUrl.reportNum + '?uid=' + localStorage.getItem('uid'),
-        type: "GET",
-        beforeSend: function (request) {
-          request.setRequestHeader('token', localStorage.getItem('netToken'));
-          request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-          request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-          request.setRequestHeader('appid', localStorage.getItem('appid'));
-          request.setRequestHeader('request-id', randomWord(true));
-          request.setRequestHeader('timestamp', new Date().getTime());
-        },
-        success: function (data) {
-          console.log('统计报告数:',data);
-          if(data.code === 0){
-            $('.tabWrap em:eq(0)').text('('+ data.data.screeningNum +')');
-            $('.tabWrap em:eq(1)').text('('+ data.data.followNum +')');
-          }else{
-            $.toast(data.msg || '请求错误~', 'text');
-          }
-          hideMyloading();
-          // resolve('帅查报告列表');
-        },
-        error: function (err) {
-          hideMyloading();
-          console.log(err);
-        }
-      });
+      // $.ajax({
+      //   url: ajaxUrl.reportNum + '?uid=' + localStorage.getItem('uid'),
+      //   type: "GET",
+      //   beforeSend: function (request) {
+      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
+      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
+      //     request.setRequestHeader('request-id', randomWord(true));
+      //     request.setRequestHeader('timestamp', new Date().getTime());
+      //   },
+      //   success: function (data) {
+      //     console.log('统计报告数:',data);
+      //     if(data.code === 0){
+      //       $('.tabWrap em:eq(0)').text('('+ data.data.screeningNum +')');
+      //       $('.tabWrap em:eq(1)').text('('+ data.data.followNum +')');
+      //     }else{
+      //       $.toast(data.msg || '请求错误~', 'text');
+      //     }
+      //     hideMyloading();
+      //     // resolve('帅查报告列表');
+      //   },
+      //   error: function (err) {
+      //     hideMyloading();
+      //     console.log(err);
+      //   }
+      // });
       return new Promise(function (resolve, reject) {
         $.ajax({
-          url: ajaxUrl.reportScreening + '?cardType=01&cardNumber=310108198208190030&registerId=' + localStorage.getItem('uid'),
+          url: ajaxUrl.reportScreening + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'),
           type: "GET",
           beforeSend: function (request) {
             request.setRequestHeader('token', localStorage.getItem('netToken'));
@@ -387,7 +387,7 @@
           success: function (data) {
             console.log('筛查报告列表:',data);
             if(data.code === 0){
-              // $('.tabWrap em:eq(0)').text('('+ data.data.length +')');
+              $('.tabWrap em:eq(0)').text('('+ data.data.length +')');
               resolve(data.data);
             }else{
               $.toast(data.msg || '请求错误~', 'text');
@@ -408,7 +408,7 @@
     function getReportFollow() {
       return new Promise(function (resolve, reject) {
         $.ajax({
-          url: ajaxUrl.reportFollow + '?cardType=01&cardNumber=310108198208190030&registerId=' + localStorage.getItem('uid'),
+          url: ajaxUrl.reportFollow + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'),
           type: "GET",
           beforeSend: function (request) {
             request.setRequestHeader('token', localStorage.getItem('netToken'));
@@ -421,7 +421,7 @@
           success: function (data) {
             console.log('随访报告列表:',data);
             if(data.code === 0){
-              // $('.tabWrap em:eq(1)').text('('+ data.data.length +')');
+              $('.tabWrap em:eq(1)').text('('+ data.data.length +')');
               resolve(data.data);
             }else{
               $.toast(data.msg || '请求错误~', 'text');
