@@ -460,7 +460,7 @@
         var nowDate = getNowDate.join('-');
         var dateStart = new Date(oldTime);
         var dateEnd = new Date(nowDate);
-        var difValue = (dateEnd - dateStart) / (1000 * 60 * 60 * 24);
+        var difValue = parseInt((dateEnd - dateStart) / (1000 * 60 * 60 * 24));
         // console.log(difValue);
 
         if(difValue >= 2){
