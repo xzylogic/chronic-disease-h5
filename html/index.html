@@ -242,11 +242,11 @@
 
   var pageData = {};
   var code = getParams('code');
-  showMyloading();
+  // showMyloading();
   //获取token
   var pro = function () {
     return new Promise(function (resolve, reject) {
-      var ajax_url = ajaxUrl.userGetTokenByAuthCode;
+      var ajax_url = ajaxUrl.userGetTokenByAuthCode + '?authCode='+ code;
       var ajax_fun = function(data){
         var tokenData = data.data;
         if (data.code === 0) {
@@ -267,7 +267,6 @@
           // console.log(localStorage.getItem('requestUrl'));
           resolve();
         } else {
-          hideMyloading();
           pageData = {
             netToken: localStorage.getItem('netToken'),
             uid: localStorage.getItem('uid'),
