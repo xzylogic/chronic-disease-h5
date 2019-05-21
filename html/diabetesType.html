@@ -104,36 +104,52 @@
         }
       });
 
-      showMyloading();
-      $.ajax({
-        // url: ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340',
-        url: ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid'),
-        type: "GET",
-        beforeSend: function (request) {
-          request.setRequestHeader('token', localStorage.getItem('netToken'));
-          request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-          request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-          request.setRequestHeader('appid', localStorage.getItem('appid'));
-          request.setRequestHeader('request-id', randomWord(true));
-          request.setRequestHeader('timestamp', new Date().getTime());
-        },
-        success: function (data) {
+      var ajax_url = ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid');
+      // var ajax_url = ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340';
+      function ajax_fun(data){
+        if(data.code === 0){
           console.log(data);
           var datas = data.data;
-          if(data.code === 0){
-            if(datas.assessmentNum > 0 || datas.eyeNum > 0 || datas.footNum > 0 || datas.kidneyNum > 0){
-              $('.alink').show();
-            }
-          }else{
-            $.toast(data.msg || '请求错误~', 'text');
+          if(datas.assessmentNum > 0 || datas.eyeNum > 0 || datas.footNum > 0 || datas.kidneyNum > 0){
+            $('.alink').show();
           }
-          hideMyloading();
-        },
-        error: function (err) {
-          hideMyloading();
-          console.log(err);
+        }else{
+          $.toast(data.msg || '请求错误~', 'text');
         }
-      });
+        hideMyloading();
+      }
+      custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
+
+      // showMyloading();
+      // $.ajax({
+      //   // url: ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340',
+      //   url: ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid'),
+      //   type: "GET",
+      //   beforeSend: function (request) {
+      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
+      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
+      //     request.setRequestHeader('request-id', randomWord(true));
+      //     request.setRequestHeader('timestamp', new Date().getTime());
+      //   },
+      //   success: function (data) {
+      //     console.log(data);
+      //     var datas = data.data;
+      //     if(data.code === 0){
+      //       if(datas.assessmentNum > 0 || datas.eyeNum > 0 || datas.footNum > 0 || datas.kidneyNum > 0){
+      //         $('.alink').show();
+      //       }
+      //     }else{
+      //       $.toast(data.msg || '请求错误~', 'text');
+      //     }
+      //     hideMyloading();
+      //   },
+      //   error: function (err) {
+      //     hideMyloading();
+      //     console.log(err);
+      //   }
+      // });
     })
   </script>
 

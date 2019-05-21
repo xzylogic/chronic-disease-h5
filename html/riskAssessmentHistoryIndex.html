@@ -31,50 +31,79 @@
   <script>
     FastClick.attach(document.body);
     $(function () {
-      showMyloading();
-      $.ajax({
-        // url: ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340',
-        url: ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid'),
-        type: "GET",
-        beforeSend: function (request) {
-          request.setRequestHeader('token', localStorage.getItem('netToken'));
-          request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-          request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-          request.setRequestHeader('appid', localStorage.getItem('appid'));
-          request.setRequestHeader('request-id', randomWord(true));
-          request.setRequestHeader('timestamp', new Date().getTime());
-        },
-        success: function (data) {
-          if(data.code === 0){
-            var dataList = data.data;
-            if(!dataList.assessmentNum > 0){
-              $('.questionSelectType span:eq(0)').text(dataList.assessmentNum);
-            }else{
-              $('.questionSelectType li:eq(0)').hide();
-            }
-            if(dataList.kidneyNum > 0){
-              $('.questionSelectType span:eq(1)').text(dataList.kidneyNum);
-            }else{
-              $('.questionSelectType li:eq(1)').hide();
-            }
-            if(dataList.eyeNum > 0){
-              $('.questionSelectType span:eq(2)').text(dataList.eyeNum);
-            }else{
-              $('.questionSelectType li:eq(2)').hide();
-            }
-            if(dataList.footNum > 0){
-              $('.questionSelectType span:eq(3)').text(dataList.footNum);
-            }else{
-              $('.questionSelectType li:eq(3)').hide();
-            }
+      // var ajax_url = ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340';
+      var ajax_url = ajaxUrl.assessmentHistoryNum + '?registerid=' + localStorage.getItem('uid');
+      function ajax_fun(data){
+        if(data.code === 0){
+          var dataList = data.data;
+          if(dataList.assessmentNum > 0){
+            $('.questionSelectType span:eq(0)').text(dataList.assessmentNum);
+          }else{
+            $('.questionSelectType li:eq(0)').hide();
           }
-          hideMyloading();
-        },
-        error: function (err) {
-          hideMyloading();
-          console.log(err);
+          if(dataList.kidneyNum > 0){
+            $('.questionSelectType span:eq(1)').text(dataList.kidneyNum);
+          }else{
+            $('.questionSelectType li:eq(1)').hide();
+          }
+          if(dataList.eyeNum > 0){
+            $('.questionSelectType span:eq(2)').text(dataList.eyeNum);
+          }else{
+            $('.questionSelectType li:eq(2)').hide();
+          }
+          if(dataList.footNum > 0){
+            $('.questionSelectType span:eq(3)').text(dataList.footNum);
+          }else{
+            $('.questionSelectType li:eq(3)').hide();
+          }
         }
-      });
+        hideMyloading();
+      }
+      custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
+      // showMyloading();
+      // $.ajax({
+      //   url: ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340',
+      //   // url: ajaxUrl.assessmentHistoryNum + '?registerid=' + localStorage.getItem('uid'),
+      //   type: "GET",
+      //   beforeSend: function (request) {
+      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
+      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
+      //     request.setRequestHeader('request-id', randomWord(true));
+      //     request.setRequestHeader('timestamp', new Date().getTime());
+      //   },
+      //   success: function (data) {
+      //     if(data.code === 0){
+      //       var dataList = data.data;
+      //       if(dataList.assessmentNum > 0){
+      //         $('.questionSelectType span:eq(0)').text(dataList.assessmentNum);
+      //       }else{
+      //         $('.questionSelectType li:eq(0)').hide();
+      //       }
+      //       if(dataList.kidneyNum > 0){
+      //         $('.questionSelectType span:eq(1)').text(dataList.kidneyNum);
+      //       }else{
+      //         $('.questionSelectType li:eq(1)').hide();
+      //       }
+      //       if(dataList.eyeNum > 0){
+      //         $('.questionSelectType span:eq(2)').text(dataList.eyeNum);
+      //       }else{
+      //         $('.questionSelectType li:eq(2)').hide();
+      //       }
+      //       if(dataList.footNum > 0){
+      //         $('.questionSelectType span:eq(3)').text(dataList.footNum);
+      //       }else{
+      //         $('.questionSelectType li:eq(3)').hide();
+      //       }
+      //     }
+      //     hideMyloading();
+      //   },
+      //   error: function (err) {
+      //     hideMyloading();
+      //     console.log(err);
+      //   }
+      // });
       $('ul li').bind('click', function () {
         // console.log('=====', $(this).previousSibling);
         var tiskText = $(this).find('span').parent().contents().filter(function(){

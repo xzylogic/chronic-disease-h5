@@ -71,6 +71,7 @@
   <script src="../custom/js/api.js"></script>
   <script>
     FastClick.attach(document.body);
+
     $(function () {
       // 获取医生建议
       function getDoctorAdvice(page){
@@ -79,31 +80,42 @@
           // if(page === 0){
           //   $('.weui-loadmore').hide();
           // }
-          $.ajax({
-            url: ajaxUrl.doctorAdviceDetail + '?flag='+ page +'&uid='+ localStorage.getItem('uid'),
-            // url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid,
-            type: "GET",
-            beforeSend: function (request) {
-              request.setRequestHeader('token', localStorage.getItem('netToken'));
-              request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-              request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-              request.setRequestHeader('appid', localStorage.getItem('appid'));
-              request.setRequestHeader('request-id', randomWord(true));
-              request.setRequestHeader('timestamp', new Date().getTime());
-            },
-            success: function (data) {
-              if(data.code === 0){
-                resolve(data.data);
-              }else{
-                $.toast(data.msg || '请求错误~', 'text');
-              }
-              hideMyloading();
-            },
-            error: function (err) {
-              hideMyloading();
-              console.log(err);
+          var ajax_url = ajaxUrl.doctorAdviceDetail + '?flag='+ page +'&uid='+ localStorage.getItem('uid');
+          var ajax_fun = function(data){
+            if(data.code === 0){
+              resolve(data.data);
+            }else{
+              $.toast(data.msg || '请求错误~', 'text');
             }
-          });
+            hideMyloading();
+          };
+          custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
+
+          // $.ajax({
+          //   url: ajaxUrl.doctorAdviceDetail + '?flag='+ page +'&uid='+ localStorage.getItem('uid'),
+          //   // url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid,
+          //   type: "GET",
+          //   beforeSend: function (request) {
+          //     request.setRequestHeader('token', localStorage.getItem('netToken'));
+          //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+          //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+          //     request.setRequestHeader('appid', localStorage.getItem('appid'));
+          //     request.setRequestHeader('request-id', randomWord(true));
+          //     request.setRequestHeader('timestamp', new Date().getTime());
+          //   },
+          //   success: function (data) {
+          //     if(data.code === 0){
+          //       resolve(data.data);
+          //     }else{
+          //       $.toast(data.msg || '请求错误~', 'text');
+          //     }
+          //     hideMyloading();
+          //   },
+          //   error: function (err) {
+          //     hideMyloading();
+          //     console.log(err);
+          //   }
+          // });
         });
       }
 
