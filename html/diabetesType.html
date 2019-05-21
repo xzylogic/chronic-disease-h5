@@ -104,9 +104,9 @@
         }
       });
 
-      var ajax_url = ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid');
       // var ajax_url = ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340';
-      function ajax_fun(data){
+      var ajax_url = ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid');
+      var ajax_fun =function(data){
         if(data.code === 0){
           console.log(data);
           var datas = data.data;
@@ -117,7 +117,7 @@
           $.toast(data.msg || '请求错误~', 'text');
         }
         hideMyloading();
-      }
+      };
       custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
 
       // showMyloading();
