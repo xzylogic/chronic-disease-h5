@@ -373,33 +373,45 @@
       //   }
       // });
       return new Promise(function (resolve, reject) {
-        $.ajax({
-          url: ajaxUrl.reportScreening + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'),
-          type: "GET",
-          beforeSend: function (request) {
-            request.setRequestHeader('token', localStorage.getItem('netToken'));
-            request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-            request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-            request.setRequestHeader('appid', localStorage.getItem('appid'));
-            request.setRequestHeader('request-id', randomWord(true));
-            request.setRequestHeader('timestamp', new Date().getTime());
-          },
-          success: function (data) {
-            console.log('筛查报告列表:',data);
-            if(data.code === 0){
-              $('.tabWrap em:eq(0)').text('('+ data.data.length +')');
-              resolve(data.data);
-            }else{
-              $.toast(data.msg || '请求错误~', 'text');
-            }
-            hideMyloading();
-            // resolve('帅查报告列表');
-          },
-          error: function (err) {
-            hideMyloading();
-            console.log(err);
+        var ajax_url1 = ajaxUrl.reportScreening + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid');
+        var ajax_fun1 = function(data){
+          if(data.code === 0){
+            $('.tabWrap em:eq(0)').text('('+ data.data.length +')');
+            resolve(data.data);
+          }else{
+            $.toast(data.msg || '请求错误~', 'text');
           }
-        });
+          hideMyloading();
+        };
+        custom.ajaxRequest({url: ajax_url1}, ajax_fun1, false);
+
+        // $.ajax({
+        //   url: ajaxUrl.reportScreening + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'),
+        //   type: "GET",
+        //   beforeSend: function (request) {
+        //     request.setRequestHeader('token', localStorage.getItem('netToken'));
+        //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+        //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+        //     request.setRequestHeader('appid', localStorage.getItem('appid'));
+        //     request.setRequestHeader('request-id', randomWord(true));
+        //     request.setRequestHeader('timestamp', new Date().getTime());
+        //   },
+        //   success: function (data) {
+        //     console.log('筛查报告列表:',data);
+        //     if(data.code === 0){
+        //       $('.tabWrap em:eq(0)').text('('+ data.data.length +')');
+        //       resolve(data.data);
+        //     }else{
+        //       $.toast(data.msg || '请求错误~', 'text');
+        //     }
+        //     hideMyloading();
+        //     // resolve('帅查报告列表');
+        //   },
+        //   error: function (err) {
+        //     hideMyloading();
+        //     console.log(err);
+        //   }
+        // });
       })
     }
 
@@ -407,33 +419,45 @@
     getReportFollow();
     function getReportFollow() {
       return new Promise(function (resolve, reject) {
-        $.ajax({
-          url: ajaxUrl.reportFollow + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'),
-          type: "GET",
-          beforeSend: function (request) {
-            request.setRequestHeader('token', localStorage.getItem('netToken'));
-            request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-            request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-            request.setRequestHeader('appid', localStorage.getItem('appid'));
-            request.setRequestHeader('request-id', randomWord(true));
-            request.setRequestHeader('timestamp', new Date().getTime());
-          },
-          success: function (data) {
-            console.log('随访报告列表:',data);
-            if(data.code === 0){
-              $('.tabWrap em:eq(1)').text('('+ data.data.length +')');
-              resolve(data.data);
-            }else{
-              $.toast(data.msg || '请求错误~', 'text');
-            }
-            hideMyloading();
-            // resolve('帅查报告列表');
-          },
-          error: function (err) {
-            hideMyloading();
-            console.log(err);
+        var ajax_url2 = ajaxUrl.reportFollow + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid');
+        var ajax_fun2 = function(data){
+          if(data.code === 0){
+            $('.tabWrap em:eq(1)').text('('+ data.data.length +')');
+            resolve(data.data);
+          }else{
+            $.toast(data.msg || '请求错误~', 'text');
           }
-        });
+          hideMyloading();
+        };
+        custom.ajaxRequest({url: ajax_url2}, ajax_fun2, false);
+
+        // $.ajax({
+        //   url: ajaxUrl.reportFollow + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'),
+        //   type: "GET",
+        //   beforeSend: function (request) {
+        //     request.setRequestHeader('token', localStorage.getItem('netToken'));
+        //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+        //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+        //     request.setRequestHeader('appid', localStorage.getItem('appid'));
+        //     request.setRequestHeader('request-id', randomWord(true));
+        //     request.setRequestHeader('timestamp', new Date().getTime());
+        //   },
+        //   success: function (data) {
+        //     console.log('随访报告列表:',data);
+        //     if(data.code === 0){
+        //       $('.tabWrap em:eq(1)').text('('+ data.data.length +')');
+        //       resolve(data.data);
+        //     }else{
+        //       $.toast(data.msg || '请求错误~', 'text');
+        //     }
+        //     hideMyloading();
+        //     // resolve('帅查报告列表');
+        //   },
+        //   error: function (err) {
+        //     hideMyloading();
+        //     console.log(err);
+        //   }
+        // });
       })
     }
 

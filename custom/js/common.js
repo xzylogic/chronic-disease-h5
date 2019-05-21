@@ -202,14 +202,23 @@ var custom = {
       onloading：请求接口之前显示loading，默认显示loading
   */
   ajaxRequest: function (opts, successFun, noloading) {
-    var tk;
-    pageData.userInfo && (tk = pageData.userInfo.token);
+    var pageData = {
+      // userInfo: 1,
+      token: localStorage.getItem('netToken') || '',
+      appid: localStorage.getItem('appid') || '',
+      channelCode: getParams('channelCode') || localStorage.getItem('channelCode') || '',
+      lightAppCode: getParams('lightAppCode') || localStorage.getItem('lightAppCode') || '',
+    };
+    // var tk;
+    // pageData.userInfo && (tk = pageData.userInfo.token);
     var param = {
       type: "GET",//默认GET请求
       beforeSend: function (request) {
-        request.setRequestHeader("token", tk);
+        request.setRequestHeader("token", pageData.token);
         request.setRequestHeader("channelCode", pageData.channelCode);
         request.setRequestHeader("lightAppCode", pageData.lightAppCode);
+        request.setRequestHeader('appid', pageData.appid);
+        request.setRequestHeader('request-id', randomWord(true));
         request.setRequestHeader('timestamp', new Date().getTime());
       },
       success: function (data) {

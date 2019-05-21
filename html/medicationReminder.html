@@ -105,187 +105,289 @@
     // 获取用药提醒列表
     getRemindList();
     function getRemindList() {
-      $.ajax({
-        url: ajaxUrl.remindList + '?flag=0&userId=' + localStorage.getItem('uid'),
-        type: "GET",
-        beforeSend: function (request) {
-          request.setRequestHeader('token', localStorage.getItem('netToken'));
-          request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-          request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-          request.setRequestHeader('appid', localStorage.getItem('appid'));
-          request.setRequestHeader('request-id', randomWord(true));
-          request.setRequestHeader('timestamp', new Date().getTime());
-        },
-        success: function (data) {
-          if(data.code === 0){
-            console.log('获取用药提醒列表',data.data);
-            var html = '';
-            var temp = $('#drugRemindList-Temp').html();
-            $('.custom-btm-fixed').show();
-            data.data.content.length > 0 ? data.data.content.map(function (res, i) {
-              // console.log(i)
-              var drugBrand = '', drugTime = '', dosage = '', drugUnit = '', drugMedicineId = '', drugName = '';
-              var drugFlag = (res.delFlag === '0' ? 'checked' : '');
-              res.remindItems.map(function (items) {
-                drugBrand += items.brand + ' ' + items.specification;
-                dosage += items.dose;
-                drugUnit += items.unit;
-                drugMedicineId = items.medicineId;
-                drugName = items.name;
-              });
-              res.remindTimes.map(function (times) {
-                var time1 = times.remindTime.split(':');
-                drugTime += time1[0] + ':' + time1[1] + ' ';
-              });
-              html += temp.format(drugBrand, drugTime, dosage, 'switchCP' + i, res.id, drugFlag, drugUnit, drugMedicineId, drugName);
-            }) : ($('.custom-nodata').show(), $('.custom-btm-fixed').hide());
-            $('.scroll-wrap').html(html);
+      var ajax_url = ajaxUrl.remindList + '?flag=0&userId=' + localStorage.getItem('uid');
+      var ajax_fun = function(data){
+        if(data.code === 0){
+          console.log('获取用药提醒列表',data.data);
+          var html = '';
+          var temp = $('#drugRemindList-Temp').html();
+          $('.custom-btm-fixed').show();
+          data.data.content.length > 0 ? data.data.content.map(function (res, i) {
+            // console.log(i)
+            var drugBrand = '', drugTime = '', dosage = '', drugUnit = '', drugMedicineId = '', drugName = '';
+            var drugFlag = (res.delFlag === '0' ? 'checked' : '');
+            res.remindItems.map(function (items) {
+              drugBrand += items.brand + ' ' + items.specification;
+              dosage += items.dose;
+              drugUnit += items.unit;
+              drugMedicineId = items.medicineId;
+              drugName = items.name;
+            });
+            res.remindTimes.map(function (times) {
+              var time1 = times.remindTime.split(':');
+              drugTime += time1[0] + ':' + time1[1] + ' ';
+            });
+            html += temp.format(drugBrand, drugTime, dosage, 'switchCP' + i, res.id, drugFlag, drugUnit, drugMedicineId, drugName);
+          }) : ($('.custom-nodata').show(), $('.custom-btm-fixed').hide());
+          $('.scroll-wrap').html(html);
 
-            //初始化删除
-            $('.weui-cell_swiped').swipeout('open');
-            // $('.reminderListLeft').bind('click', function () {
-            //   console.log($(this).find('.daytime').text());
-            //   var brand = $(this).find('.name').text();
-            //   var dose = $(this).find('.fc_orange').text();
-            //   var time = $(this).find('.daytime').children('span').text();
-            //   var medicineId = $(this).attr('data-medicineId');
-            //   var name = $(this).attr('data-name');
-            //   console.log(brand,dose,time, medicineId, name);
-            //   NativeFunc({
-            //     ACTION: "OPENURL",
-            //     PARAM: {
-            //       URL: nativeObj.htmlPath + '/medicationReminderDrug.html?brand='+brand+'&dose='+dose+'&time='+time+'&medicineId='+medicineId+'&name='+name
-            //     }
-            //   });
-            // });
-            var longClick =0, timeOutEvent;
-            $('.weui-cell__bd').bind({
-              touchstart: function(e){
-                // e.preventDefault();
-                longClick=0;//设置初始为0
-                timeOutEvent = setTimeout(function(){
-                  //此处为长按、滑动事件-----
-                  longClick=1;//假如长按，则设置为1
-                },200);
-              },
-              touchmove: function(e){
-                // e.preventDefault();
-                clearTimeout(timeOutEvent);
-                timeOutEvent = 0;
-              },
-              touchend: function(e){
-                // e.preventDefault();
-                clearTimeout(timeOutEvent);
-                if(timeOutEvent !== 0 && longClick === 0){
-                  //此处为点击事件
-                  var brand = $(this).find('.name').text();
-                  var dose = $(this).find('.fc_orange').text();
-                  var time = $(this).find('.daytime').children('span').text();
-                  var medicineId = $(this).attr('data-medicineId');
-                  var name = $(this).attr('data-name');
-                  // console.log(brand,dose,time, medicineId, name);
-                  NativeFunc({
-                    ACTION: "OPENURL",
-                    PARAM: {
-                      URL: nativeObj.htmlPath + '/medicationReminderDrug.html?brand='+brand+'&dose='+dose+'&time='+time+'&medicineId='+medicineId+'&name='+name
-                    }
-                  });
-                }
-                return false;
+          //初始化删除
+          $('.weui-cell_swiped').swipeout('open');
+          // $('.reminderListLeft').bind('click', function () {
+          //   console.log($(this).find('.daytime').text());
+          //   var brand = $(this).find('.name').text();
+          //   var dose = $(this).find('.fc_orange').text();
+          //   var time = $(this).find('.daytime').children('span').text();
+          //   var medicineId = $(this).attr('data-medicineId');
+          //   var name = $(this).attr('data-name');
+          //   console.log(brand,dose,time, medicineId, name);
+          //   NativeFunc({
+          //     ACTION: "OPENURL",
+          //     PARAM: {
+          //       URL: nativeObj.htmlPath + '/medicationReminderDrug.html?brand='+brand+'&dose='+dose+'&time='+time+'&medicineId='+medicineId+'&name='+name
+          //     }
+          //   });
+          // });
+          var longClick =0, timeOutEvent;
+          $('.weui-cell__bd').bind({
+            touchstart: function(e){
+              // e.preventDefault();
+              longClick=0;//设置初始为0
+              timeOutEvent = setTimeout(function(){
+                //此处为长按、滑动事件-----
+                longClick=1;//假如长按，则设置为1
+              },200);
+            },
+            touchmove: function(e){
+              // e.preventDefault();
+              clearTimeout(timeOutEvent);
+              timeOutEvent = 0;
+            },
+            touchend: function(e){
+              // e.preventDefault();
+              clearTimeout(timeOutEvent);
+              if(timeOutEvent !== 0 && longClick === 0){
+                //此处为点击事件
+                var brand = $(this).find('.name').text();
+                var dose = $(this).find('.fc_orange').text();
+                var time = $(this).find('.daytime').children('span').text();
+                var medicineId = $(this).attr('data-medicineId');
+                var name = $(this).attr('data-name');
+                // console.log(brand,dose,time, medicineId, name);
+                NativeFunc({
+                  ACTION: "OPENURL",
+                  PARAM: {
+                    URL: nativeObj.htmlPath + '/medicationReminderDrug.html?brand='+brand+'&dose='+dose+'&time='+time+'&medicineId='+medicineId+'&name='+name
+                  }
+                });
               }
-            });
-            $('.delete-swipeout').bind('click', function () {
-              showMyloading();
-              deleteRemind($(this).attr('data-id'), $(this).parents('.weui-cell'));
-            });
-            $('.weui-switch-cp__input').bind('click', function () {
-              // console.log($(this).attr('data-id'));
-              remindEnable($(this).attr('data-id'));
-            });
-
-            // ifClick();
-          }else{
-            $.toast(data.msg || '请求错误', 'text');
-          }
-        },
-        error: function (err) {
-          hideMyloading();
-          console.log(err);
+              return false;
+            }
+          });
+          $('.delete-swipeout').bind('click', function () {
+            showMyloading();
+            deleteRemind($(this).attr('data-id'), $(this).parents('.weui-cell'));
+          });
+          $('.weui-switch-cp__input').bind('click', function () {
+            // console.log($(this).attr('data-id'));
+            remindEnable($(this).attr('data-id'));
+          });
+        }else{
+          $.toast(data.msg || '请求错误', 'text');
         }
-      });
+        hideMyloading();
+      };
+      custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
+
+      // $.ajax({
+      //   url: ajaxUrl.remindList + '?flag=0&userId=' + localStorage.getItem('uid'),
+      //   type: "GET",
+      //   beforeSend: function (request) {
+      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
+      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
+      //     request.setRequestHeader('request-id', randomWord(true));
+      //     request.setRequestHeader('timestamp', new Date().getTime());
+      //   },
+      //   success: function (data) {
+      //     if(data.code === 0){
+      //       console.log('获取用药提醒列表',data.data);
+      //       var html = '';
+      //       var temp = $('#drugRemindList-Temp').html();
+      //       $('.custom-btm-fixed').show();
+      //       data.data.content.length > 0 ? data.data.content.map(function (res, i) {
+      //         // console.log(i)
+      //         var drugBrand = '', drugTime = '', dosage = '', drugUnit = '', drugMedicineId = '', drugName = '';
+      //         var drugFlag = (res.delFlag === '0' ? 'checked' : '');
+      //         res.remindItems.map(function (items) {
+      //           drugBrand += items.brand + ' ' + items.specification;
+      //           dosage += items.dose;
+      //           drugUnit += items.unit;
+      //           drugMedicineId = items.medicineId;
+      //           drugName = items.name;
+      //         });
+      //         res.remindTimes.map(function (times) {
+      //           var time1 = times.remindTime.split(':');
+      //           drugTime += time1[0] + ':' + time1[1] + ' ';
+      //         });
+      //         html += temp.format(drugBrand, drugTime, dosage, 'switchCP' + i, res.id, drugFlag, drugUnit, drugMedicineId, drugName);
+      //       }) : ($('.custom-nodata').show(), $('.custom-btm-fixed').hide());
+      //       $('.scroll-wrap').html(html);
+      //
+      //       //初始化删除
+      //       $('.weui-cell_swiped').swipeout('open');
+      //       var longClick =0, timeOutEvent;
+      //       $('.weui-cell__bd').bind({
+      //         touchstart: function(e){
+      //           // e.preventDefault();
+      //           longClick=0;//设置初始为0
+      //           timeOutEvent = setTimeout(function(){
+      //             //此处为长按、滑动事件-----
+      //             longClick=1;//假如长按，则设置为1
+      //           },200);
+      //         },
+      //         touchmove: function(e){
+      //           // e.preventDefault();
+      //           clearTimeout(timeOutEvent);
+      //           timeOutEvent = 0;
+      //         },
+      //         touchend: function(e){
+      //           // e.preventDefault();
+      //           clearTimeout(timeOutEvent);
+      //           if(timeOutEvent !== 0 && longClick === 0){
+      //             //此处为点击事件
+      //             var brand = $(this).find('.name').text();
+      //             var dose = $(this).find('.fc_orange').text();
+      //             var time = $(this).find('.daytime').children('span').text();
+      //             var medicineId = $(this).attr('data-medicineId');
+      //             var name = $(this).attr('data-name');
+      //             // console.log(brand,dose,time, medicineId, name);
+      //             NativeFunc({
+      //               ACTION: "OPENURL",
+      //               PARAM: {
+      //                 URL: nativeObj.htmlPath + '/medicationReminderDrug.html?brand='+brand+'&dose='+dose+'&time='+time+'&medicineId='+medicineId+'&name='+name
+      //               }
+      //             });
+      //           }
+      //           return false;
+      //         }
+      //       });
+      //       $('.delete-swipeout').bind('click', function () {
+      //         showMyloading();
+      //         deleteRemind($(this).attr('data-id'), $(this).parents('.weui-cell'));
+      //       });
+      //       $('.weui-switch-cp__input').bind('click', function () {
+      //         // console.log($(this).attr('data-id'));
+      //         remindEnable($(this).attr('data-id'));
+      //       });
+      //     }else{
+      //       $.toast(data.msg || '请求错误', 'text');
+      //     }
+      //     hideMyloading();
+      //   },
+      //   error: function (err) {
+      //     hideMyloading();
+      //     console.log(err);
+      //   }
+      // });
     }
 
     //启用、禁用用药提醒
     function remindEnable(id) {
-      showMyloading();
-      $.ajax({
-        url: ajaxUrl.remindEnable,
-        type: "POST",
-        data: JSON.stringify({id: id}),
-        contentType: 'application/json; charset=utf-8',
-        beforeSend: function (request) {
-          request.setRequestHeader('token', localStorage.getItem('netToken'));
-          request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-          request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-          request.setRequestHeader('appid', localStorage.getItem('appid'));
-          request.setRequestHeader('request-id', randomWord(true));
-          request.setRequestHeader('timestamp', new Date().getTime());
-        },
-        success: function (data) {
-          if(data.code === 0){
-            console.log('修改状态成功', data);
-            // $.toast(data.msg || '修改状态成功', 'text');
-          }else{
-            $.toast(data.msg || '请求错误', 'text');
-          }
-          hideMyloading();
-        },
-        error: function (err) {
-          hideMyloading();
-          console.log(err);
+      var ajax_url2 = ajaxUrl.remindEnable;
+      var ajax_fun2 = function(data){
+        if(data.code === 0){
+          console.log('修改状态成功', data);
+          // $.toast(data.msg || '修改状态成功', 'text');
+        }else{
+          $.toast(data.msg || '请求错误', 'text');
         }
-      });
+        hideMyloading();
+      };
+      custom.ajaxRequest({type: 'POST', url: ajax_url2, data: JSON.stringify({id: id})}, ajax_fun2, false);
+
+      // showMyloading();
+      // $.ajax({
+      //   url: ajaxUrl.remindEnable,
+      //   type: "POST",
+      //   data: JSON.stringify({id: id}),
+      //   contentType: 'application/json; charset=utf-8',
+      //   beforeSend: function (request) {
+      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
+      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
+      //     request.setRequestHeader('request-id', randomWord(true));
+      //     request.setRequestHeader('timestamp', new Date().getTime());
+      //   },
+      //   success: function (data) {
+      //     if(data.code === 0){
+      //       console.log('修改状态成功', data);
+      //       // $.toast(data.msg || '修改状态成功', 'text');
+      //     }else{
+      //       $.toast(data.msg || '请求错误', 'text');
+      //     }
+      //     hideMyloading();
+      //   },
+      //   error: function (err) {
+      //     hideMyloading();
+      //     console.log(err);
+      //   }
+      // });
     }
 
     //删除用药提醒
     function deleteRemind(id, removeRemind) {
-      $.ajax({
-        url: ajaxUrl.remindDelete,
-        type: "POST",
-        data: JSON.stringify({id: id}),
-        contentType: 'application/json; charset=utf-8',
-        beforeSend: function (request) {
-          request.setRequestHeader('token', localStorage.getItem('netToken'));
-          request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-          request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-          request.setRequestHeader('appid', localStorage.getItem('appid'));
-          request.setRequestHeader('request-id', randomWord(true));
-          request.setRequestHeader('timestamp', new Date().getTime());
-        },
-        success: function (data) {
-          if(data.code === 0){
-            console.log('删除成功', data);
-            removeRemind.remove();
-            if($('.weui-cell_swiped').length === 0){
-              $('.custom-btm-fixed').hide();
-              $('.custom-nodata').show();
-            }
-            // $.toast(data.msg || '删除成功', 'text');
-          }else{
-            $.toast(data.msg || '请求错误', 'text');
+      var ajax_url3 = ajaxUrl.remindEnable;
+      var ajax_fun3 = function(data){
+        if(data.code === 0){
+          console.log('删除成功', data);
+          removeRemind.remove();
+          if($('.weui-cell_swiped').length === 0){
+            $('.custom-btm-fixed').hide();
+            $('.custom-nodata').show();
           }
-          hideMyloading();
-        },
-        error: function (err) {
-          hideMyloading();
-          console.log(err);
+          // $.toast(data.msg || '删除成功', 'text');
+        }else{
+          $.toast(data.msg || '请求错误', 'text');
         }
-      });
-    }
+        hideMyloading();
+      };
+      custom.ajaxRequest({type: 'POST', url: ajax_url3, data: JSON.stringify({id: id})}, ajax_fun3, false);
 
-    //区分点击和滑动
-    function ifClick() {
-      $(".reminderListLeft").bind();
+      // $.ajax({
+      //   url: ajaxUrl.remindDelete,
+      //   type: "POST",
+      //   data: JSON.stringify({id: id}),
+      //   contentType: 'application/json; charset=utf-8',
+      //   beforeSend: function (request) {
+      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
+      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
+      //     request.setRequestHeader('request-id', randomWord(true));
+      //     request.setRequestHeader('timestamp', new Date().getTime());
+      //   },
+      //   success: function (data) {
+      //     if(data.code === 0){
+      //       console.log('删除成功', data);
+      //       removeRemind.remove();
+      //       if($('.weui-cell_swiped').length === 0){
+      //         $('.custom-btm-fixed').hide();
+      //         $('.custom-nodata').show();
+      //       }
+      //       // $.toast(data.msg || '删除成功', 'text');
+      //     }else{
+      //       $.toast(data.msg || '请求错误', 'text');
+      //     }
+      //     hideMyloading();
+      //   },
+      //   error: function (err) {
+      //     hideMyloading();
+      //     console.log(err);
+      //   }
+      // });
     }
   </script>
 

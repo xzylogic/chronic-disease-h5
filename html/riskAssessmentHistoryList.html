@@ -70,72 +70,79 @@
       page: 1,  //页数
     };
     //获取历史评估列表
-    function getHistoryAssess(type, page){
-      showMyloading();
-      $.ajax({
-        // url: ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=3a24cb5b173e4d6597f62a95d04e3340&type='+ type,
-        url: ajaxUrl.assessmentHistory + '?flag='+ page +'&registerid=' + localStorage.getItem('uid') +'&type='+ type,
-        type: "GET",
-        beforeSend: function (request) {
-          request.setRequestHeader('token', localStorage.getItem('netToken'));
-          request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-          request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-          request.setRequestHeader('appid', localStorage.getItem('appid'));
-          request.setRequestHeader('request-id', randomWord(true));
-          request.setRequestHeader('timestamp', new Date().getTime());
-        },
-        success: function (data) {
-          console.log(data);
-          if(data.code === 0){
-            var temp = $('#riskAsses-Temp').html();
-            $('.weui-loadmore').hide();
-            historyData.moreData = data.data && data.data.more;
-            historyData.loading = false;
-            data.data && data.data.content.length > 0 ? data.data.content.map(function (val) {
-              var ifAbnormal = '';
-              if(val.result === '0'){
-                ifAbnormal = 'normal';
-              }else{
-                ifAbnormal = 'abnormal';
-              }
-              html += temp.format(val.userName || '', val.time || '', val.resultDoc || '', val.advice || '', ifAbnormal);
-            }) : null;
-            $('.historyList').html(html);
+    var ajax_url;
+    function ajax_fun(data){
+      if(data.code === 0){
+        var temp = $('#riskAsses-Temp').html();
+        $('.weui-loadmore').hide();
+        historyData.moreData = data.data && data.data.more;
+        historyData.loading = false;
+        data.data && data.data.content.length > 0 ? data.data.content.map(function (val) {
+          var ifAbnormal = '';
+          if(val.result === '0'){
+            ifAbnormal = 'normal';
           }else{
-            $.toast(data.msg || '请求错误~', 'text');
+            ifAbnormal = 'abnormal';
           }
-          hideMyloading();
-        },
-        error: function (err) {
-          hideMyloading();
-          console.log(err);
-        }
-      });
+          html += temp.format(val.userName || '', val.time || '', val.resultDoc || '', val.advice || '', ifAbnormal);
+        }) : null;
+        $('.historyList').html(html);
+      }else{
+        $.toast(data.msg || '请求错误~', 'text');
+      }
+      hideMyloading();
+    }
+
+    function getHistoryAssess(type, page){
+      // ajax_url = ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=3a24cb5b173e4d6597f62a95d04e3340&type='+ type;
+      ajax_url = ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=' + localStorage.getItem('uid') +'&type='+ type;
+      custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
+
+      // showMyloading();
+      // $.ajax({
+      //   url: ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=3a24cb5b173e4d6597f62a95d04e3340&type='+ type,
+      //   // url: ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=' + localStorage.getItem('uid') +'&type='+ type,
+      //   type: "GET",
+      //   beforeSend: function (request) {
+      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
+      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
+      //     request.setRequestHeader('request-id', randomWord(true));
+      //     request.setRequestHeader('timestamp', new Date().getTime());
+      //   },
+      //   success: function (data) {
+      //     console.log(data);
+      //     if(data.code === 0){
+      //       var temp = $('#riskAsses-Temp').html();
+      //       $('.weui-loadmore').hide();
+      //       historyData.moreData = data.data && data.data.more;
+      //       historyData.loading = false;
+      //       data.data && data.data.content.length > 0 ? data.data.content.map(function (val) {
+      //         var ifAbnormal = '';
+      //         if(val.result === '0'){
+      //           ifAbnormal = 'normal';
+      //         }else{
+      //           ifAbnormal = 'abnormal';
+      //         }
+      //         html += temp.format(val.userName || '', val.time || '', val.resultDoc || '', val.advice || '', ifAbnormal);
+      //       }) : null;
+      //       $('.historyList').html(html);
+      //     }else{
+      //       $.toast(data.msg || '请求错误~', 'text');
+      //     }
+      //     hideMyloading();
+      //   },
+      //   error: function (err) {
+      //     hideMyloading();
+      //     console.log(err);
+      //   }
+      // });
     }
 
     $(function () {
       var text = getParams('text');
       getHistoryAssess(text, historyData.page);
-      // switch (text) {
-      //   case '1':
-      //     historyData.type = 1;
-      //     getHistoryAssess(historyData.type, historyData.page);
-      //     break;
-      //   case '2':
-      //     historyData.type = 2;
-      //     getHistoryAssess(historyData.type, historyData.page);
-      //     break;
-      //   case '3':
-      //     historyData.type = 3;
-      //     getHistoryAssess(historyData.type, historyData.page);
-      //     break;
-      //   case '4':
-      //     historyData.type = 4;
-      //     getHistoryAssess(historyData.type, historyData.page);
-      //     break;
-      //   default:
-      //     break;
-      // }
 
       //下拉刷新
       historyData.dataList.pullToRefresh().on('pull-to-refresh', function () {
