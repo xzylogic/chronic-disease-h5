@@ -464,6 +464,7 @@
         // var aaa = "2019-03-01 09:00:00";
         // var oldTime = aaa.split(' ')[0];
         var oldTime = res[0].glu.detectTime.split(' ')[0];
+        // var getOldTime = oldTime.split('-');
         var getNowDate = new Date().toLocaleDateString().split('/');
         if (getNowDate[1] < 10) {
           getNowDate[1] = '0' + getNowDate[1];
@@ -474,12 +475,15 @@
         var nowDate = getNowDate.join('-');
         var dateStart = new Date(oldTime);
         var dateEnd = new Date(nowDate);
+        // console.log(oldTime, nowDate);
+        // console.log(getNowDate[2], getOldTime[2])
         var difValue = parseInt((dateEnd - dateStart) / (1000 * 60 * 60 * 24));
         // console.log(difValue);
 
-        if (difValue >= 2) {
+        if (difValue >= 2 || !(dateStart === dateEnd)) {
           // res[0].glu.abnormal = '';
           res[0].glu.value = '';
+          showStatus = '&nbsp;';
           ifAbnormal = 'nodataCircleCon';
           noData = 'no';
         }
