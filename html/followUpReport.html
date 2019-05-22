@@ -340,7 +340,7 @@
 <script>
   FastClick.attach(document.body);
   $(function () {
-    showMyloading();
+    // showMyloading();
 
     //获取筛查报告列表
     function getReportScreening() {
@@ -372,108 +372,113 @@
       //     console.log(err);
       //   }
       // });
-      return new Promise(function (resolve, reject) {
-        var ajax_url1 = ajaxUrl.reportScreening + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid');
-        var ajax_fun1 = function(data){
-          if(data.code === 0){
-            $('.tabWrap em:eq(0)').text('('+ data.data.length +')');
-            resolve(data.data);
-          }else{
-            $.toast(data.msg || '请求错误~', 'text');
-          }
-          hideMyloading();
-        };
-        custom.ajaxRequest({url: ajax_url1}, ajax_fun1, false);
+      // return new Promise(function (resolve, reject) {
+      var defer1 = $.Deferred();
+      var ajax_url1 = ajaxUrl.reportScreening + '?cardType=01&cardNumber=' + localStorage.getItem('idcard') + '&registerId=' + localStorage.getItem('uid');//310108198208190030
+      var ajax_fun1 = function (data) {
+        if (data.code === 0) {
+          $('.tabWrap em:eq(0)').text('(' + data.data.length + ')');
+          defer1.resolve(data.data);
+        } else {
+          $.toast(data.msg || '请求错误~', 'text');
+        }
+        hideMyloading();
+      };
+      custom.ajaxRequest({url: ajax_url1}, ajax_fun1, false);
+      return defer1.promise();
 
-        // $.ajax({
-        //   url: ajaxUrl.reportScreening + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'),
-        //   type: "GET",
-        //   beforeSend: function (request) {
-        //     request.setRequestHeader('token', localStorage.getItem('netToken'));
-        //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-        //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-        //     request.setRequestHeader('appid', localStorage.getItem('appid'));
-        //     request.setRequestHeader('request-id', randomWord(true));
-        //     request.setRequestHeader('timestamp', new Date().getTime());
-        //   },
-        //   success: function (data) {
-        //     console.log('筛查报告列表:',data);
-        //     if(data.code === 0){
-        //       $('.tabWrap em:eq(0)').text('('+ data.data.length +')');
-        //       resolve(data.data);
-        //     }else{
-        //       $.toast(data.msg || '请求错误~', 'text');
-        //     }
-        //     hideMyloading();
-        //     // resolve('帅查报告列表');
-        //   },
-        //   error: function (err) {
-        //     hideMyloading();
-        //     console.log(err);
-        //   }
-        // });
-      })
+      // $.ajax({
+      //   url: ajaxUrl.reportScreening + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'),
+      //   type: "GET",
+      //   beforeSend: function (request) {
+      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
+      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
+      //     request.setRequestHeader('request-id', randomWord(true));
+      //     request.setRequestHeader('timestamp', new Date().getTime());
+      //   },
+      //   success: function (data) {
+      //     console.log('筛查报告列表:',data);
+      //     if(data.code === 0){
+      //       $('.tabWrap em:eq(0)').text('('+ data.data.length +')');
+      //       resolve(data.data);
+      //     }else{
+      //       $.toast(data.msg || '请求错误~', 'text');
+      //     }
+      //     hideMyloading();
+      //     // resolve('帅查报告列表');
+      //   },
+      //   error: function (err) {
+      //     hideMyloading();
+      //     console.log(err);
+      //   }
+      // });
+      // })
     }
 
     //获取随访报告列表
     getReportFollow();
     function getReportFollow() {
-      return new Promise(function (resolve, reject) {
-        var ajax_url2 = ajaxUrl.reportFollow + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid');
-        var ajax_fun2 = function(data){
-          if(data.code === 0){
-            $('.tabWrap em:eq(1)').text('('+ data.data.length +')');
-            resolve(data.data);
-          }else{
-            $.toast(data.msg || '请求错误~', 'text');
-          }
-          hideMyloading();
-        };
-        custom.ajaxRequest({url: ajax_url2}, ajax_fun2, false);
+      // return new Promise(function (resolve, reject) {
+      var defer2 = $.Deferred();
+      var ajax_url2 = ajaxUrl.reportFollow + '?cardType=01&cardNumber=' + localStorage.getItem('idcard') + '&registerId=' + localStorage.getItem('uid');//310108198208190030
+      var ajax_fun2 = function (data) {
+        if (data.code === 0) {
+          $('.tabWrap em:eq(1)').text('(' + data.data.length + ')');
+          defer2.resolve(data.data);
+        } else {
+          $.toast(data.msg || '请求错误~', 'text');
+        }
+        hideMyloading();
+      };
+      custom.ajaxRequest({url: ajax_url2}, ajax_fun2, false);
+      return defer2.promise();
 
-        // $.ajax({
-        //   url: ajaxUrl.reportFollow + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'),
-        //   type: "GET",
-        //   beforeSend: function (request) {
-        //     request.setRequestHeader('token', localStorage.getItem('netToken'));
-        //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-        //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-        //     request.setRequestHeader('appid', localStorage.getItem('appid'));
-        //     request.setRequestHeader('request-id', randomWord(true));
-        //     request.setRequestHeader('timestamp', new Date().getTime());
-        //   },
-        //   success: function (data) {
-        //     console.log('随访报告列表:',data);
-        //     if(data.code === 0){
-        //       $('.tabWrap em:eq(1)').text('('+ data.data.length +')');
-        //       resolve(data.data);
-        //     }else{
-        //       $.toast(data.msg || '请求错误~', 'text');
-        //     }
-        //     hideMyloading();
-        //     // resolve('帅查报告列表');
-        //   },
-        //   error: function (err) {
-        //     hideMyloading();
-        //     console.log(err);
-        //   }
-        // });
-      })
+      // $.ajax({
+      //   url: ajaxUrl.reportFollow + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'),
+      //   type: "GET",
+      //   beforeSend: function (request) {
+      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
+      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
+      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
+      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
+      //     request.setRequestHeader('request-id', randomWord(true));
+      //     request.setRequestHeader('timestamp', new Date().getTime());
+      //   },
+      //   success: function (data) {
+      //     console.log('随访报告列表:',data);
+      //     if(data.code === 0){
+      //       $('.tabWrap em:eq(1)').text('('+ data.data.length +')');
+      //       resolve(data.data);
+      //     }else{
+      //       $.toast(data.msg || '请求错误~', 'text');
+      //     }
+      //     hideMyloading();
+      //     // resolve('帅查报告列表');
+      //   },
+      //   error: function (err) {
+      //     hideMyloading();
+      //     console.log(err);
+      //   }
+      // });
+      // })
     }
 
     var html = '';
     var reportData = {
-      pageStatus : '筛查报告',
-      dataList : $('.followUpReportList'),
-      flag : '',
+      pageStatus: '筛查报告',
+      dataList: $('.followUpReportList'),
+      flag: '',
       // loading : false,   //上拉加载时防止多次加载
       // moreData : false,  //是否有更多数据
       // page: 0,  //页数
     };
 
     indexScreeningReport();
-    function indexScreeningReport(){
-      getReportScreening().then(function (res) {
+
+    function indexScreeningReport() {
+      getReportScreening().done(function (res) {
         console.log(res);
         var temp1 = $('#screening-Temp').html();
         res.length > 0 ? res.map(function (data) {
@@ -481,27 +486,27 @@
         }) : $('.custom-nodata').show();
         $('.followUpReportList').html(html);
         extendLi();
-      }).catch(function (err) {
+      }).fail(function (err) {
         hideMyloading();
         console.log(err);
       });
     }
 
-    function indexFollowReport(){
-      getReportFollow().then(function (res) {
+    function indexFollowReport() {
+      getReportFollow().done(function (res) {
         console.log(res);
         var temp2 = $('#follow-Temp').html();
 
         res.length > 0 ? res.map(function (data) {
           var symptomHtml = '';
           data.symptom && data.symptom.map(function (val) {
-            symptomHtml += '<span>'+ val +'<br/></span>'
+            symptomHtml += '<span>' + val + '<br/></span>'
           });
           html += temp2.format(data.folowDate, data.doctorName, data.hospitalName, data.followStyle || '', data.followStatus || '', data.followNextDate || '', symptomHtml || '', data.emptyBloodSugar || '', data.ogtt || '', data.hemoglobin || '', data.advice || '暂无', data.adviceOther || '暂无');
         }) : $('.custom-nodata').show();
         $('.followUpReportList').html(html);
         extendLi();
-      }).catch(function (err) {
+      }).fail(function (err) {
         hideMyloading();
         console.log(err);
       });
