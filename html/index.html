@@ -171,7 +171,7 @@
     NativeFunc({
       ACTION: "OPENURL",
       PARAM: {
-        URL: nativeObj.htmlPath+ '/../../healthcloud-measure-web/html/measurementHistory.html?from=1'
+        URL: nativeObj.htmlPath + '/../../healthcloud-measure-web/html/measurementHistory.html?from=1'
       }
     });
   }
@@ -217,7 +217,7 @@
     NativeFunc({
       ACTION: "OPENURL",
       PARAM: {
-        URL: nativeObj.htmlPath+ '/../../healthcloud-measure-web/html/bloodPressure/bloodPressureAdd.html?card_type=82'
+        URL: nativeObj.htmlPath + '/../../healthcloud-measure-web/html/bloodPressure/bloodPressureAdd.html?card_type=82'
       }
     });
   }
@@ -235,7 +235,7 @@
     NativeFunc({
       ACTION: "OPENURL",
       PARAM: {
-        URL: nativeObj.htmlPath+ '/../../healthcloud-measure-web/html/BMI/bmiAdd.html?card_type=82'
+        URL: nativeObj.htmlPath + '/../../healthcloud-measure-web/html/BMI/bmiAdd.html?card_type=82'
       }
     });
   }
@@ -244,192 +244,206 @@
   var code = getParams('code');
   // showMyloading();
   //获取token
-  var pro = function () {
-    return new Promise(function (resolve, reject) {
-      var ajax_url = ajaxUrl.userGetTokenByAuthCode + '?authCode='+ code;
-      var ajax_fun = function(data){
-        var tokenData = data.data;
-        if (data.code === 0) {
-          localStorage.setItem('netToken', tokenData.token);
-          localStorage.setItem('uid', tokenData.uid);
-          localStorage.setItem('channelCode', tokenData.channelCode);
-          localStorage.setItem('lightAppCode', tokenData.lightAppCode);
-          localStorage.setItem('appid', tokenData.appid);
-          localStorage.setItem('accountId', tokenData.accountId);
-          localStorage.setItem('requestUrl', nativeObj.htmlPath+'/../../healthcloud-measure-web/html');
-          localStorage.setItem('idcard', tokenData.idcard || '');
-          pageData = {
-            netToken: tokenData.token,
-            uid: tokenData.uid,
-            channelCode: tokenData.channelCode,
-            lightAppCode: tokenData.lightAppCode,
-          };
-          // console.log(localStorage.getItem('requestUrl'));
-          resolve();
+  function pro() {
+    // return new Promise(function (resolve, reject) {
+    var ajax_url = ajaxUrl.userGetTokenByAuthCode + '?authCode=' + code;
+    var defer1 = $.Deferred();
+    var ajax_fun = function (data) {
+      var tokenData = data.data;
+      if (data.code === 0) {
+        localStorage.setItem('netToken', tokenData.token);
+        localStorage.setItem('uid', tokenData.uid);
+        localStorage.setItem('channelCode', tokenData.channelCode);
+        localStorage.setItem('lightAppCode', tokenData.lightAppCode);
+        localStorage.setItem('appid', tokenData.appid);
+        localStorage.setItem('accountId', tokenData.accountId);
+        localStorage.setItem('requestUrl', nativeObj.htmlPath + '/../../healthcloud-measure-web/html');
+        localStorage.setItem('idcard', tokenData.idcard || '');
+        pageData = {
+          netToken: tokenData.token,
+          uid: tokenData.uid,
+          channelCode: tokenData.channelCode,
+          lightAppCode: tokenData.lightAppCode,
+        };
+        // console.log(localStorage.getItem('requestUrl'));
+        defer1.resolve();
+      } else {
+        pageData = {
+          netToken: localStorage.getItem('netToken'),
+          uid: localStorage.getItem('uid'),
+          channelCode: localStorage.getItem('channelCode'),
+          lightAppCode: localStorage.getItem('lightAppCode'),
+        };
+        if (!pageData.netToken) {
+          $.toast(data.msg || '请求错误', 'text');
         } else {
-          pageData = {
-            netToken: localStorage.getItem('netToken'),
-            uid: localStorage.getItem('uid'),
-            channelCode: localStorage.getItem('channelCode'),
-            lightAppCode: localStorage.getItem('lightAppCode'),
-          };
-          if (!pageData.netToken) {
-            $.toast(data.msg || '请求错误', 'text');
-          }else{
-            resolve();
-          }
+          defer1.resolve();
         }
-      };
-      custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
+      }
+    };
+    custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
+    return defer1.promise();
 
-      // $.ajax({
-      //   type: "GET",
-      //   url: ajaxUrl.userGetTokenByAuthCode,
-      //   data: {'authCode': code},
-      //   beforeSend: function (request) {
-      //     // request.setRequestHeader('token', localStorage.getItem('netToken'));
-      //     request.setRequestHeader('channelCode', getParams('channelCode') || localStorage.getItem('channelCode'));
-      //     request.setRequestHeader('lightAppCode', getParams('lightAppCode') || localStorage.getItem('lightAppCode'));
-      //     // request.setRequestHeader('appid', getParams('appid') || localStorage.getItem('appid'));
-      //     request.setRequestHeader('timestamp', new Date().getTime());
-      //   },
-      //   success: function (data) {
-      //     var tokenData = data.data;
-      //     if (data.code === 0) {
-      //       localStorage.setItem('netToken', tokenData.token);
-      //       localStorage.setItem('uid', tokenData.uid);
-      //       localStorage.setItem('channelCode', tokenData.channelCode);
-      //       localStorage.setItem('lightAppCode', tokenData.lightAppCode);
-      //       localStorage.setItem('appid', tokenData.appid);
-      //       localStorage.setItem('accountId', tokenData.accountId);
-      //       localStorage.setItem('requestUrl', nativeObj.htmlPath+'/../../healthcloud-measure-web/html');
-      //       localStorage.setItem('idcard', tokenData.idcard || '');
-      //       pageData = {
-      //         netToken: tokenData.token,
-      //         uid: tokenData.uid,
-      //         channelCode: tokenData.channelCode,
-      //         lightAppCode: tokenData.lightAppCode,
-      //       };
-      //       // console.log(localStorage.getItem('requestUrl'));
-      //       resolve();
-      //     } else {
-      //       hideMyloading();
-      //       pageData = {
-      //         netToken: localStorage.getItem('netToken'),
-      //         uid: localStorage.getItem('uid'),
-      //         channelCode: localStorage.getItem('channelCode'),
-      //         lightAppCode: localStorage.getItem('lightAppCode'),
-      //       };
-      //       if (!pageData.netToken) {
-      //         $.toast(data.msg || '请求错误', 'text');
-      //       }else{
-      //         resolve();
-      //       }
-      //     }
-      //   },
-      //   error: function (err) {
-      //     hideMyloading();
-      //     console.log(err);
-      //   }
-      // });
-    })
-  };
+    // $.ajax({
+    //   type: "GET",
+    //   url: ajaxUrl.userGetTokenByAuthCode,
+    //   data: {'authCode': code},
+    //   beforeSend: function (request) {
+    //     // request.setRequestHeader('token', localStorage.getItem('netToken'));
+    //     request.setRequestHeader('channelCode', getParams('channelCode') || localStorage.getItem('channelCode'));
+    //     request.setRequestHeader('lightAppCode', getParams('lightAppCode') || localStorage.getItem('lightAppCode'));
+    //     // request.setRequestHeader('appid', getParams('appid') || localStorage.getItem('appid'));
+    //     request.setRequestHeader('timestamp', new Date().getTime());
+    //   },
+    //   success: function (data) {
+    //     var tokenData = data.data;
+    //     if (data.code === 0) {
+    //       localStorage.setItem('netToken', tokenData.token);
+    //       localStorage.setItem('uid', tokenData.uid);
+    //       localStorage.setItem('channelCode', tokenData.channelCode);
+    //       localStorage.setItem('lightAppCode', tokenData.lightAppCode);
+    //       localStorage.setItem('appid', tokenData.appid);
+    //       localStorage.setItem('accountId', tokenData.accountId);
+    //       localStorage.setItem('requestUrl', nativeObj.htmlPath+'/../../healthcloud-measure-web/html');
+    //       localStorage.setItem('idcard', tokenData.idcard || '');
+    //       pageData = {
+    //         netToken: tokenData.token,
+    //         uid: tokenData.uid,
+    //         channelCode: tokenData.channelCode,
+    //         lightAppCode: tokenData.lightAppCode,
+    //       };
+    //       // console.log(localStorage.getItem('requestUrl'));
+    //       resolve();
+    //     } else {
+    //       hideMyloading();
+    //       pageData = {
+    //         netToken: localStorage.getItem('netToken'),
+    //         uid: localStorage.getItem('uid'),
+    //         channelCode: localStorage.getItem('channelCode'),
+    //         lightAppCode: localStorage.getItem('lightAppCode'),
+    //       };
+    //       if (!pageData.netToken) {
+    //         $.toast(data.msg || '请求错误', 'text');
+    //       }else{
+    //         resolve();
+    //       }
+    //     }
+    //   },
+    //   error: function (err) {
+    //     hideMyloading();
+    //     console.log(err);
+    //   }
+    // });
+    // })
+  }
 
   //获取血糖记录
-  function getBloodGlucose(){
-    return new Promise(function (resolve, reject) {
-      var ajax_url2 = ajaxUrl.bloodGlucoseRecord + '?uid=' + pageData.uid + '&accountId=' + localStorage.getItem('accountId');
-      var ajax_fun2 = function(data){
-        if(data.code === 0){
-          resolve(data.data);
-        }else{
-          $.toast(data.msg || '请求错误~', 'text');
-        }
-      };
-      custom.ajaxRequest({url: ajax_url2}, ajax_fun2, false);
+  function getBloodGlucose() {
+    // return new Promise(function (resolve, reject) {
+    var defer2 = $.Deferred();
+    var ajax_url2 = ajaxUrl.bloodGlucoseRecord + '?uid=' + pageData.uid + '&accountId=' + localStorage.getItem('accountId');
+    var ajax_fun2 = function (data) {
+      if (data.code === 0) {
+        defer2.resolve(data.data);
+      } else {
+        $.toast(data.msg || '请求错误~', 'text');
+      }
+    };
+    custom.ajaxRequest({url: ajax_url2}, ajax_fun2, false);
+    return defer2.promise();
 
-      // $.ajax({
-      //   url: ajaxUrl.bloodGlucoseRecord + '?uid=' + pageData.uid + '&accountId=' + localStorage.getItem('accountId'),
-      //   type: "GET",
-      //   // contentType: 'application/json; charset=utf-8',
-      //   beforeSend: function (request) {
-      //     request.setRequestHeader('token', pageData.netToken);
-      //     request.setRequestHeader('channelCode', pageData.channelCode);
-      //     request.setRequestHeader('lightAppCode', pageData.lightAppCode);
-      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
-      //     request.setRequestHeader('request-id', randomWord(true));
-      //     request.setRequestHeader('timestamp', new Date().getTime());
-      //   },
-      //   success: function (data) {
-      //     console.log('获取血糖',data);
-      //     if(data.code === 0){
-      //       resolve(data.data);
-      //     }else{
-      //       $.toast(data.msg || '请求错误~', 'text');
-      //     }
-      //   },
-      //   error: function (err) {
-      //     hideMyloading();
-      //     console.log(err);
-      //   }
-      // });
-    });
+    // $.ajax({
+    //   url: ajaxUrl.bloodGlucoseRecord + '?uid=' + pageData.uid + '&accountId=' + localStorage.getItem('accountId'),
+    //   type: "GET",
+    //   // contentType: 'application/json; charset=utf-8',
+    //   beforeSend: function (request) {
+    //     request.setRequestHeader('token', pageData.netToken);
+    //     request.setRequestHeader('channelCode', pageData.channelCode);
+    //     request.setRequestHeader('lightAppCode', pageData.lightAppCode);
+    //     request.setRequestHeader('appid', localStorage.getItem('appid'));
+    //     request.setRequestHeader('request-id', randomWord(true));
+    //     request.setRequestHeader('timestamp', new Date().getTime());
+    //   },
+    //   success: function (data) {
+    //     console.log('获取血糖',data);
+    //     if(data.code === 0){
+    //       resolve(data.data);
+    //     }else{
+    //       $.toast(data.msg || '请求错误~', 'text');
+    //     }
+    //   },
+    //   error: function (err) {
+    //     hideMyloading();
+    //     console.log(err);
+    //   }
+    // });
+    // });
   }
 
   // 获取医生建议
-  function getDoctorAdvice(){
-    return new Promise(function (resolve, reject) {
-      // var ajax_url3 = ajaxUrl.doctorAdviceDetail + '?flag=0&uid=3a24cb5b173e4d6597f62a95d04e3340';
-      var ajax_url3 = ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid;
-      var ajax_fun3 = function(data){
-        if(data.code === 0){
-          resolve(data.data);
-        }else{
-          $.toast(data.msg || '请求错误~', 'text');
-        }
-      };
-      custom.ajaxRequest({url: ajax_url3}, ajax_fun3, false);
+  function getDoctorAdvice() {
+    // return new Promise(function (resolve, reject) {
+    var defer3 = $.Deferred();
+    // var ajax_url3 = ajaxUrl.doctorAdviceDetail + '?flag=0&uid=3a24cb5b173e4d6597f62a95d04e3340';
+    var ajax_url3 = ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid;
+    var ajax_fun3 = function (data) {
+      if (data.code === 0) {
+        defer3.resolve(data.data);
+      } else {
+        $.toast(data.msg || '请求错误~', 'text');
+      }
+    };
+    custom.ajaxRequest({url: ajax_url3}, ajax_fun3, false);
+    return defer3.promise();
 
-      // $.ajax({
-      //   // url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=3a24cb5b173e4d6597f62a95d04e3340',
-      //   url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid,
-      //   type: "GET",
-      //   beforeSend: function (request) {
-      //     request.setRequestHeader('token', pageData.netToken);
-      //     request.setRequestHeader('channelCode', pageData.channelCode);
-      //     request.setRequestHeader('lightAppCode', pageData.lightAppCode);
-      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
-      //     request.setRequestHeader('request-id', randomWord(true));
-      //     request.setRequestHeader('timestamp', new Date().getTime());
-      //   },
-      //   success: function (data) {
-      //     console.log('医生建议:',data);
-      //     if(data.code === 0){
-      //       resolve(data.data);
-      //     }else{
-      //       $.toast(data.msg || '请求错误~', 'text');
-      //     }
-      //   },
-      //   error: function (err) {
-      //     hideMyloading();
-      //     console.log(err);
-      //   }
-      // });
-    });
+    // $.ajax({
+    //   // url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=3a24cb5b173e4d6597f62a95d04e3340',
+    //   url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid,
+    //   type: "GET",
+    //   beforeSend: function (request) {
+    //     request.setRequestHeader('token', pageData.netToken);
+    //     request.setRequestHeader('channelCode', pageData.channelCode);
+    //     request.setRequestHeader('lightAppCode', pageData.lightAppCode);
+    //     request.setRequestHeader('appid', localStorage.getItem('appid'));
+    //     request.setRequestHeader('request-id', randomWord(true));
+    //     request.setRequestHeader('timestamp', new Date().getTime());
+    //   },
+    //   success: function (data) {
+    //     console.log('医生建议:',data);
+    //     if(data.code === 0){
+    //       resolve(data.data);
+    //     }else{
+    //       $.toast(data.msg || '请求错误~', 'text');
+    //     }
+    //   },
+    //   error: function (err) {
+    //     hideMyloading();
+    //     console.log(err);
+    //   }
+    // });
+    // });
   }
 
   //首页进入请求接口、加载数据
   loadData();
+
   function loadData() {
     pro().then(function () {
-      return Promise.all([getBloodGlucose(), getDoctorAdvice()])
-    }).then(function (res) {
-      // console.log(res);
+      // return Promise.all([getBloodGlucose(), getDoctorAdvice()])
+      // $.when(getBloodGlucose(), getDoctorAdvice()).then(function (res1, res2) {
+      //   console.log(111);
+      //   console.log(res1, res2);
+      // })
+      return $.when(getBloodGlucose(), getDoctorAdvice())
+    }).done(function (res0, res1) {
+      var res = [];
+      res[0] = res0;
+      res[1] = res1;
       // console.log(res[0].glu)
       var html = '';
       var temp = $('#bloodData-Temp').html();
       var ifAbnormal = '', status = '', noData = '', showStatus = '';
-      if(res[0].glu && res[0].glu.value){
+      if (res[0].glu && res[0].glu.value) {
         switch (res[0].glu.isAbnormal) {
           case 0:
             showStatus = '血糖正常';
@@ -451,11 +465,11 @@
         // var oldTime = aaa.split(' ')[0];
         var oldTime = res[0].glu.detectTime.split(' ')[0];
         var getNowDate = new Date().toLocaleDateString().split('/');
-        if(getNowDate[1] < 10){
+        if (getNowDate[1] < 10) {
           getNowDate[1] = '0' + getNowDate[1];
         }
-        if(getNowDate[2] < 10){
-          getNowDate[2] = '0'+ getNowDate[2];
+        if (getNowDate[2] < 10) {
+          getNowDate[2] = '0' + getNowDate[2];
         }
         var nowDate = getNowDate.join('-');
         var dateStart = new Date(oldTime);
@@ -463,7 +477,7 @@
         var difValue = parseInt((dateEnd - dateStart) / (1000 * 60 * 60 * 24));
         // console.log(difValue);
 
-        if(difValue >= 2){
+        if (difValue >= 2) {
           // res[0].glu.abnormal = '';
           res[0].glu.value = '';
           ifAbnormal = 'nodataCircleCon';
@@ -471,32 +485,33 @@
         }
         html += temp.format(showStatus, res[0].glu.value, status, ifAbnormal, noData);
         $('.riskDataWrap').html(html);
-        if(difValue >= 2){
-          $('.no').text('您'+ difValue +'天未测量血糖');
+        if (difValue >= 2) {
+          $('.no').text('您' + difValue + '天未测量血糖');
         }
         bindClick();
       }
 
-      $('.glyHe').text(res[0].ghb && (res[0].ghb+'%') || '— —');
+      $('.glyHe').text(res[0].ghb && (res[0].ghb + '%') || '— —');
       $('.bloodRate').text(res[0].gluComplianceRate || '— —');
       $('.ifQuelified').text(res[0].isQualified === '不显示' ? '— —' : res[0].isQualified);
-      if(res[1].more){
+      if (res[1].more) {
         $('.doctorAdvice em').addClass('redDot');
       }
       hideMyloading();
-    }).catch(function (err) {
+    }).fail(function (err) {
       hideMyloading();
       console.log(err);
     });
   }
 
   bindClick();
+
   function bindClick() {
     $('.circleCon').bind('click', function () {
       NativeFunc({
         ACTION: "OPENURL",
         PARAM: {
-          URL: nativeObj.htmlPath+ '/../../healthcloud-measure-web/html/bloodGlucose/bloodGlucoseAdd.html?card_type=82'
+          URL: nativeObj.htmlPath + '/../../healthcloud-measure-web/html/bloodGlucose/bloodGlucoseAdd.html?card_type=82'
         }
       });
     });
