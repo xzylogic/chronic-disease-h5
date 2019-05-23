@@ -105,7 +105,7 @@
       });
 
       // var ajax_url = ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340';
-      var ajax_url = ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid');
+      var ajax_url = ajaxUrl.assessmentHistoryNum + '?registerid=' + localStorage.getItem('uid');
       var ajax_fun =function(data){
         if(data.code === 0){
           console.log(data);
@@ -123,7 +123,7 @@
       // showMyloading();
       // $.ajax({
       //   // url: ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340',
-      //   url: ajaxUrl.assessmentHistory + '?registerid=' + localStorage.getItem('uid'),
+      //   url: ajaxUrl.assessmentHistoryNum + '?registerid=' + localStorage.getItem('uid'),
       //   type: "GET",
       //   beforeSend: function (request) {
       //     request.setRequestHeader('token', localStorage.getItem('netToken'));
