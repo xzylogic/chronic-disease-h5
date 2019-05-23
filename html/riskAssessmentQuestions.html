@@ -189,7 +189,7 @@
       </li>
     </ul>
     <div class="custom-btm-fixed">
-        <span class="custom-btm-btn" onclick="submit()">提交</span>
+        <span class="custom-btm-btn" onclick="submitData()">提交</span>
     </div>
   </form>
 </div>
@@ -204,22 +204,22 @@
     var everyInput = $('ul li input'), riskType = '';
     var lastInput = $('ul li:last-child input'), obj = {};
 
-    function submit() {
+    function submitData() {
       // console.log(obj);
       if(obj.hasOwnProperty('10')){
-        $.alert('您本次评估结果尚无糖尿病'+ riskType +'风险，请继续维持健康的生活方式，并定期体检。', function(){goBack()});
+        $.alert('您本次评估结果尚无糖尿病'+ riskType +'风险，请继续维持健康的生活方式，并定期体检。', function(){returnBack()});
       }else if($.isEmptyObject(obj)){
         $.alert('请勾选符合您的选项');
       }else{
-        $.alert('您本次评估结果具有糖尿病'+ riskType +'风险，建议您到居住地所属社区卫生服务中心进行并发症筛查，及早控制病情。', function(){goBack()});
+        $.alert('您本次评估结果具有糖尿病'+ riskType +'风险，建议您到居住地所属社区卫生服务中心进行并发症筛查，及早控制病情。', function(){returnBack()});
       }
     }
 
-    function goBack() {
+    function returnBack() {
       NativeFunc({
-        ACTION: "OPENURL",
+        ACTION: "CLOSEPAGE",
         PARAM: {
-          URL: nativeObj.htmlPath + '/riskAssessmentType.html'
+          INDEX: '0'
         }
       });
     }
