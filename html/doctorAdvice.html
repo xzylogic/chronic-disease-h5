@@ -8,12 +8,15 @@
   <link rel="stylesheet" type="text/css" href="../custom/css/common.css"/>
   <link rel="stylesheet" type="text/css" href="../custom/css/doctorAdvice.css"/>
 </head>
-
+<style>
+  .item:after{content: " ";display: inline-block;position: absolute;top:10px;right: 1px;background: url(../custom/images/darrow.png);width: 0.4rem;height: 0.213333rem;margin-top:-0.106667rem;background-size: contain;}
+  .showItem .item:after{background-image: url(../custom/images/uparrow.png)}
+</style>
 <body>
-<div class="doctorAdviceBox">
+<!--<div class="doctorAdviceBox" style="display: none;">
   <div style="position: fixed; width: 100%; z-index: 11;">
     <div class="doctorMes clearfix" style="display:block;">
-      <span class="photo"><img src="../custom/images/photo.jpg"/><!--  class="default" --></span>
+      <span class="photo"><img src="../custom/images/photo.jpg"/>&lt;!&ndash;  class="default" &ndash;&gt;</span>
       <div class="mes">
         <h3>签约医生：黄晓明</h3>
         <p>所在单位：上海黄埔的社区中心</p>
@@ -28,9 +31,9 @@
     <img src="../custom/images/nodata.png">
     <p>暂无建议</p>
   </div>
-  <div class="main">
+  &lt;!&ndash;<div class="main">
     <div class="have-data-box" style="position: fixed; height:100%; top: 4.7rem; overflow:auto;">
-      <!--显示下拉标签-->
+      &lt;!&ndash;显示下拉标签&ndash;&gt;
       <div class="weui-pull-to-refresh__layer pull-refresh-loading">
         <div class='weui-pull-to-refresh__arrow'></div>
         <div class='weui-pull-to-refresh__preloader'></div>
@@ -40,26 +43,65 @@
         <span id="last-Time"></span>
       </div>
       <ul class="newadviceList" style="padding-bottom: 3.1rem;">
-        <!--<li>-->
-        <!--<p><label>测量时间</label><span>2017-09-10&nbsp;&nbsp;&nbsp;&nbsp;早晨</span></p>-->
-        <!--<p><label>血糖异常</label><span><em class="abnormal">10.21<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></p>-->
-        <!--<p><label>干预时间</label><span>2019-09-12</span></p>-->
-        <!--<p><label>医生建议</label><span>请注意到医院检查</span></p>-->
-        <!--</li>-->
+        &lt;!&ndash;<li>&ndash;&gt;
+        &lt;!&ndash;<p><label>测量时间</label><span>2017-09-10&nbsp;&nbsp;&nbsp;&nbsp;早晨</span></p>&ndash;&gt;
+        &lt;!&ndash;<p><label>血糖异常</label><span><em class="abnormal">10.21<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></p>&ndash;&gt;
+        &lt;!&ndash;<p><label>干预时间</label><span>2019-09-12</span></p>&ndash;&gt;
+        &lt;!&ndash;<p><label>医生建议</label><span>请注意到医院检查</span></p>&ndash;&gt;
+        &lt;!&ndash;</li>&ndash;&gt;
       </ul>
       <div id="load-more" class="weui-loadmore" style="display: none; margin-top: -3.1rem;">
         <i class="weui-loading"></i>
         <span class="weui-loadmore__tips">正在加载</span>
       </div>
     </div>
+  </div>&ndash;&gt;
+</div>-->
+<div class="doctorAdviceBox" style="position: absolute; overflow: auto; height: 100%;">
+  <div class="have-data-box" style="height:100%; overflow:auto;">
+  <!--显示下拉标签-->
+  <div class="weui-pull-to-refresh__layer pull-refresh-loading">
+    <div class='weui-pull-to-refresh__arrow'></div>
+    <div class='weui-pull-to-refresh__preloader'></div>
+    <div class="down">下拉刷新</div>
+    <div class="up">释放刷新</div>
+    <div class="refresh"></div>
+    <span id="last-Time"></span>
+  </div>
+  <ul class="newadviceList">
+    <!--<li>-->
+      <!--<p><label>异常类型</label><span>血糖首次异常,血压首次异常,非首次舒张压过低</span></p>-->
+      <!--<p><label>异常数据</label>-->
+        <!--<span class="item">2018-11-28&nbsp;&nbsp;午餐后&nbsp;&nbsp;<span><em class="abnormal">17.4<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></span>-->
+        <!--<span>2018-11-28&nbsp;&nbsp;午餐后&nbsp;&nbsp;<span><em class="abnormal">17.4<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></span>-->
+        <!--<span>2018-11-28&nbsp;&nbsp;午餐后&nbsp;&nbsp;<span><em class="abnormal">17.4<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></span>-->
+      <!--</p>-->
+      <!--<p><label>干预时间</label><span>2018-12-20</span></p>-->
+      <!--<p><label>医生姓名</label><span>肖金金</span></p>-->
+      <!--<p><label>医疗机构</label><span>浦东新区张江社区卫生服务中心</span></p>-->
+      <!--<p><label>医生建议</label><span>您好,您血糖首次异常,请及时到医院就诊或咨询医生</span></p>-->
+    <!--</li>-->
+  </ul>
+  <div id="load-more" class="weui-loadmore" style="display: none;">
+    <i class="weui-loading"></i>
+    <span class="weui-loadmore__tips">正在加载</span>
   </div>
 </div>
+</div>
+<!--<p><label>测量时间</label><span>{0}&nbsp;&nbsp;&nbsp;&nbsp;{1}</span></p>-->
+<!--<p><label>{7}</label><span><em class="{5}">{2}<img src="{6}"></em>&nbsp;&nbsp;mmol/L</span></p>-->
+<!--<p><label>干预时间</label><span>{3}</span></p>-->
+<!--<p><label>医生建议</label><span>{4}</span></p>-->
+<!--<span class="{10}">{1}&nbsp;&nbsp;{2}&nbsp;&nbsp;<span><em class="{11}">{3}<img src="{12}"></em>&nbsp;&nbsp;{4}</span></span>-->
+
 <script type="text/template" id="dovtorAdvice-Temp">
   <li>
-    <p><label>测量时间</label><span>{0}&nbsp;&nbsp;&nbsp;&nbsp;{1}</span></p>
-    <p><label>{7}</label><span><em class="{5}">{2}<img src="{6}"></em>&nbsp;&nbsp;mmol/L</span></p>
-    <p><label>干预时间</label><span>{3}</span></p>
-    <p><label>医生建议</label><span>{4}</span></p>
+    <p><label>异常类型</label><span>{0}</span></p>
+    <p><label>异常数据</label>{1}<span style="display:none">{6}</span></p>
+    <p><label>干预时间</label><span>{2}</span></p>
+    <p><label>医生姓名</label><span>{3}</span></p>
+    <p><label>医疗机构</label><span>{4}</span></p>
+    <p><label>医生建议</label><span>{5}</span></p>
   </li>
 </script>
 <script type="text/javascript" src="../lib/js/flexible.js"></script>
@@ -75,13 +117,14 @@
   $(function () {
     // 获取医生建议
     function getDoctorAdvice(page) {
-      showMyloading();
+      // showMyloading();
       // return new Promise(function (resolve, reject) {
       // if(page === 0){
       //   $('.weui-loadmore').hide();
       // }
       var defer = $.Deferred();
-      var ajax_url = ajaxUrl.doctorAdviceDetail + '?flag=' + page + '&uid=' + localStorage.getItem('uid');
+      // var ajax_url = ajaxUrl.doctorAdviceDetail + '?flag=' + page + '&uid=' + localStorage.getItem('uid');
+      var ajax_url = ajaxUrl.doctorAdviceDetail + '?flag=' + page + '&uid=3a24cb5b173e4d6597f62a95d04e3340';
       var ajax_fun = function (data) {
         if (data.code === 0) {
           defer.resolve(data.data);
@@ -90,7 +133,7 @@
         }
         hideMyloading();
       };
-      custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
+      custom.ajaxRequest({url: ajax_url}, ajax_fun, true);
       return defer.promise();
 
       // $.ajax({
@@ -123,7 +166,7 @@
 
     var html = '';
     var adviceData = {
-      pageStatus: '血糖异常',
+      // pageStatus: '血糖异常',
       dataList: $('.have-data-box'),
       loading: false,   //上拉加载时防止多次加载
       moreData: false,  //是否有更多数据
@@ -131,7 +174,6 @@
     };
 
     indexDoctorAdvice();
-
     function indexDoctorAdvice(page = 0) {
       getDoctorAdvice(page).done(function (res) {
         console.log(res);
@@ -142,67 +184,128 @@
         } else {
           $('.weui-loadmore').hide();
           adviceData.loading = false;
+          var meal = '', flagStatus = '', flagStatus2 = '', flagImg = '', flagImg2 = '', flagItem = '';
           res.content.length > 0 ? res.content.map(function (data) {
-            var bloodList = data.bloodGlucose_list[0];  //血糖
-            var pressureList = data.pressure_list[0];   //血压
-            var meal = '', flagStatus = '', flagImg = '';
-            switch (adviceData.pageStatus) {
-              case '血糖异常':
-                if (bloodList) {
-                  switch (bloodList.testPeriod) {
-                    case "0":
-                      meal = '早餐前';
-                      break;
-                    case "1":
-                      meal = '早餐后';
-                      break;
-                    case "2":
-                      meal = '午餐前';
-                      break;
-                    case "3":
-                      meal = '午餐后';
-                      break;
-                    case "4":
-                      meal = '晚餐前';
-                      break;
-                    case "5":
-                      meal = '晚餐后';
-                      break;
-                    case "6":
-                      meal = '睡前';
-                      break;
-                    case "7":
-                      meal = '凌晨';
-                      break;
-                    default :
-                      meal = '随机';
-                      break;
-                  }
-                  switch (bloodList.flag) {
-                    case '1':
-                      flagStatus = 'abnormal';
-                      flagImg = '../custom/images/sup.png';
-                      break;
-                    case '2':
-                      flagStatus = 'abnormal';
-                      flagImg = '../custom/images/down-arrow1.png';
-                      break;
-                    default:
-                      break;
-                  }
-                  html += temp.format(bloodList.testTime, meal, bloodList.fpgValue, data.intervene_time, data.doctor_suggest, flagStatus, flagImg, adviceData.pageStatus);
-                }
-                break;
-              case '血压异常':
-                if (pressureList) {
-                  html += temp.format(pressureList.testTime, '', pressureList.diastolic, data.intervene_time, data.doctor_suggest, flagStatus, flagImg, adviceData.pageStatus);
-                }
-                break;
-              default:
-                break;
-            }
+            var abnormalHtml = '', abnormalHtml2 = '', indexItem = 0;
+            data.bloodGlucose_list && data.bloodGlucose_list.map(function (res) {
+              if(data.bloodGlucose_list.length === 1){
+                flagItem = '';
+              }else{
+                flagItem = 'item';
+              }
+              switch (res.testPeriod) {
+                case "0":
+                  meal = '早餐前';
+                  break;
+                case "1":
+                  meal = '早餐后';
+                  break;
+                case "2":
+                  meal = '午餐前';
+                  break;
+                case "3":
+                  meal = '午餐后';
+                  break;
+                case "4":
+                  meal = '晚餐前';
+                  break;
+                case "5":
+                  meal = '晚餐后';
+                  break;
+                case "6":
+                  meal = '睡前';
+                  break;
+                case "7":
+                  meal = '凌晨';
+                  break;
+                default :
+                  meal = '随机';
+                  break;
+              }
+              switch (res.flag) {
+                case '0':
+                  flagStatus = '';
+                  flagImg = '';
+                  break;
+                case '1':
+                  flagStatus = 'abnormal';
+                  flagImg = '../custom/images/sup.png';
+                  break;
+                case '2':
+                  flagStatus = 'abnormal';
+                  flagImg = '../custom/images/down-arrow1.png';
+                  break;
+                default:
+                  break;
+              }
+              if(indexItem === 0){
+                abnormalHtml += '<span class='+ flagItem +'>'+ res.testTime +'&nbsp;&nbsp;'+ meal +'&nbsp;&nbsp;<em class='+ flagStatus +'>'+ res.fpgValue +'<img src='+ flagImg +'></em>&nbsp;&nbsp;mmol/L</span><br>';
+              }else{
+                abnormalHtml2 += '<span>'+ res.testTime +'&nbsp;&nbsp;'+ meal +'&nbsp;&nbsp;<em class='+ flagStatus +'>'+ res.fpgValue +'<img src='+ flagImg +'></em>&nbsp;&nbsp;mmol/L</span><br>';
+              }
+              indexItem++;
+            });
+
+            data.pressure_list && data.pressure_list.map(function (res) {
+              if(data.pressure_list.length === 1){
+                flagItem = '';
+              }else{
+                flagItem = 'item';
+              }
+              switch (res.diastolicFlag) {
+                case 0:
+                  flagStatus = '';
+                  flagImg = '';
+                  break;
+                case 1:
+                  flagStatus = 'abnormal';
+                  flagImg = '../custom/images/sup.png';
+                  break;
+                case 2:
+                  flagStatus = 'abnormal';
+                  flagImg = '../custom/images/down-arrow1.png';
+                  break;
+                default:
+                  break;
+              }
+              switch (res.systolicFlag) {
+                case 0:
+                  flagStatus2 = '';
+                  flagImg2 = '';
+                  break;
+                case 1:
+                  flagStatus2 = 'abnormal';
+                  flagImg2 = '../custom/images/sup.png';
+                  break;
+                case 2:
+                  flagStatus2 = 'abnormal';
+                  flagImg2 = '../custom/images/down-arrow1.png';
+                  break;
+                default:
+                  break;
+              }
+              if(indexItem === 0){
+                abnormalHtml += '<span class='+ flagItem +'>'+ res.testTime +'&nbsp;&nbsp;'+ res.testHour +'&nbsp;&nbsp;<em class='+ flagStatus +'>'+ res.diastolic +'<img src='+ flagImg +'></em>/<em class='+ flagStatus2 +'>'+ res.systolic +'<img src='+ flagImg2 +'></em>&nbsp;&nbsp;mmHg</span><br>';
+              }else{
+                abnormalHtml2 += '<span>'+ res.testTime +'&nbsp;&nbsp;'+ res.testHour +'&nbsp;&nbsp;<em class='+ flagStatus +'>'+ res.diastolic +'<img src='+ flagImg +'></em>/<em class='+ flagStatus2 +'>'+ res.systolic +'<img src='+ flagImg2 +'></em>&nbsp;&nbsp;mmHg</span><br>';
+              }
+              indexItem++;
+            });
+
+            html += temp.format(data.interven_type, abnormalHtml, data.intervene_time, data.doctor_name, data.hospital_name, data.doctor_suggest, abnormalHtml2);
           }) : '';
           $('.newadviceList').html(html);
+
+          //点击显示隐藏异常数据
+          $('.item').bind('click', function () {
+            if ($(this).next().next().css('display') === 'inline') {
+              $(this).next().next().hide();
+              $(this).parent().removeClass();
+            }else{
+              $(this).next().next().show();
+              $(this).parent().addClass('showItem');
+            }
+          });
         }
       }).fail(function (err) {
         hideMyloading();
@@ -228,22 +331,100 @@
       }
     });
 
+    // function indexDoctorAdviceSSS(page = 0) {
+    //   getDoctorAdvice(page).done(function (res) {
+    //     console.log(res);
+    //     adviceData.moreData = res.more;
+    //     var temp = $('#dovtorAdvice-Temp').html();
+    //     if (page === 0 && res.content.length === 0) {
+    //       $('.custom-nodata').show();
+    //     } else {
+    //       $('.weui-loadmore').hide();
+    //       adviceData.loading = false;
+    //       res.content.length > 0 ? res.content.map(function (data) {
+    //         var bloodList = data.bloodGlucose_list[0];  //血糖
+    //         var pressureList = data.pressure_list[0];   //血压
+    //         var meal = '', flagStatus = '', flagImg = '';
+    //         switch (adviceData.pageStatus) {
+    //           case '血糖异常':
+    //             if (bloodList) {
+    //               switch (bloodList.testPeriod) {
+    //                 case "0":
+    //                   meal = '早餐前';
+    //                   break;
+    //                 case "1":
+    //                   meal = '早餐后';
+    //                   break;
+    //                 case "2":
+    //                   meal = '午餐前';
+    //                   break;
+    //                 case "3":
+    //                   meal = '午餐后';
+    //                   break;
+    //                 case "4":
+    //                   meal = '晚餐前';
+    //                   break;
+    //                 case "5":
+    //                   meal = '晚餐后';
+    //                   break;
+    //                 case "6":
+    //                   meal = '睡前';
+    //                   break;
+    //                 case "7":
+    //                   meal = '凌晨';
+    //                   break;
+    //                 default :
+    //                   meal = '随机';
+    //                   break;
+    //               }
+    //               switch (bloodList.flag) {
+    //                 case '1':
+    //                   flagStatus = 'abnormal';
+    //                   flagImg = '../custom/images/sup.png';
+    //                   break;
+    //                 case '2':
+    //                   flagStatus = 'abnormal';
+    //                   flagImg = '../custom/images/down-arrow1.png';
+    //                   break;
+    //                 default:
+    //                   break;
+    //               }
+    //               html += temp.format(bloodList.testTime, meal, bloodList.fpgValue, data.intervene_time, data.doctor_suggest, flagStatus, flagImg, adviceData.pageStatus);
+    //             }
+    //             break;
+    //           case '血压异常':
+    //             if (pressureList) {
+    //               html += temp.format(pressureList.testTime, '', pressureList.diastolic, data.intervene_time, data.doctor_suggest, flagStatus, flagImg, adviceData.pageStatus);
+    //             }
+    //             break;
+    //           default:
+    //             break;
+    //         }
+    //       }) : '';
+    //       $('.newadviceList').html(html);
+    //     }
+    //   }).fail(function (err) {
+    //     hideMyloading();
+    //     console.log(err);
+    //   });
+    // }
+
     //判断当前是血糖页面还是血压页面
-    $('.tabWrap span').bind('click', function () {
-      showMyloading();
-      $('.tabWrap span').removeClass();
-      $(this).addClass('current');
-      if ($(this).text().includes('血压异常')) {
-        adviceData.pageStatus = '血压异常';
-      } else {
-        adviceData.pageStatus = '血糖异常';
-      }
-      html = '';
-      // $('.main').css({position: 'absolute', top: '4.7rem', height: '100%', marginTop: '1px'});
-      $('.newadviceList').html('');
-      adviceData.page = 0;
-      indexDoctorAdvice(0);
-    });
+    // $('.tabWrap span').bind('click', function () {
+    //   // showMyloading();
+    //   $('.tabWrap span').removeClass();
+    //   $(this).addClass('current');
+    //   if ($(this).text().includes('血压异常')) {
+    //     adviceData.pageStatus = '血压异常';
+    //   } else {
+    //     adviceData.pageStatus = '血糖异常';
+    //   }
+    //   html = '';
+    //   // $('.main').css({position: 'absolute', top: '4.7rem', height: '100%', marginTop: '1px'});
+    //   $('.newadviceList').html('');
+    //   adviceData.page = 0;
+    //   indexDoctorAdvice(0);
+    // });
   })
 </script>
 </body>

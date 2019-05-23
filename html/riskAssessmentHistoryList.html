@@ -70,32 +70,30 @@
       page: 1,  //页数
     };
     //获取历史评估列表
-    var ajax_url;
-    function ajax_fun(data){
-      if(data.code === 0){
-        var temp = $('#riskAsses-Temp').html();
-        $('.weui-loadmore').hide();
-        historyData.moreData = data.data && data.data.more;
-        historyData.loading = false;
-        data.data && data.data.content.length > 0 ? data.data.content.map(function (val) {
-          var ifAbnormal = '';
-          if(val.result === '0'){
-            ifAbnormal = 'normal';
-          }else{
-            ifAbnormal = 'abnormal';
-          }
-          html += temp.format(val.userName || '', val.time || '', val.resultDoc || '', val.advice || '', ifAbnormal);
-        }) : null;
-        $('.historyList').html(html);
-      }else{
-        $.toast(data.msg || '请求错误~', 'text');
-      }
-      hideMyloading();
-    }
-
     function getHistoryAssess(type, page){
       // ajax_url = ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=3a24cb5b173e4d6597f62a95d04e3340&type='+ type;
-      ajax_url = ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=' + localStorage.getItem('uid') +'&type='+ type;
+      var ajax_url = ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=' + localStorage.getItem('uid') +'&type='+ type;
+      var ajax_fun = function(data){
+        if(data.code === 0){
+          var temp = $('#riskAsses-Temp').html();
+          $('.weui-loadmore').hide();
+          historyData.moreData = data.data && data.data.more;
+          historyData.loading = false;
+          data.data && data.data.content.length > 0 ? data.data.content.map(function (val) {
+            var ifAbnormal = '';
+            if(val.result === '0'){
+              ifAbnormal = 'normal';
+            }else{
+              ifAbnormal = 'abnormal';
+            }
+            html += temp.format(val.userName || '', val.time || '', val.resultDoc || '', val.advice || '', ifAbnormal);
+          }) : null;
+          $('.historyList').html(html);
+        }else{
+          $.toast(data.msg || '请求错误~', 'text');
+        }
+        hideMyloading();
+      };
       custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
 
       // showMyloading();
