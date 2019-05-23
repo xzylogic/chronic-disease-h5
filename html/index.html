@@ -280,6 +280,7 @@
           defer1.resolve();
         }
       }
+      hideMyloading();
     };
     custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
     return defer1.promise();
@@ -348,6 +349,7 @@
       } else {
         $.toast(data.msg || '请求错误~', 'text');
       }
+      hideMyloading();
     };
     custom.ajaxRequest({url: ajax_url2}, ajax_fun2, false);
     return defer2.promise();
@@ -392,6 +394,7 @@
       } else {
         $.toast(data.msg || '请求错误~', 'text');
       }
+      hideMyloading();
     };
     custom.ajaxRequest({url: ajax_url3}, ajax_fun3, false);
     return defer3.promise();
