@@ -149,7 +149,7 @@
           //   });
           // });
           var longClick =0, timeOutEvent;
-          $('.weui-cell__bd').bind({
+          $('.reminderListLeft').bind({
             touchstart: function(e){
               // e.preventDefault();
               longClick=0;//设置初始为0
@@ -339,7 +339,7 @@
 
     //删除用药提醒
     function deleteRemind(id, removeRemind) {
-      var ajax_url3 = ajaxUrl.remindEnable;
+      var ajax_url3 = ajaxUrl.remindDelete;
       var ajax_fun3 = function(data){
         if(data.code === 0){
           console.log('删除成功', data);

@@ -604,15 +604,15 @@
       };
     }
 
-    console.log(remindDrugData);
-    console.log(JSON.stringify(remindDrugData));
+    // console.log(remindDrugData);
+    // console.log(JSON.stringify(remindDrugData));
     // 保存常用药品
     var ajax_url3 = ajaxUrl.remindSave;
     var ajax_fun3 = function (data) {
       if (data.code === 0) {
         // console.log('保存',data);
-        console.log('commomDrugListId=============', commomDrugListId);
-        console.log('commomDrugListName=============', commomDrugListName);
+        // console.log('commomDrugListId=============', commomDrugListId);
+        // console.log('commomDrugListName=============', commomDrugListName);
         if (anotherType === '胰岛素') {
           if (mecObjInsulin[showDrugText]) {
             delete mecObjInsulin[showDrugText];
@@ -880,7 +880,7 @@
       $('.itext').val(urlDose);
       addTimeHtml(timeObj);
     }
-    console.log(urlBrand, urlDose, urlTime);
+    // console.log(urlBrand, urlDose, urlTime);
 
     //判断当前是口服药页面还是胰岛素页面
     $('.tabWrap span').bind('click', function () {
