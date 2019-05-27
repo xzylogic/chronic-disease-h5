@@ -45,7 +45,7 @@
       if(data.code === 0){
         var dataList = data.data;
 
-        if(dataList.followCrowedType === (null || '')){
+        if(dataList.followCrowedType === null || dataList.followCrowedType === '' || dataList.followDate === null || dataList.followDate === ''){
           $('.custom-nodata').show();
         }else {
           var followNum = '';
