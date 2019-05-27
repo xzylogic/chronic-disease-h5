@@ -448,15 +448,15 @@
       var ifAbnormal = '', status = '', noData = '', showStatus = '';
       if (res[0].glu && res[0].glu.value) {
         switch (res[0].glu.isAbnormal) {
-          case 0:
+          case '0':
             showStatus = '血糖正常';
             break;
-          case 1:
+          case '1':
             showStatus = '血糖异常';
             ifAbnormal = 'riskDataCircleCon';
             status = 'up';
             break;
-          case 2:
+          case '2':
             showStatus = '血糖异常';
             ifAbnormal = 'riskDataCircleCon';
             status = 'down';
