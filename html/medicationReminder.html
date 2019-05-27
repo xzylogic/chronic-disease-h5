@@ -111,6 +111,7 @@
           console.log('获取用药提醒列表',data.data);
           var html = '';
           var temp = $('#drugRemindList-Temp').html();
+          $('.custom-nodata').hide();
           $('.custom-btm-fixed').show();
           data.data.content.length > 0 ? data.data.content.map(function (res, i) {
             // console.log(i)

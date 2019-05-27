@@ -65,13 +65,16 @@
           '           </p>\n' +
           '           <div class="con">\n' +
           '             <span class="time"></span>\n' +
-          '             <p class="clearfix"><label>建议随访时间</label><span>'+ dataList.followDate +'</span></p>\n' +
-          '             <p class="clearfix"><label>随访医生　　</label><span>'+ dataList.doctorName +'</span></p>\n' +
-          '             <p class="clearfix"><label>所属医疗机构</label><span>'+ dataList.hospitalName +'</span></p>\n' +
+          '             <p class="clearfix"><label>建议随访时间</label><span>'+ (dataList.followDate || '') +'</span></p>\n' +
+          '             <p class="clearfix"><label>随访医生　　</label><span>'+ (dataList.doctorName || '') +'</span></p>\n' +
+          '             <p class="clearfix"><label>所属医疗机构</label><span>'+ (dataList.hospitalName || '') +'</span></p>\n' +
           '           </div>\n' +
           '         </li>';
         $('.list').html(html);
 
+        if(dataList.followCrowedType === (null || '')){
+          $('.custom-nodata').show();
+        }
         if(dataList.overdueFlag){
           $('.time').text('已过期').addClass('timeOver');
           $.modal({
