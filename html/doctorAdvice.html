@@ -59,34 +59,38 @@
 </div>-->
 <div class="doctorAdviceBox" style="position: absolute; overflow: auto; height: 100%;">
   <div class="have-data-box" style="height:100%; overflow:auto;">
-  <!--显示下拉标签-->
-  <div class="weui-pull-to-refresh__layer pull-refresh-loading">
-    <div class='weui-pull-to-refresh__arrow'></div>
-    <div class='weui-pull-to-refresh__preloader'></div>
-    <div class="down">下拉刷新</div>
-    <div class="up">释放刷新</div>
-    <div class="refresh"></div>
-    <span id="last-Time"></span>
-  </div>
-  <ul class="newadviceList">
-    <!--<li>-->
-      <!--<p><label>异常类型</label><span>血糖首次异常,血压首次异常,非首次舒张压过低</span></p>-->
-      <!--<p><label>异常数据</label>-->
-        <!--<span class="item">2018-11-28&nbsp;&nbsp;午餐后&nbsp;&nbsp;<span><em class="abnormal">17.4<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></span>-->
-        <!--<span>2018-11-28&nbsp;&nbsp;午餐后&nbsp;&nbsp;<span><em class="abnormal">17.4<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></span>-->
-        <!--<span>2018-11-28&nbsp;&nbsp;午餐后&nbsp;&nbsp;<span><em class="abnormal">17.4<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></span>-->
-      <!--</p>-->
-      <!--<p><label>干预时间</label><span>2018-12-20</span></p>-->
-      <!--<p><label>医生姓名</label><span>肖金金</span></p>-->
-      <!--<p><label>医疗机构</label><span>浦东新区张江社区卫生服务中心</span></p>-->
-      <!--<p><label>医生建议</label><span>您好,您血糖首次异常,请及时到医院就诊或咨询医生</span></p>-->
-    <!--</li>-->
-  </ul>
-  <div id="load-more" class="weui-loadmore" style="display: none;">
-    <i class="weui-loading"></i>
-    <span class="weui-loadmore__tips">正在加载</span>
+    <!--显示下拉标签-->
+    <div class="weui-pull-to-refresh__layer pull-refresh-loading">
+      <div class='weui-pull-to-refresh__arrow'></div>
+      <div class='weui-pull-to-refresh__preloader'></div>
+      <div class="down">下拉刷新</div>
+      <div class="up">释放刷新</div>
+      <div class="refresh"></div>
+      <span id="last-Time"></span>
+    </div>
+    <ul class="newadviceList">
+      <!--<li>-->
+        <!--<p><label>异常类型</label><span>血糖首次异常,血压首次异常,非首次舒张压过低</span></p>-->
+        <!--<p><label>异常数据</label>-->
+          <!--<span class="item">2018-11-28&nbsp;&nbsp;午餐后&nbsp;&nbsp;<span><em class="abnormal">17.4<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></span>-->
+          <!--<span>2018-11-28&nbsp;&nbsp;午餐后&nbsp;&nbsp;<span><em class="abnormal">17.4<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></span>-->
+          <!--<span>2018-11-28&nbsp;&nbsp;午餐后&nbsp;&nbsp;<span><em class="abnormal">17.4<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></span>-->
+        <!--</p>-->
+        <!--<p><label>干预时间</label><span>2018-12-20</span></p>-->
+        <!--<p><label>医生姓名</label><span>肖金金</span></p>-->
+        <!--<p><label>医疗机构</label><span>浦东新区张江社区卫生服务中心</span></p>-->
+        <!--<p><label>医生建议</label><span>您好,您血糖首次异常,请及时到医院就诊或咨询医生</span></p>-->
+      <!--</li>-->
+    </ul>
+    <div id="load-more" class="weui-loadmore" style="display: none;">
+      <i class="weui-loading"></i>
+      <span class="weui-loadmore__tips">正在加载</span>
+    </div>
   </div>
 </div>
+<div class='custom-nodata' style="display:none;">
+  <img src="../custom/images/nodata.png">
+  <p>暂无建议</p>
 </div>
 <!--<p><label>测量时间</label><span>{0}&nbsp;&nbsp;&nbsp;&nbsp;{1}</span></p>-->
 <!--<p><label>{7}</label><span><em class="{5}">{2}<img src="{6}"></em>&nbsp;&nbsp;mmol/L</span></p>-->
@@ -123,8 +127,8 @@
       //   $('.weui-loadmore').hide();
       // }
       var defer = $.Deferred();
-      // var ajax_url = ajaxUrl.doctorAdviceDetail + '?flag=' + page + '&uid=' + localStorage.getItem('uid');
-      var ajax_url = ajaxUrl.doctorAdviceDetail + '?flag=' + page + '&uid=3a24cb5b173e4d6597f62a95d04e3340';
+      var ajax_url = ajaxUrl.doctorAdviceDetail + '?flag=' + page + '&uid=' + localStorage.getItem('uid');
+      // var ajax_url = ajaxUrl.doctorAdviceDetail + '?flag=' + page + '&uid=3a24cb5b173e4d6597f62a95d04e3340';
       var ajax_fun = function (data) {
         if (data.code === 0) {
           defer.resolve(data.data);
@@ -173,8 +177,8 @@
       page: 0,  //页数
     };
 
-    indexDoctorAdvice();
-    function indexDoctorAdvice(page = 0) {
+    indexDoctorAdvice(adviceData.page);
+    function indexDoctorAdvice(page) {
       getDoctorAdvice(page).done(function (res) {
         console.log(res);
         adviceData.moreData = res.more;
@@ -317,7 +321,7 @@
     adviceData.dataList.pullToRefresh().on('pull-to-refresh', function () {
       html = '';
       adviceData.page = 0;
-      indexDoctorAdvice(0);
+      indexDoctorAdvice(adviceData.page);
       adviceData.dataList.pullToRefreshDone();
     });
 
