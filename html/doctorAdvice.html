@@ -113,7 +113,7 @@
 <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
 <script type="text/javascript" src="../lib/js/jquery-weui.js"></script>
 <script type="text/javascript" src="../custom/js/native.js"></script>
-<script type="text/javascript" src="../custom/js/common.js"></script>
+<script type="text/javascript" src="../custom/js/common.js?v=1.0"></script>
 <script src="../custom/js/api.js"></script>
 <script>
   FastClick.attach(document.body);
@@ -121,14 +121,8 @@
   $(function () {
     // 获取医生建议
     function getDoctorAdvice(page) {
-      // showMyloading();
-      // return new Promise(function (resolve, reject) {
-      // if(page === 0){
-      //   $('.weui-loadmore').hide();
-      // }
       var defer = $.Deferred();
-      var ajax_url = ajaxUrl.doctorAdviceDetail + '?flag=' + page + '&uid=' + localStorage.getItem('uid');
-      // var ajax_url = ajaxUrl.doctorAdviceDetail + '?flag=' + page + '&uid=3a24cb5b173e4d6597f62a95d04e3340';
+      var ajax_url = ajaxUrl.doctorAdviceDetail;
       var ajax_fun = function (data) {
         if (data.code === 0) {
           defer.resolve(data.data);
@@ -137,35 +131,8 @@
         }
         hideMyloading();
       };
-      custom.ajaxRequest({url: ajax_url}, ajax_fun, true);
+      custom.ajaxRequest({url: ajax_url, data: {flag: page, uid: localStorage.getItem('uid')}}, ajax_fun, true);
       return defer.promise();
-
-      // $.ajax({
-      //   url: ajaxUrl.doctorAdviceDetail + '?flag='+ page +'&uid='+ localStorage.getItem('uid'),
-      //   // url: ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid,
-      //   type: "GET",
-      //   beforeSend: function (request) {
-      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
-      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
-      //     request.setRequestHeader('request-id', randomWord(true));
-      //     request.setRequestHeader('timestamp', new Date().getTime());
-      //   },
-      //   success: function (data) {
-      //     if(data.code === 0){
-      //       resolve(data.data);
-      //     }else{
-      //       $.toast(data.msg || '请求错误~', 'text');
-      //     }
-      //     hideMyloading();
-      //   },
-      //   error: function (err) {
-      //     hideMyloading();
-      //     console.log(err);
-      //   }
-      // });
-      // });
     }
 
     var html = '';
@@ -334,101 +301,6 @@
         indexDoctorAdvice(adviceData.page++);
       }
     });
-
-    // function indexDoctorAdviceSSS(page = 0) {
-    //   getDoctorAdvice(page).done(function (res) {
-    //     console.log(res);
-    //     adviceData.moreData = res.more;
-    //     var temp = $('#dovtorAdvice-Temp').html();
-    //     if (page === 0 && res.content.length === 0) {
-    //       $('.custom-nodata').show();
-    //     } else {
-    //       $('.weui-loadmore').hide();
-    //       adviceData.loading = false;
-    //       res.content.length > 0 ? res.content.map(function (data) {
-    //         var bloodList = data.bloodGlucose_list[0];  //血糖
-    //         var pressureList = data.pressure_list[0];   //血压
-    //         var meal = '', flagStatus = '', flagImg = '';
-    //         switch (adviceData.pageStatus) {
-    //           case '血糖异常':
-    //             if (bloodList) {
-    //               switch (bloodList.testPeriod) {
-    //                 case "0":
-    //                   meal = '早餐前';
-    //                   break;
-    //                 case "1":
-    //                   meal = '早餐后';
-    //                   break;
-    //                 case "2":
-    //                   meal = '午餐前';
-    //                   break;
-    //                 case "3":
-    //                   meal = '午餐后';
-    //                   break;
-    //                 case "4":
-    //                   meal = '晚餐前';
-    //                   break;
-    //                 case "5":
-    //                   meal = '晚餐后';
-    //                   break;
-    //                 case "6":
-    //                   meal = '睡前';
-    //                   break;
-    //                 case "7":
-    //                   meal = '凌晨';
-    //                   break;
-    //                 default :
-    //                   meal = '随机';
-    //                   break;
-    //               }
-    //               switch (bloodList.flag) {
-    //                 case '1':
-    //                   flagStatus = 'abnormal';
-    //                   flagImg = '../custom/images/sup.png';
-    //                   break;
-    //                 case '2':
-    //                   flagStatus = 'abnormal';
-    //                   flagImg = '../custom/images/down-arrow1.png';
-    //                   break;
-    //                 default:
-    //                   break;
-    //               }
-    //               html += temp.format(bloodList.testTime, meal, bloodList.fpgValue, data.intervene_time, data.doctor_suggest, flagStatus, flagImg, adviceData.pageStatus);
-    //             }
-    //             break;
-    //           case '血压异常':
-    //             if (pressureList) {
-    //               html += temp.format(pressureList.testTime, '', pressureList.diastolic, data.intervene_time, data.doctor_suggest, flagStatus, flagImg, adviceData.pageStatus);
-    //             }
-    //             break;
-    //           default:
-    //             break;
-    //         }
-    //       }) : '';
-    //       $('.newadviceList').html(html);
-    //     }
-    //   }).fail(function (err) {
-    //     hideMyloading();
-    //     console.log(err);
-    //   });
-    // }
-
-    //判断当前是血糖页面还是血压页面
-    // $('.tabWrap span').bind('click', function () {
-    //   // showMyloading();
-    //   $('.tabWrap span').removeClass();
-    //   $(this).addClass('current');
-    //   if ($(this).text().includes('血压异常')) {
-    //     adviceData.pageStatus = '血压异常';
-    //   } else {
-    //     adviceData.pageStatus = '血糖异常';
-    //   }
-    //   html = '';
-    //   // $('.main').css({position: 'absolute', top: '4.7rem', height: '100%', marginTop: '1px'});
-    //   $('.newadviceList').html('');
-    //   adviceData.page = 0;
-    //   indexDoctorAdvice(0);
-    // });
   })
 </script>
 </body>

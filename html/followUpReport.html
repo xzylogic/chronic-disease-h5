@@ -335,46 +335,16 @@
 <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
 <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
 <script type="text/javascript" src="../custom/js/native.js"></script>
-<script type="text/javascript" src="../custom/js/common.js"></script>
+<script type="text/javascript" src="../custom/js/common.js?v=1.0"></script>
 <script src="../custom/js/api.js"></script>
 <script>
   FastClick.attach(document.body);
   $(function () {
-    // showMyloading();
-
     //获取筛查报告列表
     function getReportScreening() {
       //统计报告数
-      // $.ajax({
-      //   url: ajaxUrl.reportNum + '?uid=' + localStorage.getItem('uid'),
-      //   type: "GET",
-      //   beforeSend: function (request) {
-      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
-      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
-      //     request.setRequestHeader('request-id', randomWord(true));
-      //     request.setRequestHeader('timestamp', new Date().getTime());
-      //   },
-      //   success: function (data) {
-      //     console.log('统计报告数:',data);
-      //     if(data.code === 0){
-      //       $('.tabWrap em:eq(0)').text('('+ data.data.screeningNum +')');
-      //       $('.tabWrap em:eq(1)').text('('+ data.data.followNum +')');
-      //     }else{
-      //       $.toast(data.msg || '请求错误~', 'text');
-      //     }
-      //     hideMyloading();
-      //     // resolve('帅查报告列表');
-      //   },
-      //   error: function (err) {
-      //     hideMyloading();
-      //     console.log(err);
-      //   }
-      // });
-      // return new Promise(function (resolve, reject) {
       var defer1 = $.Deferred();
-      var ajax_url1 = ajaxUrl.reportScreening + '?cardType=01&cardNumber=' + localStorage.getItem('idcard') + '&registerId=' + localStorage.getItem('uid');//310108198208190030
+      var ajax_url1 = ajaxUrl.reportScreening;//310108198208190030
       var ajax_fun1 = function (data) {
         if (data.code === 0) {
           $('.tabWrap em:eq(0)').text('(' + data.data.length + ')');
@@ -384,37 +354,8 @@
         }
         hideMyloading();
       };
-      custom.ajaxRequest({url: ajax_url1}, ajax_fun1, false);
+      custom.ajaxRequest({url: ajax_url1, data: {cardType: '01', cardNumber: localStorage.getItem('idcard'), registerId: localStorage.getItem('uid')}}, ajax_fun1, false);
       return defer1.promise();
-
-      // $.ajax({
-      //   url: ajaxUrl.reportScreening + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'),
-      //   type: "GET",
-      //   beforeSend: function (request) {
-      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
-      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
-      //     request.setRequestHeader('request-id', randomWord(true));
-      //     request.setRequestHeader('timestamp', new Date().getTime());
-      //   },
-      //   success: function (data) {
-      //     console.log('筛查报告列表:',data);
-      //     if(data.code === 0){
-      //       $('.tabWrap em:eq(0)').text('('+ data.data.length +')');
-      //       resolve(data.data);
-      //     }else{
-      //       $.toast(data.msg || '请求错误~', 'text');
-      //     }
-      //     hideMyloading();
-      //     // resolve('帅查报告列表');
-      //   },
-      //   error: function (err) {
-      //     hideMyloading();
-      //     console.log(err);
-      //   }
-      // });
-      // })
     }
 
     //获取随访报告列表
@@ -422,7 +363,7 @@
     function getReportFollow() {
       // return new Promise(function (resolve, reject) {
       var defer2 = $.Deferred();
-      var ajax_url2 = ajaxUrl.reportFollow + '?cardType=01&cardNumber=' + localStorage.getItem('idcard') + '&registerId=' + localStorage.getItem('uid');//310108198208190030
+      var ajax_url2 = ajaxUrl.reportFollow;//310108198208190030
       var ajax_fun2 = function (data) {
         if (data.code === 0) {
           $('.tabWrap em:eq(1)').text('(' + data.data.length + ')');
@@ -432,37 +373,8 @@
         }
         hideMyloading();
       };
-      custom.ajaxRequest({url: ajax_url2}, ajax_fun2, false);
+      custom.ajaxRequest({url: ajax_url2, data: {cardType: '01', cardNumber: localStorage.getItem('idcard'), registerId: localStorage.getItem('uid')}}, ajax_fun2, false);
       return defer2.promise();
-
-      // $.ajax({
-      //   url: ajaxUrl.reportFollow + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'),
-      //   type: "GET",
-      //   beforeSend: function (request) {
-      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
-      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
-      //     request.setRequestHeader('request-id', randomWord(true));
-      //     request.setRequestHeader('timestamp', new Date().getTime());
-      //   },
-      //   success: function (data) {
-      //     console.log('随访报告列表:',data);
-      //     if(data.code === 0){
-      //       $('.tabWrap em:eq(1)').text('('+ data.data.length +')');
-      //       resolve(data.data);
-      //     }else{
-      //       $.toast(data.msg || '请求错误~', 'text');
-      //     }
-      //     hideMyloading();
-      //     // resolve('帅查报告列表');
-      //   },
-      //   error: function (err) {
-      //     hideMyloading();
-      //     console.log(err);
-      //   }
-      // });
-      // })
     }
 
     var html = '';

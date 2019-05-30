@@ -26,14 +26,13 @@
   <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
   <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
   <script type="text/javascript" src="../custom/js/native.js"></script>
-  <script type="text/javascript" src="../custom/js/common.js"></script>
+  <script type="text/javascript" src="../custom/js/common.js?v=1.0"></script>
   <script src="../custom/js/api.js"></script>
   <script>
     FastClick.attach(document.body);
     $(function () {
-      // var ajax_url = ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340';
-      var ajax_url = ajaxUrl.assessmentHistoryNum + '?registerid=' + localStorage.getItem('uid');
-      function ajax_fun(data){
+      var ajax_url = ajaxUrl.assessmentHistoryNum;
+      var ajax_fun = function(data){
         if(data.code === 0){
           var dataList = data.data;
           if(dataList.assessmentNum > 0){
@@ -58,54 +57,9 @@
           }
         }
         hideMyloading();
-      }
-      custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
-      // showMyloading();
-      // $.ajax({
-      //   url: ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340',
-      //   // url: ajaxUrl.assessmentHistoryNum + '?registerid=' + localStorage.getItem('uid'),
-      //   type: "GET",
-      //   beforeSend: function (request) {
-      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
-      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
-      //     request.setRequestHeader('request-id', randomWord(true));
-      //     request.setRequestHeader('timestamp', new Date().getTime());
-      //   },
-      //   success: function (data) {
-      //     if(data.code === 0){
-      //       var dataList = data.data;
-      //       if(dataList.assessmentNum > 0){
-      //         $('.questionSelectType span:eq(0)').text(dataList.assessmentNum);
-      //       }else{
-      //         $('.questionSelectType li:eq(0)').hide();
-      //       }
-      //       if(dataList.kidneyNum > 0){
-      //         $('.questionSelectType span:eq(1)').text(dataList.kidneyNum);
-      //       }else{
-      //         $('.questionSelectType li:eq(1)').hide();
-      //       }
-      //       if(dataList.eyeNum > 0){
-      //         $('.questionSelectType span:eq(2)').text(dataList.eyeNum);
-      //       }else{
-      //         $('.questionSelectType li:eq(2)').hide();
-      //       }
-      //       if(dataList.footNum > 0){
-      //         $('.questionSelectType span:eq(3)').text(dataList.footNum);
-      //       }else{
-      //         $('.questionSelectType li:eq(3)').hide();
-      //       }
-      //     }
-      //     hideMyloading();
-      //   },
-      //   error: function (err) {
-      //     hideMyloading();
-      //     console.log(err);
-      //   }
-      // });
+      };
+      custom.ajaxRequest({url: ajax_url, data: {registerid: localStorage.getItem('uid')}}, ajax_fun, false);
       $('ul li').bind('click', function () {
-        // console.log('=====', $(this).previousSibling);
         var tiskText = $(this).find('span').parent().contents().filter(function(){
               return this.nodeType === 3;
             }).text();

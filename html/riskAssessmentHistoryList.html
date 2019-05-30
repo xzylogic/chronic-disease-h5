@@ -56,7 +56,7 @@
   <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
   <script type="text/javascript" src="../lib/js/jquery-weui.js"></script>
   <script type="text/javascript" src="../custom/js/native.js"></script>
-  <script type="text/javascript" src="../custom/js/common.js"></script>
+  <script type="text/javascript" src="../custom/js/common.js?v=1.0"></script>
   <script src="../custom/js/api.js"></script>
   <script>
     FastClick.attach(document.body);
@@ -71,8 +71,7 @@
     };
     //获取历史评估列表
     function getHistoryAssess(type, page){
-      // ajax_url = ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=3a24cb5b173e4d6597f62a95d04e3340&type='+ type;
-      var ajax_url = ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=' + localStorage.getItem('uid') +'&type='+ type;
+      var ajax_url = ajaxUrl.assessmentHistoryList;
       var ajax_fun = function(data){
         if(data.code === 0){
           var temp = $('#riskAsses-Temp').html();
@@ -94,48 +93,7 @@
         }
         hideMyloading();
       };
-      custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
-
-      // showMyloading();
-      // $.ajax({
-      //   url: ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=3a24cb5b173e4d6597f62a95d04e3340&type='+ type,
-      //   // url: ajaxUrl.assessmentHistoryList + '?flag='+ page +'&registerid=' + localStorage.getItem('uid') +'&type='+ type,
-      //   type: "GET",
-      //   beforeSend: function (request) {
-      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
-      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
-      //     request.setRequestHeader('request-id', randomWord(true));
-      //     request.setRequestHeader('timestamp', new Date().getTime());
-      //   },
-      //   success: function (data) {
-      //     console.log(data);
-      //     if(data.code === 0){
-      //       var temp = $('#riskAsses-Temp').html();
-      //       $('.weui-loadmore').hide();
-      //       historyData.moreData = data.data && data.data.more;
-      //       historyData.loading = false;
-      //       data.data && data.data.content.length > 0 ? data.data.content.map(function (val) {
-      //         var ifAbnormal = '';
-      //         if(val.result === '0'){
-      //           ifAbnormal = 'normal';
-      //         }else{
-      //           ifAbnormal = 'abnormal';
-      //         }
-      //         html += temp.format(val.userName || '', val.time || '', val.resultDoc || '', val.advice || '', ifAbnormal);
-      //       }) : null;
-      //       $('.historyList').html(html);
-      //     }else{
-      //       $.toast(data.msg || '请求错误~', 'text');
-      //     }
-      //     hideMyloading();
-      //   },
-      //   error: function (err) {
-      //     hideMyloading();
-      //     console.log(err);
-      //   }
-      // });
+      custom.ajaxRequest({url: ajax_url, data: {flag: page, registerid: localStorage.getItem('uid'), type: type}}, ajax_fun, false);
     }
 
     $(function () {

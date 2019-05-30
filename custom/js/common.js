@@ -301,6 +301,7 @@ var custom = {
                 request.setRequestHeader("token", req.TOKEN);
                 request.setRequestHeader("sign", req.SIGN);
                 request.setRequestHeader("appid", req.APPID);
+                request.setRequestHeader('request-id', randomWord(true));
                 request.setRequestHeader('timestamp', _timestamp);
               }
               encryptParam.url = req.URL;/*密文URL*/

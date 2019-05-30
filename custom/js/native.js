@@ -130,13 +130,23 @@ function NativeFunc(paramObj,callback) {
       //原生不支持接口时，原始方法打开窗体
       if(paramObj.ACTION=="OPENURL") location.href = paramObj.PARAM.URL;//默认Web模式打开
       if(paramObj.ACTION=="LOCATION") callback();//不执行定位，直接回调
-      if(paramObj.ACTION=="CLOSEPAGE") location.href = paramObj.PARAM.URL;//原生关闭当前WebView回到上一个WebView，Web操作为打开上一个URL地址
+      if(paramObj.ACTION=="CLOSEPAGE") {
+        window.history.back();
+      }// 返回
+      // if(paramObj.ACTION=="CLOSEPAGE") location.href = paramObj.PARAM.URL;//原生关闭当前WebView回到上一个WebView，Web操作为打开上一个URL地址
     }
   }
   //其他渠道（微信，云闪付 渠道）
   else{
-    if(paramObj.ACTION=="OPENURL" || paramObj.ACTION=="CLOSEPAGE") location.href = paramObj.PARAM.URL;//默认Web模式打开
+    // if(paramObj.ACTION=="OPENURL" || paramObj.ACTION=="CLOSEPAGE") location.href = paramObj.PARAM.URL;//默认Web模式打开
     // if(paramObj.ACTION=="CLOSEPAGE") window.history.back();
+    if(paramObj.ACTION=="OPENURL") {
+      location.href = paramObj.PARAM.URL;
+    }// 默认Web模式打开
+
+    if(paramObj.ACTION=="CLOSEPAGE") {
+      window.history.back();
+    }// 返回
   }
 };
 
