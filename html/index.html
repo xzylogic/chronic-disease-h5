@@ -247,7 +247,7 @@
   //获取token
   function pro() {
     // return new Promise(function (resolve, reject) {
-    var ajax_url = ajaxUrl.userGetTokenByAuthCode + '?authCode=' + code;
+    var ajax_url = ajaxUrl.userGetTokenByAuthCode;
     var defer1 = $.Deferred();
     var ajax_fun = function (data) {
       var tokenData = data.data;
@@ -283,7 +283,7 @@
       }
       hideMyloading();
     };
-    custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
+    custom.ajaxRequest({url: ajax_url, data: {authCode: code}}, ajax_fun, false);
     return defer1.promise();
 
     // $.ajax({
@@ -343,7 +343,7 @@
   function getBloodGlucose() {
     // return new Promise(function (resolve, reject) {
     var defer2 = $.Deferred();
-    var ajax_url2 = ajaxUrl.bloodGlucoseRecord + '?uid=' + pageData.uid + '&accountId=' + localStorage.getItem('accountId')+'&format=json';
+    var ajax_url2 = ajaxUrl.bloodGlucoseRecord;
     var ajax_fun2 = function (data) {
       if (data.code === 0) {
         defer2.resolve(data.data);
@@ -352,7 +352,7 @@
       }
       hideMyloading();
     };
-    custom.ajaxRequest({url: ajax_url2}, ajax_fun2, false);
+    custom.ajaxRequest({url: ajax_url2, data: {uid: pageData.uid, accountId: localStorage.getItem('accountId'), format: 'json'}}, ajax_fun2, false);
     return defer2.promise();
 
     // $.ajax({
@@ -388,7 +388,7 @@
     // return new Promise(function (resolve, reject) {
     var defer3 = $.Deferred();
     // var ajax_url3 = ajaxUrl.doctorAdviceDetail + '?flag=0&uid=3a24cb5b173e4d6597f62a95d04e3340';
-    var ajax_url3 = ajaxUrl.doctorAdviceDetail + '?flag=0&uid=' + pageData.uid;
+    var ajax_url3 = ajaxUrl.doctorAdviceDetail;
     var ajax_fun3 = function (data) {
       if (data.code === 0) {
         defer3.resolve(data.data);
@@ -397,7 +397,7 @@
       }
       hideMyloading();
     };
-    custom.ajaxRequest({url: ajax_url3}, ajax_fun3, false);
+    custom.ajaxRequest({url: ajax_url3, data: {flag: '0', uid: pageData.uid}}, ajax_fun3, false);
     return defer3.promise();
 
     // $.ajax({
