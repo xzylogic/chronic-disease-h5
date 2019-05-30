@@ -87,11 +87,14 @@
   <script>
     FastClick.attach(document.body);
 
-    setTimeout(function () {
-      nativeObj.RegisterFun(function () {
-        getRemindList();
-      })
-    }, 100);
+    //注册页面活动状态事件
+    nativeObj.RegisterFun(function (paramObj) {
+      switch (paramObj.ACTION) {
+        case "ACTIVEPAGE"://页面激活
+          getRemindList();
+          break;
+      }
+    });
 
     function addRemind(){
       NativeFunc({

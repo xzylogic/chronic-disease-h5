@@ -137,18 +137,19 @@
 <script>
   FastClick.attach(document.body);
 
-  setTimeout(function () {
-    nativeObj.RegisterFun(function () {
-      loadData();
-    })
-    // nativeObj.RegisterFun(function (paramObj) {
-    //   switch (paramObj.ACTION) {
-    //     case "ACTIVEPAGE"://页面激活
-    //       //
-    //       break;
-    //   }
-    // });
-  }, 100);
+  // setTimeout(function () {
+  //   nativeObj.RegisterFun(function () {
+  //     loadData();
+  //   })
+  // }, 100);
+  //注册页面活动状态事件
+  nativeObj.RegisterFun(function (paramObj) {
+    switch (paramObj.ACTION) {
+      case "ACTIVEPAGE"://页面激活
+        loadData();
+        break;
+    }
+  });
 
   function addMore() {
     $('.popup-wrap').show();
@@ -342,7 +343,7 @@
   function getBloodGlucose() {
     // return new Promise(function (resolve, reject) {
     var defer2 = $.Deferred();
-    var ajax_url2 = ajaxUrl.bloodGlucoseRecord + '?uid=' + pageData.uid + '&accountId=' + localStorage.getItem('accountId');
+    var ajax_url2 = ajaxUrl.bloodGlucoseRecord + '?uid=' + pageData.uid + '&accountId=' + localStorage.getItem('accountId')+'&format=json';
     var ajax_fun2 = function (data) {
       if (data.code === 0) {
         defer2.resolve(data.data);
@@ -432,17 +433,12 @@
 
   function loadData() {
     pro().then(function () {
-      // return Promise.all([getBloodGlucose(), getDoctorAdvice()])
-      // $.when(getBloodGlucose(), getDoctorAdvice()).then(function (res1, res2) {
-      //   console.log(111);
-      //   console.log(res1, res2);
-      // })
       return $.when(getBloodGlucose(), getDoctorAdvice())
     }).done(function (res0, res1) {
       var res = [];
       res[0] = res0;
       res[1] = res1;
-      // console.log(res[0].glu)
+      // console.log(res0.res1)
       var html = '';
       var temp = $('#bloodData-Temp').html();
       var ifAbnormal = '', status = '', noData = '', showStatus = '';
@@ -464,8 +460,6 @@
           default:
             break;
         }
-        // var aaa = "2019-03-01 09:00:00";
-        // var oldTime = aaa.split(' ')[0];
         var oldTime = res[0].glu.detectTime.split(' ')[0];
         // var getOldTime = oldTime.split('-');
         var getNowDate = new Date().toLocaleDateString().split('/');

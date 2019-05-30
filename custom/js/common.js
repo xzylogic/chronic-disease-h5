@@ -201,6 +201,7 @@ var custom = {
       success：成功回调函数
       onloading：请求接口之前显示loading，默认显示loading
   */
+  appVersion: getParams('appVersion'),//App版本
   ajaxRequest: function (opts, successFun, noloading) {
     var pageData = {
       // userInfo: 1,
@@ -213,6 +214,7 @@ var custom = {
     // pageData.userInfo && (tk = pageData.userInfo.token);
     var param = {
       type: "GET",//默认GET请求
+      dataType:"text",//字符串格式，返回为字符串密文
       beforeSend: function (request) {
         request.setRequestHeader("token", pageData.token);
         request.setRequestHeader("channelCode", pageData.channelCode);
@@ -222,26 +224,112 @@ var custom = {
         request.setRequestHeader('timestamp', new Date().getTime());
       },
       success: function (data) {
-        /*将来对 data 进行解密*/
-        successFun(data);
+        /* app4.9.0 - 对 data 进行解密*/
+        if(custom.appVersion && custom.appVersion >= '4.9.0') {
+          NativeFunc({
+            ACTION: "DECRYPT",
+            PARAM: {
+              TEXT: data,
+            }
+          }, function (req) {
+            req = JSON.parse(req);
+            successFun(JSON.parse(req.TEXT));
+          });
+        }
+        else{
+          // typeof data === 'string' ? successFun(JSON.parse(data)) : successFun(data);
+          successFun(JSON.parse(data));
+        }
       },
       error: function (error) {
         hideMyloading();
         $.toptip('网络出了点异常，请重试', 'error');
       }
     };
-    (opts.type == 'POST') && (param.contentType = "application/json; charset=utf-8");
-    //参数/函数 赋值/重写
+    // (opts.type == 'POST') && (param.contentType = "application/json; charset=utf-8");
+    // //参数/函数 赋值/重写
+    // if (opts) {
+    //   for (key in opts) {
+    //     if (key == 'url' || key == 'data') {
+    //       /*将来对 url、data 进行加密*/
+    //     }
+    //     param[key] = opts[key]
+    //   }
+    // }
+    // !noloading && showMyloading();
+    // $.ajax(param);
+
+    //组装参数
     if (opts) {
+      /*参数/函数 赋值/重写*/
       for (key in opts) {
-        if (key == 'url' || key == 'data') {
-          /*将来对 url、data 进行加密*/
-        }
         param[key] = opts[key]
       }
+
+      /* 健康云 4.9.0 开始，对url、data加密*/
+      if(custom.appVersion && custom.appVersion >= '4.9.0'){
+        /* 调用原生加密、请求函数 */
+        var encryptFunc = function(encryptParam){
+          var _url = '';//待加密url
+          var _data = '';//待加密data
+          var _timestamp = new Date().getTime();
+
+          encryptParam['url'] && (_url = location.origin + encryptParam['url']);//完整URL
+          if(encryptParam['data']){
+            //POST 请求在传入ajaxRequest已转成字符串了，不需要处理
+            if(encryptParam['type'].toUpperCase()=='POST')
+              _data = encryptParam['data'];
+            else
+              _data = JSON.stringify(encryptParam['data']);
+          };
+
+          //调用原生进行加密
+          NativeFunc({
+              ACTION: "ENCRYPT",
+              PARAM: {
+                URL: _url,
+                TEXT:_data,
+                MODE:encryptParam['type'],
+                "TIMESTAMP": _timestamp
+              }
+            }
+            ,function(req){
+              var req = JSON.parse(req);
+
+              /*发送加密请求时，需要在头部设置签名等参数（和非加密请求有所差异）*/
+              encryptParam.beforeSend = function(request) {
+                request.setRequestHeader("token", req.TOKEN);
+                request.setRequestHeader("sign", req.SIGN);
+                request.setRequestHeader("appid", req.APPID);
+                request.setRequestHeader('timestamp', _timestamp);
+              }
+              encryptParam.url = req.URL;/*密文URL*/
+
+              if(encryptParam['type'].toUpperCase()=='GET'){
+                /*GET请求 已通过加密已将data参数追加到URL之后，data不需要传值*/
+                encryptParam.data && (delete encryptParam.data);
+              }
+              else {
+                /*POST请求，data为密文字符串（非JSON），同时设置 contentType */
+                if (req.TEXT) encryptParam['data'] = req.TEXT;//POST 加密后data
+                encryptParam.contentType= 'text/plain';
+              }
+              !noloading && showMyloading();
+              $.ajax(encryptParam);
+            });
+        }
+
+        encryptFunc(param);
+      }
+      else{
+        //POST请求设置 contentType
+        (opts.type=='POST') && (param.contentType="application/json; charset=utf-8");
+
+        /*其他容器请求*/
+        !noloading && showMyloading();
+        $.ajax(param);
+      }
     }
-    !noloading && showMyloading();
-    $.ajax(param);
   },
 };
 
