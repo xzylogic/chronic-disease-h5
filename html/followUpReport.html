@@ -361,7 +361,6 @@
     //获取随访报告列表
     getReportFollow();
     function getReportFollow() {
-      // return new Promise(function (resolve, reject) {
       var defer2 = $.Deferred();
       var ajax_url2 = ajaxUrl.reportFollow;//310108198208190030
       var ajax_fun2 = function (data) {
@@ -388,10 +387,8 @@
     };
 
     indexScreeningReport();
-
     function indexScreeningReport() {
       getReportScreening().done(function (res) {
-        console.log(res);
         var temp1 = $('#screening-Temp').html();
         res.length > 0 ? res.map(function (data) {
           html += temp1.format(data.reportDate, data.doctorName, data.hospitalName, data.peripheralBloodSugar || '', data.venousBloodSugar || '', data.dgtt || '', data.riskFactors || '暂无', data.reportResult || '暂无');
@@ -406,9 +403,7 @@
 
     function indexFollowReport() {
       getReportFollow().done(function (res) {
-        console.log(res);
         var temp2 = $('#follow-Temp').html();
-
         res.length > 0 ? res.map(function (data) {
           var symptomHtml = '';
           data.symptom && data.symptom.map(function (val) {
@@ -426,9 +421,9 @@
 
     //判断当前是筛查页面还是随访页面
     $('.tabWrap span').bind('click', function () {
-      showMyloading();
       $('.tabWrap span').removeClass();
       $(this).addClass('current');
+      $('.custom-nodata').hide();
       if ($(this).text().includes('随访报告')) {
         html = '';
         reportData.pageStatus = '随访报告';
