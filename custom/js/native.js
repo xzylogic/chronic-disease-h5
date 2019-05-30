@@ -1,65 +1,91 @@
 // 根据key值 获取url传参
 function getParams (key) {
-    var url = location.search.replace(/^\?/, '').split('&');
-    var paramsObj = {};
-    for (var i = 0, iLen = url.length; i < iLen; i++) {
-        var param = url[i].split('=');
-        paramsObj[param[0]] = param[1];
-    }
-    if (key) {
-        return paramsObj[key] || '';
-    }
-    return paramsObj;
+  var url = location.search.replace(/^\?/, '').split('&');
+  var paramsObj = {};
+  for (var i = 0, iLen = url.length; i < iLen; i++) {
+    var param = url[i].split('=');
+    paramsObj[param[0]] = param[1];
+  }
+  if (key) {
+    return paramsObj[key] || '';
+  }
+  return paramsObj;
 };
+var jsLoadStartTime = Date.now();//js加载时间
+var androidTimeout = true;//安卓需要延迟
 
 // 原生对象
 var nativeObj= {
-    isNative:getParams("isNative") || localStorage.getItem("isNative"),//平台 0:非原生，1:原生(健康云)，2:微信
-    frameType: getParams("frameType") || localStorage.getItem("frameType"),//框架标识 frameType. IOS:0, Android:1
-    htmlPath:location.href.substring(0,location.href.lastIndexOf('/')),
-    
-    /*
-        根据渠道注册函数供原生调用（新）
-        业务页面注册事件示例：
-        nativeObj.RegisterFun(function (paramObj) {
-            switch (paramObj.ACTION) {
-                case "ACTIVEPAGE"://页面激活
-                    alert('当前页面成为活动页面');
-                    break;
-                case "STOPPAGE"://页面失去激活
-                    alert('页面失去激活');
-                    break;
+  isNative:getParams("isNative") || localStorage.getItem("isNative"),//平台 0:非原生，1:原生(健康云)，2:微信
+  frameType: getParams("frameType") || localStorage.getItem("frameType"),//框架标识 frameType. IOS:0, Android:1
+  htmlPath:location.href.substring(0,location.href.lastIndexOf('/')),
+
+  /*
+      根据渠道注册函数供原生调用（新）
+      业务页面注册事件示例：
+      nativeObj.RegisterFun(function (paramObj) {
+          switch (paramObj.ACTION) {
+              case "ACTIVEPAGE"://页面激活
+                  alert('当前页面成为活动页面');
+                  break;
+              case "STOPPAGE"://页面失去激活
+                  alert('页面失去激活');
+                  break;
+          }
+      });
+  */
+  RegisterFun: function (callbackFun) {
+    //健康云渠道
+    if (nativeObj.isNative == "1") {
+      //IOS Frame，注册函数
+      if (nativeObj.frameType == "0") {
+        IOSBridge(function (bridge) {
+          //注册函数，responseCallback原生回调函数
+          bridge.registerHandler('WebBridge', function (paramJSON, responseCallback) {
+            if (paramJSON.length > 0) {
+              var paramObj = JSON.parse(paramJSON);
+              callbackFun(paramObj);
             }
+          });
         });
-    */
-    RegisterFun: function (callbackFun) {
-        //健康云渠道
-        if (nativeObj.isNative == "1") {
-            //IOS Frame，注册函数
-            if (nativeObj.frameType == "0") {
-                IOSBridge(function (bridge) {
-                    //注册函数，responseCallback原生回调函数
-                    bridge.registerHandler('WebBridge', function (paramJSON, responseCallback) {
-                        if (paramJSON.length > 0) {
-                            var paramObj = JSON.parse(paramJSON);
-                            callbackFun(paramObj);
-                        }
-                    });
-                });
+      }
+      //Android Frame，注册函数
+      if (nativeObj.frameType == "1") {
+        var rgsFun = function(bridge) {
+          bridge.registerHandler("WebBridge", function(paramJSON, responseCallback) {
+            if (paramJSON.length > 0) {
+              var paramObj = JSON.parse(paramJSON);
+              callbackFun(paramObj);
             }
-            //Android Frame，注册函数
-            if (nativeObj.frameType == "1") {
-                AndroidBridge(function(bridge) {
-                    bridge.registerHandler("WebBridge", function(paramJSON, responseCallback) {
-                        if (paramJSON.length > 0) {
-                            var paramObj = JSON.parse(paramJSON);
-                            callbackFun(paramObj);
-                        }
-                    });
-                });
-            }
+          });
         }
+
+        /*
+           兼容安卓WebView刚开页面立马调用原生接口失效bug，
+           此处判断在安卓WebView中，调用原生接口时页面是否已打开超过200ms；
+           (不同机型时间有所不同，高配手机时间越短。本次定义中间值200ms)
+       */
+        if(androidTimeout) {
+          var jsloadTime = Date.now() - jsLoadStartTime;//js已加载时间，单位ms
+          jsloadTime = 200 - jsloadTime;
+
+          //js load到现在未超过200ms
+          if (jsloadTime > 0) {
+            setTimeout(function () {
+              AndroidBridge(rgsFun);
+            }, jsloadTime)
+          }
+          else{
+            AndroidBridge(rgsFun);
+            androidTimeout = false;//超过200ms 修改状态，下次直接调用安卓接口
+          }
+        }
+        else
+          AndroidBridge(rgsFun);
+
+      }//android if end
     }
+  }
 };
 
 /*
@@ -67,143 +93,162 @@ var nativeObj= {
     callback: 回调函数（Web类型此参数无效）
  */
 function NativeFunc(paramObj,callback) {
-    if(callback==undefined || callback == null) callback=function(response){ };
-    //原生渠道（健康云渠道）
-    if(nativeObj.isNative=="1") {
-        var JsonStr = JSON.stringify(paramObj);
-        //IOS Frame
-        if(nativeObj.frameType=="0"){
-            IOSNativeFunc(JsonStr, callback);//IOS
-        }
-        //Android Frame
-        else if(nativeObj.frameType=="1"){
+  if(callback==undefined || callback == null) callback=function(response){ };
+  //原生渠道（健康云渠道）
+  if(nativeObj.isNative=="1") {
+    var JsonStr = JSON.stringify(paramObj);
+    //IOS Frame
+    if(nativeObj.frameType=="0"){
+      IOSNativeFunc(JsonStr, callback);//IOS
+    }
+    //Android Frame
+    else if(nativeObj.frameType=="1"){
+      /*
+          兼容安卓WebView刚开页面立马调用原生接口失效bug，
+          此处判断在安卓WebView中，调用原生接口时页面是否已打开超过200ms；
+          (不同机型时间有所不同，高配手机时间越短。本次定义中间值200ms)
+      */
+      if(androidTimeout) {
+        var jsloadTime = Date.now() - jsLoadStartTime;//js已加载时间，单位ms
+        jsloadTime = 200 - jsloadTime;
+
+        //js load到现在未超过200ms
+        if (jsloadTime > 0) {
+          setTimeout(function () {
             AndroidNativeFunc(JsonStr, callback);//Android
-        }else{
-            //原生不支持接口时，原始方法打开窗体
-            if(paramObj.ACTION=="OPENURL") location.href = paramObj.PARAM.URL;//默认Web模式打开
-            if(paramObj.ACTION=="LOCATION") callback();//不执行定位，直接回调
-            if(paramObj.ACTION=="CLOSEPAGE") location.href = paramObj.PARAM.URL;//原生关闭当前WebView回到上一个WebView，Web操作为打开上一个URL地址
+          }, jsloadTime)
         }
+        else{
+          AndroidNativeFunc(JsonStr, callback);//Android
+          androidTimeout = false;//超过200ms 修改状态，下次直接调用安卓接口
+        }
+      }
+      else
+        AndroidNativeFunc(JsonStr, callback);//Android
+
+    }else{
+      //原生不支持接口时，原始方法打开窗体
+      if(paramObj.ACTION=="OPENURL") location.href = paramObj.PARAM.URL;//默认Web模式打开
+      if(paramObj.ACTION=="LOCATION") callback();//不执行定位，直接回调
+      if(paramObj.ACTION=="CLOSEPAGE") location.href = paramObj.PARAM.URL;//原生关闭当前WebView回到上一个WebView，Web操作为打开上一个URL地址
     }
-    //其他渠道（微信，云闪付 渠道）
-    else{
-        if(paramObj.ACTION=="OPENURL") {
-            location.href = paramObj.PARAM.URL;
-		}// 默认Web模式打开
-		
-		if(paramObj.ACTION=="CLOSEPAGE") {
-			window.history.back();
-		}// 返回
-    }
+  }
+  //其他渠道（微信，云闪付 渠道）
+  else{
+    if(paramObj.ACTION=="OPENURL" || paramObj.ACTION=="CLOSEPAGE") location.href = paramObj.PARAM.URL;//默认Web模式打开
+    // if(paramObj.ACTION=="CLOSEPAGE") window.history.back();
+  }
 };
 
 /* 这段代码是固定的，必须要放到js中 */
 function IOSBridge(callback) {
-    if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
-    if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
-    window.WVJBCallbacks = [callback];
+  if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+  if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+  window.WVJBCallbacks = [callback];
 
-    var WVJBIframe = document.createElement('iframe');
-    WVJBIframe.style.display = 'none';
-    WVJBIframe.src = 'https://__bridge_loaded__';
-    document.documentElement.appendChild(WVJBIframe);
-    setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+  var WVJBIframe = document.createElement('iframe');
+  WVJBIframe.style.display = 'none';
+  WVJBIframe.src = 'https://__bridge_loaded__';
+  document.documentElement.appendChild(WVJBIframe);
+  setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
 };
 
 /* 这段代码是固定的，必须要放到js中 */
 function AndroidBridge(callback) {
-    if (window.WebViewJavascriptBridge) {
+  if (window.WebViewJavascriptBridge) {
+    callback(WebViewJavascriptBridge)
+  } else {
+    document.addEventListener(
+      'WebViewJavascriptBridgeReady'
+      , function() {
         callback(WebViewJavascriptBridge)
-    } else {
-        document.addEventListener(
-            'WebViewJavascriptBridgeReady'
-            , function() {
-                callback(WebViewJavascriptBridge)
-            },
-            false
-        );
-    }
+      },
+      false
+    );
+  }
 };
 
 /* 调用IOS 函数 paramJSON 参数, callback 回调函数 */
 function IOSNativeFunc(paramJSON,callback) {
-    IOSBridge(function (bridge) {
-        bridge.callHandler('NativeBridge', paramJSON, callback);
-    });
+  IOSBridge(function (bridge) {
+    bridge.callHandler('NativeBridge', paramJSON, callback);
+  });
 };
 
 /* 调用Android 函数 paramJSON 参数, callback 回调函数 */
 function AndroidNativeFunc(paramJSON,callback) {
-	
-    window.WebViewJavascriptBridge.callHandler(
-        'NativeBridge'
-        , paramJSON
-        , callback
-    );
+  window.WebViewJavascriptBridge.callHandler(
+    'NativeBridge'
+    , paramJSON
+    , callback
+  );
 };
 
+
+/*
+    项目为用到下列函数
+*/
 /* 相册选择图片 */
 function NativeChooseImage() {
-    //原生渠道（健康云渠道）
-    if(nativeObj.isNative=="1") {
-        //IOS Frame
-        if(nativeObj.frameType=="0"){
-            IOSBridge(function (bridge) {
-                bridge.callHandler('callImagePicker');
-            });
-        }
-	    //Android Frame 直接用原生
-// 	    if(nativeObj.frameType=="1"){
-// 			
-// 	    }
+  //原生渠道（健康云渠道）
+  if(nativeObj.isNative=="1") {
+    //IOS Frame
+    if(nativeObj.frameType=="0"){
+      IOSBridge(function (bridge) {
+        bridge.callHandler('callImagePicker');
+      });
     }
+    //Android Frame 直接用原生
+// 	    if(nativeObj.frameType=="1"){
+//
+// 	    }
+  }
 };
 
 /* 选择图片后返回base64格式数据 */
 function getImageBaseData(callback) {
-	//原生渠道（健康云渠道）
-	if(nativeObj.isNative=="1") {
-	    //IOS Frame
-	    if(nativeObj.frameType=="0"){
-	        IOSBridge(function (bridge) {
-	        	//注册函数，responseCallback原生回调函数
-	        	bridge.registerHandler('putImageBaseData', function (data, responseCallback) {
-	        		callback(data);
-	        	});
-	        });
-	    }
-	    //Android Frame 直接用原生
+  //原生渠道（健康云渠道）
+  if(nativeObj.isNative=="1") {
+    //IOS Frame
+    if(nativeObj.frameType=="0"){
+      IOSBridge(function (bridge) {
+        //注册函数，responseCallback原生回调函数
+        bridge.registerHandler('putImageBaseData', function (data, responseCallback) {
+          callback(data);
+        });
+      });
+    }
+    //Android Frame 直接用原生
 // 	    if(nativeObj.frameType=="1"){
-// 			
+//
 // 	    }
-	};
+  };
 }
 
 /* h5 禁止微信内置浏览器调整字体大小方法 android 通过重写事件控制 */
 (function() {
-	if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
-		handleFontSize();
-	} else {
-		if (document.addEventListener) {
-			document.addEventListener("WeixinJSBridgeReady", handleFontSize, false);
-		} else if (document.attachEvent) {
-			document.attachEvent("WeixinJSBridgeReady", handleFontSize);
-			document.attachEvent("onWeixinJSBridgeReady", handleFontSize);
-		}
-	}
+  if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
+    handleFontSize();
+  } else {
+    if (document.addEventListener) {
+      document.addEventListener("WeixinJSBridgeReady", handleFontSize, false);
+    } else if (document.attachEvent) {
+      document.attachEvent("WeixinJSBridgeReady", handleFontSize);
+      document.attachEvent("onWeixinJSBridgeReady", handleFontSize);
+    }
+  }
 
-	function handleFontSize() {
-		// 设置网页字体为默认大小
-		WeixinJSBridge.invoke('setFontSizeCallback', {
-			'fontSize': 0
-		});
-		// 重写设置网页字体大小的事件
-		WeixinJSBridge.on('menu:setfont', function() {
-			WeixinJSBridge.invoke('setFontSizeCallback', {
-				'fontSize': 0
-			});
-		});
-	}
+  function handleFontSize() {
+    // 设置网页字体为默认大小
+    WeixinJSBridge.invoke('setFontSizeCallback', {
+      'fontSize': 0
+    });
+    // 重写设置网页字体大小的事件
+    WeixinJSBridge.on('menu:setfont', function() {
+      WeixinJSBridge.invoke('setFontSizeCallback', {
+        'fontSize': 0
+      });
+    });
+  }
 
 })();
-
