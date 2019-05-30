@@ -35,12 +35,11 @@
   <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
   <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
   <script type="text/javascript" src="../custom/js/native.js"></script>
-  <script type="text/javascript" src="../custom/js/common.js"></script>
+  <script type="text/javascript" src="../custom/js/common.js?v=1.0"></script>
   <script src="../custom/js/api.js"></script>
   <script>
     FastClick.attach(document.body);
-    var ajax_url = ajaxUrl.followPlan + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'); //310108198208190030
-    // var ajax_url = ajaxUrl.followPlan + '?cardType=01&cardNumber=310108198208190030&registerId=' + localStorage.getItem('uid');
+    var ajax_url = ajaxUrl.followPlan; //310108198208190030
     function ajax_fun(data){
       if(data.code === 0){
         var dataList = data.data;
@@ -93,72 +92,7 @@
       }
       hideMyloading();
     }
-    custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
-
-    // showMyloading();
-    // $.ajax({
-    //   url: ajaxUrl.followPlan + '?cardType=01&cardNumber='+ localStorage.getItem('idcard') +'&registerId=' + localStorage.getItem('uid'), //310108198208190030
-    //   type: "GET",
-    //   beforeSend: function (request) {
-    //     request.setRequestHeader('token', localStorage.getItem('netToken'));
-    //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-    //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-    //     request.setRequestHeader('appid', localStorage.getItem('appid'));
-    //     request.setRequestHeader('request-id', randomWord(true));
-    //     request.setRequestHeader('timestamp', new Date().getTime());
-    //   },
-    //   success: function (data) {
-    //     // console.log('随访计划:',data);
-    //     if(data.code === 0){
-    //       var dataList = data.data, followNum = '';
-    //       switch (dataList.followCrowedType) {
-    //         case '1':
-    //           followNum = '六个月一次 | 每年至少2次';
-    //           break;
-    //         case '2':
-    //           return;
-    //         case '3':
-    //           followNum = '三个月一次 | 每年至少4次';
-    //           break;
-    //         case '4':
-    //           return;
-    //         default:
-    //           return;
-    //       }
-    //
-    //       var html = '<li>\n' +
-    //         '           <p class="top">\n' +
-    //         '             <label><img src=\'../custom/images/followup.png\' />随访频度</label><span>'+ followNum +'</span>\n' +
-    //         '           </p>\n' +
-    //         '           <div class="con">\n' +
-    //         '             <span class="time"></span>\n' +
-    //         '             <p class="clearfix"><label>建议随访时间</label><span>'+ dataList.followDate +'</span></p>\n' +
-    //         '             <p class="clearfix"><label>随访医生　　</label><span>'+ dataList.doctorName +'</span></p>\n' +
-    //         '             <p class="clearfix"><label>所属医疗机构</label><span>'+ dataList.hospitalName +'</span></p>\n' +
-    //         '           </div>\n' +
-    //         '         </li>';
-    //       $('.list').html(html);
-    //
-    //       if(dataList.overdueFlag){
-    //         $('.time').text('已过期').addClass('timeOver');
-    //         $.modal({
-    //           title: "",
-    //           text: "您的随访已过期，请尽快到所属医疗机构随访",
-    //           buttons: [
-    //             { text: "好的"},
-    //           ]
-    //         });
-    //       }
-    //     }else{
-    //       $.toast(data.msg || '请求错误', 'text');
-    //     }
-    //     hideMyloading();
-    //   },
-    //   error: function (err) {
-    //     hideMyloading();
-    //     console.log(err);
-    //   }
-    // });
+    custom.ajaxRequest({url: ajax_url, data: {cardType: '01', cardNumber: localStorage.getItem('idcard'), registerId: localStorage.getItem('uid')}}, ajax_fun, false);
   </script>
 
 </body>

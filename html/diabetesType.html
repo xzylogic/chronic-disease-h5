@@ -51,7 +51,7 @@
   <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
   <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
   <script type="text/javascript" src="../custom/js/native.js"></script>
-  <script type="text/javascript" src="../custom/js/common.js"></script>
+  <script type="text/javascript" src="../custom/js/common.js?v=1.0"></script>
   <script src="../custom/js/api.js"></script>
   <script>
     FastClick.attach(document.body);
@@ -73,39 +73,10 @@
               URL: nativeObj.htmlPath + '/riskAssessmentType.html'
             }
           });
-          // switch ($(this).val()) {
-          //   case '1':
-          //     NativeFunc({
-          //       ACTION: "OPENURL",
-          //       PARAM: {
-          //         URL: nativeObj.htmlPath + '/diabetesType.html'
-          //       }
-          //     });
-          //     break;
-          //   case '2':
-          //     NativeFunc({
-          //       ACTION: "OPENURL",
-          //       PARAM: {
-          //         URL: nativeObj.htmlPath + '/diabetesType.html'
-          //       }
-          //     });
-          //     break;
-          //   case '3':
-          //     NativeFunc({
-          //       ACTION: "OPENURL",
-          //       PARAM: {
-          //         URL: nativeObj.htmlPath + '/diabetesType.html'
-          //       }
-          //     });
-          //     break;
-          //   default:
-          //     break;
-          // }
         }
       });
 
-      // var ajax_url = ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340';
-      var ajax_url = ajaxUrl.assessmentHistoryNum + '?registerid=' + localStorage.getItem('uid');
+      var ajax_url = ajaxUrl.assessmentHistoryNum;
       var ajax_fun =function(data){
         if(data.code === 0){
           console.log(data);
@@ -118,38 +89,7 @@
         }
         hideMyloading();
       };
-      custom.ajaxRequest({url: ajax_url}, ajax_fun, false);
-
-      // showMyloading();
-      // $.ajax({
-      //   // url: ajaxUrl.assessmentHistoryNum + '?registerid=3a24cb5b173e4d6597f62a95d04e3340',
-      //   url: ajaxUrl.assessmentHistoryNum + '?registerid=' + localStorage.getItem('uid'),
-      //   type: "GET",
-      //   beforeSend: function (request) {
-      //     request.setRequestHeader('token', localStorage.getItem('netToken'));
-      //     request.setRequestHeader('channelCode', localStorage.getItem('channelCode'));
-      //     request.setRequestHeader('lightAppCode', localStorage.getItem('lightAppCode'));
-      //     request.setRequestHeader('appid', localStorage.getItem('appid'));
-      //     request.setRequestHeader('request-id', randomWord(true));
-      //     request.setRequestHeader('timestamp', new Date().getTime());
-      //   },
-      //   success: function (data) {
-      //     console.log(data);
-      //     var datas = data.data;
-      //     if(data.code === 0){
-      //       if(datas.assessmentNum > 0 || datas.eyeNum > 0 || datas.footNum > 0 || datas.kidneyNum > 0){
-      //         $('.alink').show();
-      //       }
-      //     }else{
-      //       $.toast(data.msg || '请求错误~', 'text');
-      //     }
-      //     hideMyloading();
-      //   },
-      //   error: function (err) {
-      //     hideMyloading();
-      //     console.log(err);
-      //   }
-      // });
+      custom.ajaxRequest({url: ajax_url, data: {registerid: localStorage.getItem('uid')}}, ajax_fun, false);
     })
   </script>
 
