@@ -60,7 +60,7 @@
   <script type="text/template" id="drugRemindList-Temp">
     <div class="weui-cell weui-cell_swiped">
       <div class="weui-cell__bd">
-        <div class="reminderListLeft" data-medicineId="{7}" data-name="{8}">
+        <div class="reminderListLeft" data-medicineId="{7}" data-name="{8}" data-fixedId="{9}" data-delFlag="{10}" data-remark="{11}" data-timesId="{12}" data-mecId="{13}" data-type="{14}">
           <span class="name">{0}</span>
           <p class="daytime"><label>每天：</label><span>{1}</span></p>
           <!--<p class="daytime"><label>每天：</label><span>11:00</span><span>11:00</span></p>-->
@@ -111,14 +111,15 @@
       var ajax_url = ajaxUrl.remindList;
       var ajax_fun = function(data){
         if(data.code === 0){
-          console.log('获取用药提醒列表',data.data);
+          // console.log('获取用药提醒列表',data.data);
           var html = '';
           var temp = $('#drugRemindList-Temp').html();
           $('.custom-nodata').hide();
           $('.custom-btm-fixed').show();
           data.data.content.length > 0 ? data.data.content.map(function (res, i) {
-            // console.log(i)
-            var drugBrand = '', drugTime = '', dosage = '', drugUnit = '', drugMedicineId = '', drugName = '';
+            console.log(res)
+            var drugBrand = '', drugTime = '', dosage = '', drugUnit = '', drugMedicineId = '', drugName = '',
+                drugId = res.id, drugDelFlag = res.delFlag, drugRemark = res.remark, drugTimesId = '', drugMecId = '', drugType = res.type;
             var drugFlag = (res.delFlag === '0' ? 'checked' : '');
             res.remindItems.map(function (items) {
               drugBrand += items.brand + ' ' + items.specification;
@@ -126,12 +127,14 @@
               drugUnit += items.unit;
               drugMedicineId = items.medicineId;
               drugName = items.name;
+              drugMecId = items.id;
             });
             res.remindTimes.map(function (times) {
               var time1 = times.remindTime.split(':');
+              drugTimesId += times.id + '-';
               drugTime += time1[0] + ':' + time1[1] + ' ';
             });
-            html += temp.format(drugBrand, drugTime, dosage, 'switchCP' + i, res.id, drugFlag, drugUnit, drugMedicineId, drugName);
+            html += temp.format(drugBrand, drugTime, dosage, 'switchCP' + i, res.id, drugFlag, drugUnit, drugMedicineId, drugName, drugId, drugDelFlag, drugRemark, drugTimesId, drugMecId, drugType);
           }) : ($('.custom-nodata').show(), $('.custom-btm-fixed').hide());
           $('.scroll-wrap').html(html);
 
@@ -162,11 +165,16 @@
                 var time = $(this).find('.daytime').children('span').text();
                 var medicineId = $(this).attr('data-medicineId');
                 var name = $(this).attr('data-name');
-                // console.log(brand,dose,time, medicineId, name);
+                var id = $(this).attr('data-fixedId');
+                var delFlag = $(this).attr('data-delFlag');
+                var remark = $(this).attr('data-remark');
+                var timesId = $(this).attr('data-timesId');
+                var mecId = $(this).attr('data-mecId');
+                var type = $(this).attr('data-type');
                 NativeFunc({
                   ACTION: "OPENURL",
                   PARAM: {
-                    URL: nativeObj.htmlPath + '/medicationReminderDrug.html?brand='+brand+'&dose='+dose+'&time='+time+'&medicineId='+medicineId+'&name='+name
+                    URL: nativeObj.htmlPath + '/medicationReminderDrug.html?brand='+brand+'&dose='+dose+'&time='+time+'&medicineId='+medicineId+'&name='+name+'&id='+id+'&delFlag='+delFlag+'&remark='+remark+'&timesId='+timesId+'&mecId='+mecId+'&type='+type
                   }
                 });
               }
@@ -178,7 +186,6 @@
             deleteRemind($(this).attr('data-id'), $(this).parents('.weui-cell'));
           });
           $('.weui-switch-cp__input').bind('click', function () {
-            // console.log($(this).attr('data-id'));
             remindEnable($(this).attr('data-id'));
           });
         }else{
