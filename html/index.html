@@ -253,6 +253,7 @@
         localStorage.setItem('accountId', tokenData.accountId);
         localStorage.setItem('requestUrl', nativeObj.htmlPath + '/../../healthcloud-measure-web/html');
         localStorage.setItem('idcard', tokenData.idcard || '');
+        localStorage.removeItem('iotUid');
         pageData = {
           netToken: tokenData.token,
           uid: tokenData.uid,
