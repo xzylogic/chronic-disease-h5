@@ -359,6 +359,7 @@
         var dateEnd = new Date(nowDate);
         var difValue = parseInt((dateEnd - dateStart) / (1000 * 60 * 60 * 24));
 
+        nowDate = new Date().Format('yyyy-MM-dd');
         alert(oldTime+'-'+nowDate);
         if (!(oldTime === nowDate)) {
           res[0].glu.value = '';
@@ -369,7 +370,6 @@
         }
 
         html += temp.format(showStatus, res[0].glu.value, status, ifAbnormal, noData);
-        alert(html);
         $('.riskDataWrap').html(html);
         if (difValue >= 2) {
             alert('set text')
