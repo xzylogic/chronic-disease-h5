@@ -132,7 +132,7 @@
 <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
 <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
 <script type="text/javascript" src="../custom/js/native.js"></script>
-<script type="text/javascript" src="../custom/js/common.js?v=1.0"></script>
+<script type="text/javascript" src="../custom/js/common.js?v=1.1"></script>
 <script src="../custom/js/api.js"></script>
 <script>
   FastClick.attach(document.body);
@@ -316,11 +316,11 @@
   loadData();
   function loadData() {
     pro().then(function () {
-      return $.when(getBloodGlucose(), getDoctorAdvice())
-    }).done(function (res0, res1) {
+      return $.when(getBloodGlucose())
+    }).done(function (res0) {
       var res = [];
       res[0] = res0;
-      res[1] = res1;
+      // res[1] = res1;
       // console.log(res0.res1)
       var html = '';
       var temp = $('#bloodData-Temp').html();
@@ -374,9 +374,9 @@
       $('.glyHe').text(res[0].ghb && (res[0].ghb + '%') || '— —');
       $('.bloodRate').text(res[0].gluComplianceRate || '— —');
       $('.ifQuelified').text(res[0].isQualified === '不显示' ? '— —' : res[0].isQualified);
-      if (res[1].more) {
-        $('.doctorAdvice em').addClass('redDot');
-      }
+      // if (res[1].more) {
+      //   $('.doctorAdvice em').addClass('redDot');
+      // }
       hideMyloading();
     }).fail(function (err) {
       hideMyloading();
