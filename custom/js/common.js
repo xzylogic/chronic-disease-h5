@@ -232,7 +232,6 @@ var custom = {
               TEXT: data,
             }
           }, function (req) {
-            // alert(req);
             req = JSON.parse(req);
             successFun(JSON.parse(req.TEXT));
           });
@@ -283,16 +282,6 @@ var custom = {
             else
               _data = JSON.stringify(encryptParam['data']);
           };
-
-          // alert(JSON.stringify({
-          //   ACTION: "ENCRYPT",
-          //   PARAM: {
-          //     URL: _url,
-          //     TEXT:_data,
-          //     MODE:encryptParam['type'],
-          //     "TIMESTAMP": _timestamp
-          //   }
-          // }))
           //调用原生进行加密
           NativeFunc({
               ACTION: "ENCRYPT",
