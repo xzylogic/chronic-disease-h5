@@ -21,10 +21,6 @@ var ajaxUrl = {
   assessmentRecent: ajaxRoot + 'disease-assessment-recent',     //获取用户最近的风险评估结果
   assessment: ajaxRoot + 'disease-assessment',     //获取风险评估详情
   assessmentCount: ajaxRoot + 'disease-assessment-count',     //风险评估人数
-  assessmentEye: ajaxRoot + 'disease-assessment-eye',     //风险评估-糖尿病眼疾症状评估
-  assessmentFoot: ajaxRoot + 'disease-assessment-foot',     //风险评估-糖尿病足风险评估
-  assessmentKidney: ajaxRoot + 'disease-assessment-kidney',     //风险评估-糖尿病肾病症状评估
-
 
   reportInspectDetail: ajaxRoot + 'disease-report-inspect-detail',     //慢病报告-检查报告详情
   reportInspect: ajaxRoot + 'disease-report-inspect',     //慢病报告-检查报告列表
@@ -39,8 +35,9 @@ var ajaxUrl = {
 
   assessmentHistoryList: ajaxRoot + 'disease-assessment-history-list',     //风险评估-历史评估列表
   assessmentHistoryNum: ajaxRoot + 'disease-assessment-history-num',     //风险评估-历史评估数量
-
-
+  assessmentEye: ajaxRoot + 'disease-assessment-eye',     //风险评估-糖尿病眼疾症状评估
+  assessmentFoot: ajaxRoot + 'disease-assessment-foot',     //风险评估-糖尿病足风险评估
+  assessmentKidney: ajaxRoot + 'disease-assessment-kidney',     //风险评估-糖尿病肾病症状评估
 
   remindEnable: ajaxRoot + 'disease-remind-enable-or-disable',     //用药提醒-启用/禁用用药提醒
   remindDelete: ajaxRoot + 'disease-remind-delete',     //用药提醒-删除用药提醒
