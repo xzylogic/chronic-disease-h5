@@ -313,7 +313,7 @@ var custom = {
               else {
                 /*POST请求，data为密文字符串（非JSON），同时设置 contentType */
                 if (req.TEXT) encryptParam['data'] = req.TEXT;//POST 加密后data
-                encryptParam.contentType= 'text/json';
+                encryptParam.contentType= 'text/plain';
               }
               !noloading && showMyloading();
               $.ajax(encryptParam);
