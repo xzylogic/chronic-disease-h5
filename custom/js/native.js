@@ -110,7 +110,7 @@ function NativeFunc(paramObj,callback) {
       */
       if(androidTimeout) {
         var jsloadTime = Date.now() - jsLoadStartTime;//js已加载时间，单位ms
-        jsloadTime = 200 - jsloadTime;
+        jsloadTime = 500 - jsloadTime;
 
         //js load到现在未超过200ms
         if (jsloadTime > 0) {
