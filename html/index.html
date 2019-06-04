@@ -366,6 +366,7 @@
         }
         html += temp.format(showStatus, res[0].glu.value, status, ifAbnormal, noData);
         $('.riskDataWrap').html(html);
+        alert(difValue)
         if (difValue >= 2) {
           $('.no').text('您' + difValue + '天未测量血糖');
         }
