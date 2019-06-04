@@ -232,7 +232,7 @@ var custom = {
               TEXT: data,
             }
           }, function (req) {
-            alert(req);
+            // alert(req);
             req = JSON.parse(req);
             successFun(JSON.parse(req.TEXT));
           });

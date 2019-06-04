@@ -132,7 +132,7 @@
 <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
 <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
 <script type="text/javascript" src="../custom/js/native.js?v=2.10"></script>
-<script type="text/javascript" src="../custom/js/common.js?v=2.16"></script>
+<script type="text/javascript" src="../custom/js/common.js?v=2.17"></script>
 <script src="../custom/js/api.js?v=1.02"></script>
 <script>
   FastClick.attach(document.body);
@@ -323,6 +323,8 @@
       res[0] = res0;
       res[1] = res1;
       // console.log(res0.res1)
+        alert(JSON.stringify(res0));
+        alert(JSON.stringify(res1));
       var html = '';
       var temp = $('#bloodData-Temp').html();
       var ifAbnormal = '', status = '', noData = '', showStatus = '';
@@ -364,9 +366,10 @@
           noData = 'no';
           status = '';
         }
+
         html += temp.format(showStatus, res[0].glu.value, status, ifAbnormal, noData);
+        alert(html);
         $('.riskDataWrap').html(html);
-        alert(difValue)
         if (difValue >= 2) {
             alert('set text')
           $('.no').text('您' + difValue + '天未测量血糖');
