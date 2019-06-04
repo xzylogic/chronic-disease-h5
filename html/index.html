@@ -141,7 +141,6 @@
   nativeObj.RegisterFun(function (paramObj) {
     switch (paramObj.ACTION) {
       case "ACTIVEPAGE"://页面激活
-        alert('active')
         loadData();
         break;
     }
@@ -318,13 +317,10 @@
   function loadData() {
     pro().then(function () {
       return $.when(getBloodGlucose(), getDoctorAdvice())
-    }).done(function (res0,res1) {
+    }).done(function (res0, res1) {
       var res = [];
       res[0] = res0;
       res[1] = res1;
-      // console.log(res0.res1)
-        alert(JSON.stringify(res0));
-        alert(JSON.stringify(res1));
       var html = '';
       var temp = $('#bloodData-Temp').html();
       var ifAbnormal = '', status = '', noData = '', showStatus = '';
@@ -347,20 +343,18 @@
             break;
         }
         var oldTime = res[0].glu.detectTime.split(' ')[0];
-        var getNowDate = new Date().toLocaleDateString().split('/');
-        if (getNowDate[1] < 10) {
-          getNowDate[1] = '0' + getNowDate[1];
-        }
-        if (getNowDate[2] < 10) {
-          getNowDate[2] = '0' + getNowDate[2];
-        }
-        var nowDate = getNowDate.join('-');
+        // var getNowDate = new Date().toLocaleDateString().split('/');
+        // if (getNowDate[1] < 10) {
+        //   getNowDate[1] = '0' + getNowDate[1];
+        // }
+        // if (getNowDate[2] < 10) {
+        //   getNowDate[2] = '0' + getNowDate[2];
+        // }
+        var nowDate = new Date().Format('yyyy-MM-dd');
         var dateStart = new Date(oldTime);
         var dateEnd = new Date(nowDate);
         var difValue = parseInt((dateEnd - dateStart) / (1000 * 60 * 60 * 24));
 
-        nowDate = new Date().Format('yyyy-MM-dd');
-        alert(oldTime+'-'+nowDate);
         if (!(oldTime === nowDate)) {
           res[0].glu.value = '';
           showStatus = '&nbsp;';
@@ -372,7 +366,6 @@
         html += temp.format(showStatus, res[0].glu.value, status, ifAbnormal, noData);
         $('.riskDataWrap').html(html);
         if (difValue >= 2) {
-            alert('set text')
           $('.no').text('您' + difValue + '天未测量血糖');
         }
         bindClick();
