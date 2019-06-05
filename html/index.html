@@ -131,9 +131,9 @@
 <script type="text/javascript" src="../lib/js/flexible.js"></script>
 <script type="text/javascript" src="../lib/js/fastclick.min.js"></script>
 <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
-<script type="text/javascript" src="../custom/js/native.js"></script>
-<script type="text/javascript" src="../custom/js/common.js?v=3.1"></script>
-<script src="../custom/js/api.js?v=1.02"></script>
+<script type="text/javascript" src="../custom/js/native.js?v=3.5"></script>
+<script type="text/javascript" src="../custom/js/common.js?v=3.5"></script>
+<script src="../custom/js/api.js?v=3.5"></script>
 <script>
   FastClick.attach(document.body);
 
@@ -299,7 +299,7 @@
   // 获取医生建议
   function getDoctorAdvice() {
     var defer3 = $.Deferred();
-    var ajax_url3 = ajaxUrl.doctorAdviceDetail;
+    var ajax_url3 = ajaxUrl.doctorAdviceDetails;
     var ajax_fun3 = function (data) {
       if (data.code === 0) {
         defer3.resolve(data.data);
@@ -316,12 +316,11 @@
   loadData();
   function loadData() {
     pro().then(function () {
-      // return $.when(getBloodGlucose(), getDoctorAdvice())
-      return $.when(getBloodGlucose())
-    }).done(function (res0) {
+      return $.when(getBloodGlucose(), getDoctorAdvice())
+    }).done(function (res0, res1) {
       var res = [];
       res[0] = res0;
-      // res[1] = res1;
+      res[1] = res1;
       var html = '';
       var temp = $('#bloodData-Temp').html();
       var ifAbnormal = '', status = '', noData = '', showStatus = '';
@@ -343,7 +342,7 @@
           default:
             break;
         }
-        var oldTime = res[0].glu.detectTime.split(' ')[0];
+        var oldTime = res[0].glu.detectTime && res[0].glu.detectTime.split(' ')[0];
         // var getNowDate = new Date().toLocaleDateString().split('/');
         // if (getNowDate[1] < 10) {
         //   getNowDate[1] = '0' + getNowDate[1];
@@ -375,9 +374,9 @@
       $('.glyHe').text(res[0].ghb && (res[0].ghb + '%') || '— —');
       $('.bloodRate').text(res[0].gluComplianceRate || '— —');
       $('.ifQuelified').text(res[0].isQualified === '不显示' ? '— —' : res[0].isQualified);
-      // if (res[1].more) {
-      //   $('.doctorAdvice em').addClass('redDot');
-      // }
+      if (res[1].more) {
+        $('.doctorAdvice em').addClass('redDot');
+      }
       hideMyloading();
     }).fail(function (err) {
       hideMyloading();
