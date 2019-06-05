@@ -113,7 +113,7 @@
 <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
 <script type="text/javascript" src="../lib/js/jquery-weui.js"></script>
 <script type="text/javascript" src="../custom/js/native.js"></script>
-<script type="text/javascript" src="../custom/js/common.js?v=3.1"></script>
+<script type="text/javascript" src="../custom/js/common.js?v=3.7"></script>
 <script src="../custom/js/api.js"></script>
 <script>
   FastClick.attach(document.body);
@@ -131,7 +131,7 @@
         }
         hideMyloading();
       };
-      custom.ajaxRequest({url: ajax_url, data: {page: page, limit: 10, uid: localStorage.getItem('uid'), accountId: localStorage.getItem('accountId'), format: 'json'}}, ajax_fun, true);
+      custom.ajaxRequest({url: ajax_url, data: {page: page, limit: 5, uid: localStorage.getItem('uid'), accountId: localStorage.getItem('accountId'), format: 'json'}}, ajax_fun, true);
       return defer.promise();
     }
 
