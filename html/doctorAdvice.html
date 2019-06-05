@@ -147,7 +147,7 @@
     indexDoctorAdvice(adviceData.page);
     function indexDoctorAdvice(page) {
       getDoctorAdvice(page).done(function (res) {
-        console.log(res);
+        // console.log(res);
         adviceData.moreData = res.more;
         var temp = $('#dovtorAdvice-Temp').html();
         if (page === 1 && res.content.length === 0) {
