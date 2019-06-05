@@ -131,8 +131,7 @@
         }
         hideMyloading();
       };
-      custom.ajaxRequest({url: ajax_url, data: {uid: localStorage.getItem('uid'), accountId: localStorage.getItem('accountId')}}, ajax_fun, true);
-      // custom.ajaxRequest({url: ajax_url, data: {flag: page, uid: localStorage.getItem('uid'), accountId: localStorage.getItem('accountId')}}, ajax_fun, true);
+      custom.ajaxRequest({url: ajax_url, data: {page: page, limit: 10, uid: localStorage.getItem('uid'), accountId: localStorage.getItem('accountId'), format: 'json'}}, ajax_fun, true);
       return defer.promise();
     }
 
@@ -142,17 +141,16 @@
       dataList: $('.have-data-box'),
       loading: false,   //上拉加载时防止多次加载
       moreData: false,  //是否有更多数据
-      page: 0,  //页数
+      page: 1,  //页数
     };
 
     indexDoctorAdvice(adviceData.page);
     function indexDoctorAdvice(page) {
       getDoctorAdvice(page).done(function (res) {
         console.log(res);
-        adviceData.moreData = false;
-        // adviceData.moreData = res.more;
+        adviceData.moreData = res.more;
         var temp = $('#dovtorAdvice-Temp').html();
-        if (page === 0 && res.content.length === 0) {
+        if (page === 1 && res.content.length === 0) {
           $('.custom-nodata').show();
         } else {
           $('.weui-loadmore').hide();
