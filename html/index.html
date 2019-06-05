@@ -299,7 +299,7 @@
   // 获取医生建议
   function getDoctorAdvice() {
     var defer3 = $.Deferred();
-    var ajax_url3 = ajaxUrl.doctorAdviceDetails;
+    var ajax_url3 = ajaxUrl.doctorAdviceDetail;
     var ajax_fun3 = function (data) {
       if (data.code === 0) {
         defer3.resolve(data.data);
@@ -343,13 +343,6 @@
             break;
         }
         var oldTime = res[0].glu.detectTime && res[0].glu.detectTime.split(' ')[0];
-        // var getNowDate = new Date().toLocaleDateString().split('/');
-        // if (getNowDate[1] < 10) {
-        //   getNowDate[1] = '0' + getNowDate[1];
-        // }
-        // if (getNowDate[2] < 10) {
-        //   getNowDate[2] = '0' + getNowDate[2];
-        // }
         var nowDate = new Date().Format('yyyy-MM-dd');
         var dateStart = new Date(oldTime);
         var dateEnd = new Date(nowDate);
@@ -385,7 +378,6 @@
   }
 
   bindClick();
-
   function bindClick() {
     $('.circleCon').bind('click', function () {
       NativeFunc({
