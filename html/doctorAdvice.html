@@ -131,7 +131,8 @@
         }
         hideMyloading();
       };
-      custom.ajaxRequest({url: ajax_url, data: {flag: page, uid: localStorage.getItem('uid'), accountId: localStorage.getItem('accountId')}}, ajax_fun, true);
+      custom.ajaxRequest({url: ajax_url, data: {uid: localStorage.getItem('uid'), accountId: localStorage.getItem('accountId')}}, ajax_fun, true);
+      // custom.ajaxRequest({url: ajax_url, data: {flag: page, uid: localStorage.getItem('uid'), accountId: localStorage.getItem('accountId')}}, ajax_fun, true);
       return defer.promise();
     }
 
@@ -148,7 +149,8 @@
     function indexDoctorAdvice(page) {
       getDoctorAdvice(page).done(function (res) {
         console.log(res);
-        adviceData.moreData = res.more;
+        adviceData.moreData = false;
+        // adviceData.moreData = res.more;
         var temp = $('#dovtorAdvice-Temp').html();
         if (page === 0 && res.content.length === 0) {
           $('.custom-nodata').show();
