@@ -58,7 +58,7 @@
   </div>&ndash;&gt;
 </div>-->
 <div class="doctorAdviceBox" style="position: absolute; overflow: auto; height: 100%;">
-  <div class="have-data-box" style="height:100%; overflow:auto">
+  <div class="have-data-box" style="height:100%; overflow:auto; z-index: 11;">
     <!--显示下拉标签-->
     <div class="weui-pull-to-refresh__layer pull-refresh-loading">
       <div class='weui-pull-to-refresh__arrow'></div>
@@ -121,6 +121,7 @@
   $(function () {
     // 获取医生建议
     function getDoctorAdvice(page) {
+      alert(page)
       var defer = $.Deferred();
       var ajax_url = ajaxUrl.doctorAdviceDetail;
       var ajax_fun = function (data) {
@@ -299,7 +300,7 @@
         if (adviceData.loading) return;
         adviceData.loading = true;
         $('.weui-loadmore').show();
-        indexDoctorAdvice(adviceData.page++);
+        indexDoctorAdvice(++adviceData.page);
       }
     });
   })
