@@ -9,63 +9,43 @@
   <link rel="stylesheet" type="text/css" href="../custom/css/doctorAdvice.css"/>
 </head>
 <style>
+  .doctorAdviceBox{
+    position: relative;
+    height: 100%;
+    background-color: #f4f4f4;
+    z-index:99;
+  }
+  .have-data-box{
+    position: absolute;
+    top:-2.2rem;
+    bottom:0;
+    margin-top:0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow:auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .pull-refresh-loading {
+    padding: 0;
+    height: 2.2rem;
+    line-height: 2.2rem;
+    font-size: .7rem;
+    color: #999;
+    text-align: center;
+  }
   .item:after{content: " ";display: inline-block;position: absolute;top:10px;right: 1px;background: url(../custom/images/darrow.png);width: 0.4rem;height: 0.213333rem;margin-top:-0.106667rem;background-size: contain;}
   .showItem .item:after{background-image: url(../custom/images/uparrow.png)}
 </style>
 <body>
-<!--<div class="doctorAdviceBox" style="display: none;">
-  <div style="position: fixed; width: 100%; z-index: 11;">
-    <div class="doctorMes clearfix" style="display:block;">
-      <span class="photo"><img src="../custom/images/photo.jpg"/>&lt;!&ndash;  class="default" &ndash;&gt;</span>
-      <div class="mes">
-        <h3>签约医生：黄晓明</h3>
-        <p>所在单位：上海黄埔的社区中心</p>
-      </div>
-    </div>
-    <div class="tabWrap">
-      <span class="current">血糖异常</span><span>血压异常</span>
-    </div>
-    <p class="border-top"></p>
-  </div>
-  <div class='custom-nodata' style="display:none;">
-    <img src="../custom/images/nodata.png">
-    <p>暂无建议</p>
-  </div>
-  &lt;!&ndash;<div class="main">
-    <div class="have-data-box" style="position: fixed; height:100%; top: 4.7rem; overflow:auto;">
-      &lt;!&ndash;显示下拉标签&ndash;&gt;
-      <div class="weui-pull-to-refresh__layer pull-refresh-loading">
-        <div class='weui-pull-to-refresh__arrow'></div>
-        <div class='weui-pull-to-refresh__preloader'></div>
-        <div class="down">下拉刷新</div>
-        <div class="up">释放刷新</div>
-        <div class="refresh"></div>
-        <span id="last-Time"></span>
-      </div>
-      <ul class="newadviceList" style="padding-bottom: 3.1rem;">
-        &lt;!&ndash;<li>&ndash;&gt;
-        &lt;!&ndash;<p><label>测量时间</label><span>2017-09-10&nbsp;&nbsp;&nbsp;&nbsp;早晨</span></p>&ndash;&gt;
-        &lt;!&ndash;<p><label>血糖异常</label><span><em class="abnormal">10.21<img src="../custom/images/sup.png"></em>&nbsp;&nbsp;mmol/L</span></p>&ndash;&gt;
-        &lt;!&ndash;<p><label>干预时间</label><span>2019-09-12</span></p>&ndash;&gt;
-        &lt;!&ndash;<p><label>医生建议</label><span>请注意到医院检查</span></p>&ndash;&gt;
-        &lt;!&ndash;</li>&ndash;&gt;
-      </ul>
-      <div id="load-more" class="weui-loadmore" style="display: none; margin-top: -3.1rem;">
-        <i class="weui-loading"></i>
-        <span class="weui-loadmore__tips">正在加载</span>
-      </div>
-    </div>
-  </div>&ndash;&gt;
-</div>-->
-<div class="doctorAdviceBox" style="position: absolute; overflow: auto; height: 100%;">
-  <div class="have-data-box" style="height:100%; overflow:auto; z-index: 11;">
+<div class="doctorAdviceBox">
+  <div class="have-data-box">
     <!--显示下拉标签-->
     <div class="weui-pull-to-refresh__layer pull-refresh-loading">
       <div class='weui-pull-to-refresh__arrow'></div>
       <div class='weui-pull-to-refresh__preloader'></div>
       <div class="down">下拉刷新</div>
       <div class="up">释放刷新</div>
-      <div class="refresh"></div>
+      <div class="refresh">正在刷新</div>
       <span id="last-Time"></span>
     </div>
     <ul class="newadviceList">
@@ -92,11 +72,6 @@
   <img src="../custom/images/nodata.png">
   <p>暂无建议</p>
 </div>
-<!--<p><label>测量时间</label><span>{0}&nbsp;&nbsp;&nbsp;&nbsp;{1}</span></p>-->
-<!--<p><label>{7}</label><span><em class="{5}">{2}<img src="{6}"></em>&nbsp;&nbsp;mmol/L</span></p>-->
-<!--<p><label>干预时间</label><span>{3}</span></p>-->
-<!--<p><label>医生建议</label><span>{4}</span></p>-->
-<!--<span class="{10}">{1}&nbsp;&nbsp;{2}&nbsp;&nbsp;<span><em class="{11}">{3}<img src="{12}"></em>&nbsp;&nbsp;{4}</span></span>-->
 
 <script type="text/template" id="dovtorAdvice-Temp">
   <li>
@@ -121,7 +96,6 @@
   $(function () {
     // 获取医生建议
     function getDoctorAdvice(page) {
-      alert(page)
       var defer = $.Deferred();
       var ajax_url = ajaxUrl.doctorAdviceDetail;
       var ajax_fun = function (data) {
@@ -132,7 +106,7 @@
         }
         hideMyloading();
       };
-      custom.ajaxRequest({url: ajax_url, data: {page: page, limit: 5, uid: localStorage.getItem('uid'), accountId: localStorage.getItem('accountId'), format: 'json'}}, ajax_fun, true);
+      custom.ajaxRequest({url: ajax_url, data: {page: page, limit: 10, uid: localStorage.getItem('uid'), accountId: localStorage.getItem('accountId'), format: 'json'}}, ajax_fun, true);
       return defer.promise();
     }
 
