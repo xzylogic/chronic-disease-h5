@@ -106,7 +106,7 @@
         }
         hideMyloading();
       };
-      custom.ajaxRequest({url: ajax_url, data: {page: page, limit: 10, uid: localStorage.getItem('uid'), accountId: localStorage.getItem('accountId'), format: 'json'}}, ajax_fun, true);
+      custom.ajaxRequest({url: ajax_url, data: {page: page, limit: 5, uid: localStorage.getItem('uid'), accountId: localStorage.getItem('accountId'), format: 'json'}}, ajax_fun, false);
       return defer.promise();
     }
 
