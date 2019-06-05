@@ -158,13 +158,13 @@
           var meal = '', flagStatus = '', flagStatus2 = '', flagImg = '', flagImg2 = '', flagItem = '';
           res.content.length > 0 ? res.content.map(function (data) {
             var abnormalHtml = '', abnormalHtml2 = '', indexItem = 0;
-            data.bloodGlucose_list && data.bloodGlucose_list.map(function (res) {
-              if(data.bloodGlucose_list.length === 1){
+            data.gluList && data.gluList.map(function (res) {
+              if(data.gluList.length === 1){
                 flagItem = '';
               }else{
                 flagItem = 'item';
               }
-              switch (res.testPeriod) {
+              switch (res.type) {
                 case "0":
                   meal = '早餐前';
                   break;
@@ -210,15 +210,15 @@
                   break;
               }
               if(indexItem === 0){
-                abnormalHtml += '<span class='+ flagItem +'>'+ res.testTime +'&nbsp;&nbsp;'+ meal +'&nbsp;&nbsp;<em class='+ flagStatus +'>'+ res.fpgValue +'<img src='+ flagImg +'></em>&nbsp;&nbsp;mmol/L</span><br>';
+                abnormalHtml += '<span class='+ flagItem +'>'+ res.detectTime +'&nbsp;&nbsp;'+ meal +'&nbsp;&nbsp;<em class='+ flagStatus +'>'+ res.gluValue +'<img src='+ flagImg +'></em>&nbsp;&nbsp;mmol/L</span><br>';
               }else{
-                abnormalHtml2 += '<span>'+ res.testTime +'&nbsp;&nbsp;'+ meal +'&nbsp;&nbsp;<em class='+ flagStatus +'>'+ res.fpgValue +'<img src='+ flagImg +'></em>&nbsp;&nbsp;mmol/L</span><br>';
+                abnormalHtml2 += '<span>'+ res.detectTime +'&nbsp;&nbsp;'+ meal +'&nbsp;&nbsp;<em class='+ flagStatus +'>'+ res.gluValue +'<img src='+ flagImg +'></em>&nbsp;&nbsp;mmol/L</span><br>';
               }
               indexItem++;
             });
 
-            data.pressure_list && data.pressure_list.map(function (res) {
-              if(data.pressure_list.length === 1){
+            data.sysDiaList && data.sysDiaList.map(function (res) {
+              if(data.sysDiaList.length === 1){
                 flagItem = '';
               }else{
                 flagItem = 'item';
@@ -256,15 +256,15 @@
                   break;
               }
               if(indexItem === 0){
-                abnormalHtml += '<span class='+ flagItem +'>'+ res.testTime +'&nbsp;&nbsp;'+ res.testHour +'&nbsp;&nbsp;<em class='+ flagStatus +'>'+ res.diastolic +'<img src='+ flagImg +'></em>/<em class='+ flagStatus2 +'>'+ res.systolic +'<img src='+ flagImg2 +'></em>&nbsp;&nbsp;mmHg</span><br>';
+                abnormalHtml += '<span class='+ flagItem +'>'+ res.detectTime +'&nbsp;&nbsp;'+ res.detectHour +'&nbsp;&nbsp;<em class='+ flagStatus +'>'+ res.diaValue +'<img src='+ flagImg +'></em>/<em class='+ flagStatus2 +'>'+ res.sysValue +'<img src='+ flagImg2 +'></em>&nbsp;&nbsp;mmHg</span><br>';
               }else{
-                abnormalHtml2 += '<span>'+ res.testTime +'&nbsp;&nbsp;'+ res.testHour +'&nbsp;&nbsp;<em class='+ flagStatus +'>'+ res.diastolic +'<img src='+ flagImg +'></em>/<em class='+ flagStatus2 +'>'+ res.systolic +'<img src='+ flagImg2 +'></em>&nbsp;&nbsp;mmHg</span><br>';
+                abnormalHtml2 += '<span>'+ res.detectTime +'&nbsp;&nbsp;'+ res.detectHour +'&nbsp;&nbsp;<em class='+ flagStatus +'>'+ res.diaValue +'<img src='+ flagImg +'></em>/<em class='+ flagStatus2 +'>'+ res.sysValue +'<img src='+ flagImg2 +'></em>&nbsp;&nbsp;mmHg</span><br>';
               }
               indexItem++;
             });
 
-            // html += temp.format(data.abnormalType, abnormalHtml, data.dealTime, data.doctor_name, data.hospital_name, data.doctor_suggest, abnormalHtml2);
-            html += temp.format(data.interven_type, abnormalHtml, data.intervene_time, data.doctor_name, data.hospital_name, data.doctor_suggest, abnormalHtml2);
+            html += temp.format(data.abnormalType, abnormalHtml, data.dealTime, data.docName, data.hospitalName, data.dealContent, abnormalHtml2);
+            // html += temp.format(data.interven_type, abnormalHtml, data.intervene_time, data.doctor_name, data.hospital_name, data.doctor_suggest, abnormalHtml2);
           }) : '';
           $('.newadviceList').html(html);
 
