@@ -7,19 +7,45 @@
   <link rel="stylesheet" type="text/css" href="../lib/css/jquery-weui.css" />
   <link rel="stylesheet" type="text/css" href="../custom/css/common.css" />
   <link rel="stylesheet" type="text/css" href="../custom/css/riskAssessment.css" />
+  <style>
+    .riskAssessment{
+      position: relative;
+      height: 100%;
+      background-color: #f4f4f4;
+      z-index:99;
+    }
+    .have-data-box{
+      position: absolute;
+      top:-2.2rem;
+      bottom:0;
+      margin-top:0;
+      width: 100%;
+      box-sizing: border-box;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .pull-refresh-loading {
+      padding: 0;
+      height: 2.2rem;
+      line-height: 2.2rem;
+      font-size: .7rem;
+      color: #999;
+      text-align: center;
+    }
+  </style>
 
 </head>
 
 <body>
-<div class="riskAssessment riskAssessmentHistory" style="position: absolute; overflow: auto; height: 100%;">
-  <div class="have-data-box" style="height:120%; overflow:auto; z-index: 11;">
+<div class="riskAssessment riskAssessmentHistory">
+  <div class="have-data-box">
     <!--显示下拉标签-->
     <div class="weui-pull-to-refresh__layer pull-refresh-loading">
       <div class='weui-pull-to-refresh__arrow'></div>
       <div class='weui-pull-to-refresh__preloader'></div>
       <div class="down">下拉刷新</div>
       <div class="up">释放刷新</div>
-      <div class="refresh"></div>
+      <div class="refresh">正在刷新</div>
       <span id="last-Time"></span>
     </div>
     <ul class="historyList">
@@ -114,7 +140,7 @@
           if(historyData.loading) return;
           historyData.loading = true;
           $('.weui-loadmore').show();
-          getHistoryAssess(text, historyData.page++);
+          getHistoryAssess(text, ++historyData.page);
         }
       });
     });
