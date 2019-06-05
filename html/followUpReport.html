@@ -354,7 +354,7 @@
         }
         hideMyloading();
       };
-      custom.ajaxRequest({url: ajax_url1, data: {cardType: '01', cardNumber: localStorage.getItem('idcard'), registerId: localStorage.getItem('uid')}}, ajax_fun1, false);
+      custom.ajaxRequest({url: ajax_url1, data: {cardType: '01', cardNumber: localStorage.getItem('idcard'), uid: localStorage.getItem('uid')}}, ajax_fun1, false);
       return defer1.promise();
     }
 
@@ -372,7 +372,7 @@
         }
         hideMyloading();
       };
-      custom.ajaxRequest({url: ajax_url2, data: {cardType: '01', cardNumber: localStorage.getItem('idcard'), registerId: localStorage.getItem('uid')}}, ajax_fun2, false);
+      custom.ajaxRequest({url: ajax_url2, data: {cardType: '01', cardNumber: localStorage.getItem('idcard'), uid: localStorage.getItem('uid')}}, ajax_fun2, false);
       return defer2.promise();
     }
 
