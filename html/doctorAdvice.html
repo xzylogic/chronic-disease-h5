@@ -288,7 +288,7 @@
     //下拉刷新
     adviceData.dataList.pullToRefresh().on('pull-to-refresh', function () {
       html = '';
-      adviceData.page = 0;
+      adviceData.page = 1;
       indexDoctorAdvice(adviceData.page);
       adviceData.dataList.pullToRefreshDone();
     });
