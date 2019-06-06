@@ -93,7 +93,7 @@
 }
 .homeBox .riskDataWrap .circleCon em.no {
   font-size: 12px;
-  /*white-space: nowrap;*/
+  white-space: nowrap;
 }
 .homeBox .riskDataWrap .circleCon span {
   display: block;
