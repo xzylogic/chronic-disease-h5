@@ -316,16 +316,13 @@
   loadData();
   function loadData() {
     pro().then(function () {
-      return $.when(getBloodGlucose(), getDoctorAdvice())
-    }).done(function (res0, res1) {
-      var res = [];
-      res[0] = res0;
-      res[1] = res1;
+      return $.when(getBloodGlucose())
+    }).done(function (res0) {
       var html = '';
       var temp = $('#bloodData-Temp').html();
       var ifAbnormal = '', status = '', noData = '', showStatus = '';
-      if (res[0].glu && res[0].glu.value) {
-        switch (res[0].glu.isAbnormal) {
+      if (res0.glu && res0.glu.value) {
+        switch (res0.glu.isAbnormal) {
           case '0':
             showStatus = '血糖正常';
             break;
@@ -342,21 +339,21 @@
           default:
             break;
         }
-        var oldTime = res[0].glu.detectTime && res[0].glu.detectTime.split(' ')[0];
+        var oldTime = res0.glu.detectTime && res0.glu.detectTime.split(' ')[0];
         var nowDate = new Date().Format('yyyy-MM-dd');
         var dateStart = new Date(oldTime);
         var dateEnd = new Date(nowDate);
         var difValue = parseInt((dateEnd - dateStart) / (1000 * 60 * 60 * 24));
 
         if (!(oldTime === nowDate)) {
-          res[0].glu.value = '';
+          res0.glu.value = '';
           showStatus = '&nbsp;';
           ifAbnormal = 'nodataCircleCon';
           noData = 'no';
           status = '';
         }
 
-        html += temp.format(showStatus, res[0].glu.value, status, ifAbnormal, noData);
+        html += temp.format(showStatus, res0.glu.value, status, ifAbnormal, noData);
         $('.riskDataWrap').html(html);
         if (difValue >= 2) {
           $('.no').text('您' + difValue + '天未测量血糖');
@@ -364,12 +361,12 @@
         bindClick();
       }
 
-      $('.glyHe').text(res[0].ghb && (res[0].ghb + '%') || '— —');
-      $('.bloodRate').text(res[0].gluComplianceRate || '— —');
-      $('.ifQuelified').text(res[0].isQualified === '不显示' ? '— —' : res[0].isQualified);
-      if (res[1].more) {
-        $('.doctorAdvice em').addClass('redDot');
-      }
+      $('.glyHe').text(res0.ghb && (res0.ghb + '%') || '— —');
+      $('.bloodRate').text(res0.gluComplianceRate || '— —');
+      $('.ifQuelified').text(res0.isQualified === '不显示' ? '— —' : res0.isQualified);
+      // if (res1.more) {
+      //   $('.doctorAdvice em').addClass('redDot');
+      // }
       hideMyloading();
     }).fail(function (err) {
       hideMyloading();
