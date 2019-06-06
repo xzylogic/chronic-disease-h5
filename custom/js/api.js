@@ -43,6 +43,7 @@ var ajaxUrl = {
   reportScreening: ajaxRoot + 'disease-report-screening',     //慢病报告-筛查报告列表
   reportFollow: ajaxRoot + 'disease-report-follow',     //慢病报告-随访报告列表
   doctorAdviceDetail: ajaxRoot + 'iot-doc-api-deal-opinion',     //医生建议-医生建议列表
+  residentAccountId: ajaxRoot + 'iot-get-resident-by-accountId',     //请求平台accountId
   userGetTokenByAuthCode: ajaxRoot + 'userGetTokenByAuthCode',   //根据code换token
   // 体征测量
   // iotV2HealthDataList: ajaxRoot + 'iotV2HealthDataList',   //血糖
