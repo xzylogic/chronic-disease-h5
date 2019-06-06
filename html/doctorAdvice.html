@@ -125,9 +125,14 @@
         // console.log(res);
         adviceData.moreData = res.more;
         var temp = $('#dovtorAdvice-Temp').html();
+        alert(typeof page)
         if (page === 1 && res.content.length === 0) {
+          alert(page)
+          alert('a')
           $('.custom-nodata').show();
         } else {
+          alert(page)
+          alert('b')
           $('.weui-loadmore').hide();
           adviceData.loading = false;
           var meal = '', flagStatus = '', flagStatus2 = '', flagImg = '', flagImg2 = '', flagItem = '';
