@@ -301,9 +301,9 @@
   }
 
   // 获取医生建议
-  function getDoctorAdvice() {
+  function getResidentAccountId() {
     var defer3 = $.Deferred();
-    var ajax_url3 = ajaxUrl.doctorAdviceDetail;
+    var ajax_url3 = ajaxUrl.residentAccountId;
     var ajax_fun3 = function (data) {
       if (data.code === 0) {
         defer3.resolve(data.data);
@@ -312,7 +312,7 @@
       }
       hideMyloading();
     };
-    custom.ajaxRequest({url: ajax_url3, data: {page: 1, uid: localStorage.getItem('uid'), accountId: localStorage.getItem('accountId'), format: 'json'}}, ajax_fun3, false);
+    custom.ajaxRequest({url: ajax_url3, data: {accountId: localStorage.getItem('accountId')}}, ajax_fun3, false);
     return defer3.promise();
   }
 
@@ -320,8 +320,8 @@
   loadData();
   function loadData() {
     pro().then(function () {
-      return $.when(getBloodGlucose())
-    }).done(function (res0) {
+      return $.when(getBloodGlucose(), getResidentAccountId())
+    }).done(function (res0, res1) {
       var html = '';
       var temp = $('#bloodData-Temp').html();
       var ifAbnormal = '', status = '', noData = '', showStatus = '';
