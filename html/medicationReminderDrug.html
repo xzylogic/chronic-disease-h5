@@ -104,10 +104,7 @@
   // var mecObj = localStorage.getItem('mecObj') && JSON.parse(localStorage.getItem('mecObj')) || {};  //口服药数据
   // var mecObjInsulin = localStorage.getItem('mecObjInsulin') && JSON.parse(localStorage.getItem('mecObjInsulin')) || {};   //胰岛素数据
   var mecObj = {}, mecObjInsulin = {};
-  //获取口服药、胰岛素药品列表
-  showMyloading();
   var drugData, drugDataId, drugDataBrand, drugDataName, getId;   //来获取medicineId、brand
-  getDrugList(anotherType);
 
   function getDrugList(type) {
     if (type === '口服药') {
@@ -168,6 +165,7 @@
                       drugDataId = val.id;
                       drugDataBrand = val.brand;
                       drugDataName = val.name;
+                      $('.unit').text(getId[2].substr(-1, 1));
                       return true;
                     }
                   } else {
@@ -175,6 +173,7 @@
                       drugDataId = val.id;
                       drugDataBrand = val.brand;
                       drugDataName = val.name;
+                      $('.unit').text(getId[1].substr(-1, 1));
                       return true;
                     }
                   }
@@ -399,9 +398,9 @@
     var nameSpecification = showDrugText.split(' ');
     var remindDrugData;
     var timeArr = [];
-    console.log(oldTimeObj)
+    // console.log(oldTimeObj)
     Object.keys(timeObj).map(function (val, m) {
-      console.log(val)
+      // console.log(val)
       if(oldTimeObj.hasOwnProperty(val)){
         timesIdArr.map(function (id, n) {
           if(m === n){
@@ -445,8 +444,8 @@
       remindDrugData.delRemindTimes = delTimes;
       remindDrugData.id = getParams('id');
     }
-    console.log(JSON.stringify(remindDrugData))
-    console.log(remindDrugData)
+    // console.log(JSON.stringify(remindDrugData));
+    // console.log(remindDrugData);
 
     // 保存常用药品
     var ajax_url3 = ajaxUrl.remindSave;
@@ -601,24 +600,22 @@
 
   $(function () {
     //单击用药提醒列表跳转至此页面时获取当前页面URL的参数
-    console.log(getParams('type'))
-    if(getParams('type')){
-      $('.tabWrap span').removeClass();
-      if(getParams('type') === 'I'){
-        anotherType = '胰岛素';
-        $('.tabWrap span:eq(1)').addClass('current');
-      }else{
-        anotherType = '口服药';
-        $('.tabWrap span:eq(0)').addClass('current');
-      }
-      getDrugList(anotherType);
-    }
     var urlBrand = decodeURI(getParams('brand'));
+    if(getParams('type') === 'I'){
+      $('.tabWrap span').removeClass();
+      anotherType = '胰岛素';
+      $('.tabWrap span:eq(1)').addClass('current');
+      $('.unit').text(urlBrand.split(' ')[2].substr(-1, 1));
+    }else if(getParams('type') === 'M'){
+      anotherType = '口服药';
+      $('.tabWrap span:eq(0)').addClass('current');
+      $('.unit').text(urlBrand.split(' ')[1].substr(-1, 1));
+    }
+    //获取口服药、胰岛素药品列表
+    getDrugList(anotherType);
     if (urlBrand) {
-      var urlDose = decodeURI(getParams('dose')), urlTime = decodeURI(getParams('time')), urlRemark = decodeURI(getParams('remark')),
-          urlMedicineId = decodeURI(getParams('medicineId')), urlName = decodeURI(getParams('name'));
-      var time1 = urlTime.split(' ');
-      time1.map(function (val) {
+      var urlDose = decodeURI(getParams('dose')), urlTime = decodeURI(getParams('time')), urlRemark = decodeURI(getParams('remark')), urlMedicineId = decodeURI(getParams('medicineId')), urlName = decodeURI(getParams('name'));
+      urlTime && urlTime.split(' ').map(function (val) {
         if (val === '') {
           return;
         }
@@ -630,7 +627,6 @@
       $('.itext').val(urlDose);
       $('.weui-textarea').val(urlRemark);
       oldTimeObj = JSON.parse(JSON.stringify(timeObj));
-      console.log(oldTimeObj)
       addTimeHtml(timeObj);
     }
 
