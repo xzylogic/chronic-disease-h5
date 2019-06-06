@@ -312,7 +312,7 @@
       }
       hideMyloading();
     };
-    custom.ajaxRequest({url: ajax_url3, data: {accountId: localStorage.getItem('accountId')}}, ajax_fun3, false);
+    custom.ajaxRequest({url: ajax_url3, data: {accountId: localStorage.getItem('accountId'), format: 'json'}}, ajax_fun3, false);
     return defer3.promise();
   }
 
