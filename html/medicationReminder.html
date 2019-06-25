@@ -105,8 +105,52 @@
       });
     }
 
+    var code = getParams('code');
+    if(code){
+      var pageData = {};
+      //获取token
+      var ajax_url0 = ajaxUrl.userGetTokenByAuthCode;
+      var ajax_fun0 = function (data) {
+        var tokenData = data.data;
+        if (data.code === 0) {
+          localStorage.setItem('netToken', tokenData.token);
+          localStorage.setItem('uid', tokenData.uid);
+          localStorage.setItem('channelCode', tokenData.channelCode);
+          localStorage.setItem('lightAppCode', tokenData.lightAppCode);
+          localStorage.setItem('appid', tokenData.appid);
+          localStorage.setItem('accountId', tokenData.accountId);
+          localStorage.setItem('requestUrl', nativeObj.htmlPath + '/../../healthcloud-measure-web/html');
+          localStorage.setItem('idcard', tokenData.idcard || '');
+          localStorage.removeItem('iotUid');
+          pageData = {
+            netToken: tokenData.token,
+            uid: tokenData.uid,
+            channelCode: tokenData.channelCode,
+            lightAppCode: tokenData.lightAppCode,
+          };
+          getRemindList();
+        } else {
+          pageData = {
+            netToken: localStorage.getItem('netToken'),
+            uid: localStorage.getItem('uid'),
+            channelCode: localStorage.getItem('channelCode'),
+            lightAppCode: localStorage.getItem('lightAppCode'),
+          };
+          if (!pageData.netToken) {
+            $.toast(data.msg || '请求错误', 'text');
+          } else {
+            getRemindList();
+          }
+        }
+        hideMyloading();
+      };
+      custom.ajaxRequest({url: ajax_url0, data: {authCode: code}}, ajax_fun0, false);
+    }else{
+      getRemindList();
+    }
+
     // 获取用药提醒列表
-    getRemindList();
+    // getRemindList();
     function getRemindList() {
       var ajax_url = ajaxUrl.remindList;
       var ajax_fun = function(data){
