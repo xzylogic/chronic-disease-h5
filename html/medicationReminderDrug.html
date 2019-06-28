@@ -89,7 +89,13 @@
 <!-- 选药品 -->
 <link rel="stylesheet" href="../lib/css/iosSelect.css">
 <script src="../lib/js/iosSelect.js"></script>
-<script type="text/javascript">
+<script>
+  var arr = [1,2], brr = [5,6];
+  arr.some(function (value, index, array) {
+    alert(value+'='+index)
+  })
+</script>
+<!--<script type="text/javascript">
   FastClick.attach(document.body);
   $.toast.prototype.defaults.duration = 800;
 
@@ -159,7 +165,7 @@
                 // $('#drug-dose').val(selectTwoObj.id);
                 // $('#drug-dose').attr('drug-dose', selectTwoObj.value);
                 getId = selectTwoObj.value.split(' ');
-                drugData.map(function (val) {
+                drugData.some(function (val) {
                   if (drugList.drugType === 'I') {
                     if (val.brand === (getId[0] + ' ' + getId[1]) && val.specification === getId[2]) {
                       drugDataId = val.id;
@@ -253,7 +259,7 @@
     custom.ajaxRequest({url: ajax_url2, data: {type: drugList.drugType, userId: localStorage.getItem('uid')}}, ajax_fun2, false);
   }
 
-  <!-- 时间显示 -->
+  &lt;!&ndash; 时间显示 &ndash;&gt;
   var timeObj = {};
   // var timeObj = localStorage.getItem('timeObj') && JSON.parse(localStorage.getItem('timeObj')) || {};
   initTime();
@@ -353,7 +359,7 @@
   var delTimes = [];
   function deleteTime(val, id, i, obj) {
     if(id !== 'undefined' && id !== ''){
-      timesIdArr.map(function (data, m) {
+      timesIdArr.some(function (data, m) {
         if(timesIdArr[m] === id){
           timesIdArr.splice(m, 1);
           return true;
@@ -514,7 +520,7 @@
         var deleteName = $(_this).find('span').attr('data-name');   //当前删除的常用药品Id
         longClick = 0;//设置初始为0
         timeOutEvent = setTimeout(function () {
-          //此处为长按事件-----在此显示遮罩层及删除按钮
+          //此处为长按事件-&#45;&#45;&#45;&#45;在此显示遮罩层及删除按钮
           longClick = 1;//假如长按，则设置为1
           $.confirm({
             title: '提示',
@@ -567,7 +573,7 @@
           //此处为点击事件
           $('#showDrug').text(commonDrugContent);
           getId = commonDrugContent.split(' ');
-          drugData.map(function (val) {
+          drugData.some(function (val) {
             if (drugList.drugType === 'I') {
               if (val.brand === (getId[0] + ' ' + getId[1]) && val.specification === getId[2]) {
                 drugDataId = val.id;
@@ -645,7 +651,7 @@
       getDrugList(anotherType);   //获取口服药或胰岛素药品列表
     })
   })
-</script>
+</script>-->
 
 </body>
 </html>
