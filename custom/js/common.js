@@ -203,6 +203,7 @@ var custom = {
   */
   appVersion: getParams('appVersion'),//App版本
   ajaxRequest: function (opts, successFun, noloading) {
+    alert(123456)
     var pageData = {
       // userInfo: 1,
       token: localStorage.getItem('netToken') || '',
@@ -293,6 +294,7 @@ var custom = {
               }
             }
             ,function(req){
+            alert(req)
               var req = JSON.parse(req);
 
               /*发送加密请求时，需要在头部设置签名等参数（和非加密请求有所差异）*/
