@@ -283,12 +283,6 @@ var custom = {
               _data = JSON.stringify(encryptParam['data']);
           };
           //调用原生进行加密
-          alert(JSON.stringify({
-            URL: _url,
-            TEXT:_data,
-            MODE:encryptParam['type'],
-            "TIMESTAMP": _timestamp
-          }))
           NativeFunc({
               ACTION: "ENCRYPT",
               PARAM: {
