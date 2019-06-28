@@ -283,12 +283,6 @@ var custom = {
               _data = JSON.stringify(encryptParam['data']);
           };
           //调用原生进行加密
-          alert(JSON.stringify({
-            URL: _url,
-            TEXT:_data,
-            MODE:encryptParam['type'],
-            "TIMESTAMP": _timestamp
-          }))
           NativeFunc({
               ACTION: "ENCRYPT",
               PARAM: {
@@ -299,7 +293,6 @@ var custom = {
               }
             }
             ,function(req){
-            alert(req)
               var req = JSON.parse(req);
 
               /*发送加密请求时，需要在头部设置签名等参数（和非加密请求有所差异）*/
