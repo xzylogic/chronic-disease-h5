@@ -203,7 +203,6 @@ var custom = {
   */
   appVersion: getParams('appVersion'),//App版本
   ajaxRequest: function (opts, successFun, noloading) {
-    alert(123456)
     var pageData = {
       // userInfo: 1,
       token: localStorage.getItem('netToken') || '',
