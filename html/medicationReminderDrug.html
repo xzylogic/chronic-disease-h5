@@ -220,7 +220,7 @@
               $('body').css('height', '100%');
             }
           });
-        });
+        }, false);
         // console.log('获取'+ type +'药品列表:',data);
       } else {
         $.toast(data.msg || '请求错误', 'text');
@@ -565,7 +565,6 @@
         clearTimeout(timeOutEvent);
         if (timeOutEvent !== 0 && longClick === 0) {
           //此处为点击事件
-          alert(1)
           $('#showDrug').text(commonDrugContent);
           getId = commonDrugContent.split(' ');
           drugData.some(function (val) {
