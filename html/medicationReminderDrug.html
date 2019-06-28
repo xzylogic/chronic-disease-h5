@@ -112,7 +112,6 @@
     } else {
       drugList.drugType = 'I';
     }
-    alert('aaaaa')
     var ajax_url = ajaxUrl.medicineList;
     var ajax_fun = function (data) {
       if (data.code === 0) {
@@ -159,47 +158,47 @@
                 // $('#drug-name').attr('drug-name', selectOneObj.value);
                 // $('#drug-dose').val(selectTwoObj.id);
                 // $('#drug-dose').attr('drug-dose', selectTwoObj.value);
-                getId = selectTwoObj.value.split(' ');
-                alert(2)
-                drugData.some(function (val) {
-                  if (drugList.drugType === 'I') {
-                    if (val.brand === (getId[0] + ' ' + getId[1]) && val.specification === getId[2]) {
-                      drugDataId = val.id;
-                      drugDataBrand = val.brand;
-                      drugDataName = val.name;
-                      $('.unit').text(getId[2].substr(-1, 1));
-                      return true;
-                    }
-                  } else {
-                    if (val.brand === getId[0] && val.specification === getId[1]) {
-                      drugDataId = val.id;
-                      drugDataBrand = val.brand;
-                      drugDataName = val.name;
-                      $('.unit').text(getId[1].substr(-1, 1));
-                      return true;
-                    }
-                  }
-                });
-                alert(3)
-                // var otherDrugIptVal = $('.otherDrugIpt input').val();
-                // if (otherDrugIptVal !== '') {
-                //   if (drugList.drugType === 'M') {
-                //     if (otherDrugIptVal.split(' ').length !== 2) {
-                //       $.toptip('请填写正确格式(中间仅有一个空格)', 2000, 'error');
-                //       return;
+                // getId = selectTwoObj.value.split(' ');
+                // alert(2)
+                // drugData.some(function (val) {
+                //   if (drugList.drugType === 'I') {
+                //     if (val.brand === (getId[0] + ' ' + getId[1]) && val.specification === getId[2]) {
+                //       drugDataId = val.id;
+                //       drugDataBrand = val.brand;
+                //       drugDataName = val.name;
+                //       $('.unit').text(getId[2].substr(-1, 1));
+                //       return true;
                 //     }
                 //   } else {
-                //     if (otherDrugIptVal.split(' ').length !== 3) {
-                //       $.toptip('请填写正确格式(中间仅有两个空格)', 2000, 'error');
-                //       return;
+                //     if (val.brand === getId[0] && val.specification === getId[1]) {
+                //       drugDataId = val.id;
+                //       drugDataBrand = val.brand;
+                //       drugDataName = val.name;
+                //       $('.unit').text(getId[1].substr(-1, 1));
+                //       return true;
                 //     }
                 //   }
-                //   showDrugDom.html(otherDrugIptVal);
-                //   return;
-                // }
-                showDrugDom.attr('data-drug-name', selectOneObj.id);
-                showDrugDom.attr('data-drug-dose', selectTwoObj.id);
-                showDrugDom.html(selectTwoObj.value);
+                // });
+                // alert(3)
+                // // var otherDrugIptVal = $('.otherDrugIpt input').val();
+                // // if (otherDrugIptVal !== '') {
+                // //   if (drugList.drugType === 'M') {
+                // //     if (otherDrugIptVal.split(' ').length !== 2) {
+                // //       $.toptip('请填写正确格式(中间仅有一个空格)', 2000, 'error');
+                // //       return;
+                // //     }
+                // //   } else {
+                // //     if (otherDrugIptVal.split(' ').length !== 3) {
+                // //       $.toptip('请填写正确格式(中间仅有两个空格)', 2000, 'error');
+                // //       return;
+                // //     }
+                // //   }
+                // //   showDrugDom.html(otherDrugIptVal);
+                // //   return;
+                // // }
+                // showDrugDom.attr('data-drug-name', selectOneObj.id);
+                // showDrugDom.attr('data-drug-dose', selectTwoObj.id);
+                // showDrugDom.html(selectTwoObj.value);
                 alert(4)
               }
             }
@@ -636,19 +635,19 @@
     // }
 
     //判断当前是口服药页面还是胰岛素页面
-    $('.tabWrap span').bind('click', function () {
-      $('.tabWrap span').removeClass();
-      $(this).addClass('current');
-      $('#showDrug').text('选择用药');
-      if ($(this).text() === '胰岛素') {
-        $('.unit').text('U');
-        anotherType = '胰岛素';
-      } else {
-        $('.unit').text('片');
-        anotherType = '口服药';
-      }
-      getDrugList(anotherType);   //获取口服药或胰岛素药品列表
-    })
+    // $('.tabWrap span').bind('click', function () {
+    //   $('.tabWrap span').removeClass();
+    //   $(this).addClass('current');
+    //   $('#showDrug').text('选择用药');
+    //   if ($(this).text() === '胰岛素') {
+    //     $('.unit').text('U');
+    //     anotherType = '胰岛素';
+    //   } else {
+    //     $('.unit').text('片');
+    //     anotherType = '口服药';
+    //   }
+    //   getDrugList(anotherType);   //获取口服药或胰岛素药品列表
+    // })
   })
 </script>
 
