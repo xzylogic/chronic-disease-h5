@@ -159,8 +159,7 @@
                 // $('#drug-dose').val(selectTwoObj.id);
                 // $('#drug-dose').attr('drug-dose', selectTwoObj.value);
                 getId = selectTwoObj.value.split(' ');
-                alert(1)
-                drugData.some(function (val) {
+                drugData.map(function (val) {
                   if (drugList.drugType === 'I') {
                     if (val.brand === (getId[0] + ' ' + getId[1]) && val.specification === getId[2]) {
                       drugDataId = val.id;
@@ -179,7 +178,6 @@
                     }
                   }
                 });
-                alert(2)
                 var otherDrugIptVal = $('.otherDrugIpt input').val();
                 if (otherDrugIptVal !== '') {
                   if (drugList.drugType === 'M') {
@@ -355,14 +353,12 @@
   var delTimes = [];
   function deleteTime(val, id, i, obj) {
     if(id !== 'undefined' && id !== ''){
-      alert(11)
-      timesIdArr.some(function (data, m) {
+      timesIdArr.map(function (data, m) {
         if(timesIdArr[m] === id){
           timesIdArr.splice(m, 1);
           return true;
         }
       });
-      alert(22)
       delTimes.push({id: id});
     }
 
@@ -571,8 +567,7 @@
           //此处为点击事件
           $('#showDrug').text(commonDrugContent);
           getId = commonDrugContent.split(' ');
-          alert(111)
-          drugData.some(function (val) {
+          drugData.map(function (val) {
             if (drugList.drugType === 'I') {
               if (val.brand === (getId[0] + ' ' + getId[1]) && val.specification === getId[2]) {
                 drugDataId = val.id;
@@ -585,7 +580,6 @@
               }
             }
           });
-          alert(222)
           drugDataName = $(_this).find('span').attr('data-name');
         }
         return false;
