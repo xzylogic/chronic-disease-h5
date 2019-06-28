@@ -507,7 +507,7 @@
     var longClick = 0, timeOutEvent, _this, commonDrugContent;
     $(".listCommonDrug li").bind({
       touchstart: function (e) {
-        e.preventDefault();
+        // e.preventDefault();
         _this = this;
         commonDrugContent = $(_this).find('span').text();
         var deleteId = $(_this).find('span').attr('data-id');   //当前删除的常用药品Id
@@ -554,12 +554,12 @@
         }, 600);
       },
       touchmove: function (e) {
-        e.preventDefault();
+        // e.preventDefault();
         clearTimeout(timeOutEvent);
         timeOutEvent = 0;
       },
       touchend: function (e) {
-        e.preventDefault();
+        // e.preventDefault();
         _this = this;
         commonDrugContent = $(_this).find('span').text();
         clearTimeout(timeOutEvent);
