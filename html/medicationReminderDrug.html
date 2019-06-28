@@ -112,7 +112,7 @@
     } else {
       drugList.drugType = 'I';
     }
-
+    alert('aaaaa')
     var ajax_url = ajaxUrl.medicineList;
     var ajax_fun = function (data) {
       if (data.code === 0) {
@@ -121,6 +121,7 @@
         drugList.iosProvinces = [];
         drugList.iosCitys = [];
         drugList.oralArr = [];
+        alert(1)
         //对获取的数据进行id、parentId排列，value.name相同则parentId不增加
         drugData && drugData.map(function (value) {
           if (!drugList.oralArr.includes(value.name)) {
@@ -159,6 +160,7 @@
                 // $('#drug-dose').val(selectTwoObj.id);
                 // $('#drug-dose').attr('drug-dose', selectTwoObj.value);
                 getId = selectTwoObj.value.split(' ');
+                alert(2)
                 drugData.some(function (val) {
                   if (drugList.drugType === 'I') {
                     if (val.brand === (getId[0] + ' ' + getId[1]) && val.specification === getId[2]) {
@@ -178,6 +180,7 @@
                     }
                   }
                 });
+                alert(3)
                 // var otherDrugIptVal = $('.otherDrugIpt input').val();
                 // if (otherDrugIptVal !== '') {
                 //   if (drugList.drugType === 'M') {
@@ -197,12 +200,13 @@
                 showDrugDom.attr('data-drug-name', selectOneObj.id);
                 showDrugDom.attr('data-drug-dose', selectTwoObj.id);
                 showDrugDom.html(selectTwoObj.value);
+                alert(4)
               }
             }
           );
-          $('.ios-select-widget-box.olay, .close, .sure').bind('click', function () {
-            document.querySelector('#iosselectDrug').style.display = 'none';
-          });
+          // $('.ios-select-widget-box.olay, .close, .sure').bind('click', function () {
+          //   document.querySelector('#iosselectDrug').style.display = 'none';
+          // });
         });
 
         // document.querySelector('#iosselectDrug').addEventListener('click', function () {
@@ -223,6 +227,7 @@
         // }, false);
         // console.log('获取'+ type +'药品列表:',data);
       } else {
+        alert('chucuo')
         $.toast(data.msg || '请求错误', 'text');
       }
       hideMyloading();
