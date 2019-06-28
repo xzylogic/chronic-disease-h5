@@ -115,6 +115,7 @@
 
     var ajax_url = ajaxUrl.medicineList;
     var ajax_fun = function (data) {
+      hideMyloading();
       if (data.code === 0) {
         drugData = data.data;   //用来保存获得的药品列表，并通过判断来获取medicineId并赋值给drugDataId
         var proId = -1, cityId = -1, id = 0;
