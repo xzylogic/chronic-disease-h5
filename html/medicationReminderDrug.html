@@ -158,45 +158,46 @@
                 // $('#drug-name').attr('drug-name', selectOneObj.value);
                 // $('#drug-dose').val(selectTwoObj.id);
                 // $('#drug-dose').attr('drug-dose', selectTwoObj.value);
-                getId = selectTwoObj.value.split(' ');
-                drugData.some(function (val) {
-                  if (drugList.drugType === 'I') {
-                    if (val.brand === (getId[0] + ' ' + getId[1]) && val.specification === getId[2]) {
-                      drugDataId = val.id;
-                      drugDataBrand = val.brand;
-                      drugDataName = val.name;
-                      $('.unit').text(getId[2].substr(-1, 1));
-                      return true;
-                    }
-                  } else {
-                    if (val.brand === getId[0] && val.specification === getId[1]) {
-                      drugDataId = val.id;
-                      drugDataBrand = val.brand;
-                      drugDataName = val.name;
-                      $('.unit').text(getId[1].substr(-1, 1));
-                      return true;
-                    }
-                  }
-                });
-                var otherDrugIptVal = $('.otherDrugIpt input').val();
-                if (otherDrugIptVal !== '') {
-                  if (drugList.drugType === 'M') {
-                    if (otherDrugIptVal.split(' ').length !== 2) {
-                      $.toptip('请填写正确格式(中间仅有一个空格)', 2000, 'error');
-                      return;
-                    }
-                  } else {
-                    if (otherDrugIptVal.split(' ').length !== 3) {
-                      $.toptip('请填写正确格式(中间仅有两个空格)', 2000, 'error');
-                      return;
-                    }
-                  }
-                  showDrugDom.html(otherDrugIptVal);
-                  return;
-                }
-                showDrugDom.attr('data-drug-name', selectOneObj.id);
-                showDrugDom.attr('data-drug-dose', selectTwoObj.id);
-                showDrugDom.html(selectTwoObj.value);
+                alert(123)
+                // getId = selectTwoObj.value.split(' ');
+                // drugData.some(function (val) {
+                //   if (drugList.drugType === 'I') {
+                //     if (val.brand === (getId[0] + ' ' + getId[1]) && val.specification === getId[2]) {
+                //       drugDataId = val.id;
+                //       drugDataBrand = val.brand;
+                //       drugDataName = val.name;
+                //       $('.unit').text(getId[2].substr(-1, 1));
+                //       return true;
+                //     }
+                //   } else {
+                //     if (val.brand === getId[0] && val.specification === getId[1]) {
+                //       drugDataId = val.id;
+                //       drugDataBrand = val.brand;
+                //       drugDataName = val.name;
+                //       $('.unit').text(getId[1].substr(-1, 1));
+                //       return true;
+                //     }
+                //   }
+                // });
+                // var otherDrugIptVal = $('.otherDrugIpt input').val();
+                // if (otherDrugIptVal !== '') {
+                //   if (drugList.drugType === 'M') {
+                //     if (otherDrugIptVal.split(' ').length !== 2) {
+                //       $.toptip('请填写正确格式(中间仅有一个空格)', 2000, 'error');
+                //       return;
+                //     }
+                //   } else {
+                //     if (otherDrugIptVal.split(' ').length !== 3) {
+                //       $.toptip('请填写正确格式(中间仅有两个空格)', 2000, 'error');
+                //       return;
+                //     }
+                //   }
+                //   showDrugDom.html(otherDrugIptVal);
+                //   return;
+                // }
+                // showDrugDom.attr('data-drug-name', selectOneObj.id);
+                // showDrugDom.attr('data-drug-dose', selectTwoObj.id);
+                // showDrugDom.html(selectTwoObj.value);
               }
             }
           );
@@ -205,22 +206,22 @@
           });
         });
 
-        document.querySelector('#iosselectDrug').addEventListener('click', function () {
-          $('.iosselect-box').hide();
-          var winHeight = $(window).height(); //获取当前页面高度
-          $(window).resize(function () {
-            var thisHeight = $(this).height();
-            if (winHeight - thisHeight > 50) {
-              //当软键盘弹出，在这里面操作
-              //alert('aaa');
-              $('body').css('height', winHeight + 'px');
-            } else {
-              //alert('bbb');
-              //当软键盘收起，在此处操作
-              $('body').css('height', '100%');
-            }
-          });
-        }, false);
+        // document.querySelector('#iosselectDrug').addEventListener('click', function () {
+        //   $('.iosselect-box').hide();
+        //   var winHeight = $(window).height(); //获取当前页面高度
+        //   $(window).resize(function () {
+        //     var thisHeight = $(this).height();
+        //     if (winHeight - thisHeight > 50) {
+        //       //当软键盘弹出，在这里面操作
+        //       //alert('aaa');
+        //       $('body').css('height', winHeight + 'px');
+        //     } else {
+        //       //alert('bbb');
+        //       //当软键盘收起，在此处操作
+        //       $('body').css('height', '100%');
+        //     }
+        //   });
+        // }, false);
         // console.log('获取'+ type +'药品列表:',data);
       } else {
         $.toast(data.msg || '请求错误', 'text');
