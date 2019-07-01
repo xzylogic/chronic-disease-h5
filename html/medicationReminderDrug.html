@@ -116,28 +116,28 @@
     var ajax_url = ajaxUrl.medicineList;
     var ajax_fun = function (data) {
       if (data.code === 0) {
-        drugData = data.data;   //用来保存获得的药品列表，并通过判断来获取medicineId并赋值给drugDataId
-        var proId = -1, cityId = -1, id = 0;
-        drugList.iosProvinces = [];
-        drugList.iosCitys = [];
-        drugList.oralArr = [];
-        //对获取的数据进行id、parentId排列，value.name相同则parentId不增加
-        drugData && drugData.map(function (value) {
-          if (!drugList.oralArr.includes(value.name)) {
-            drugList.oralArr.push(value.name);
-            proId++;
-            drugList.iosProvinces.push({id: proId, value: value.name});
-            cityId++;
-            id = 0;
-            drugList.iosCitys.push({id: id, parentId: cityId, value: value.brand + ' ' + value.specification});
-          } else {
-            id++;
-            drugList.iosCitys.push({id: id, parentId: cityId, value: value.brand + ' ' + value.specification});
-          }
-        });
-        var showDrugDom = $('#showDrug');
-        showDrugDom.attr('data-drug-name', 0);
-        showDrugDom.attr('data-drug-dose', 0);
+        // drugData = data.data;   //用来保存获得的药品列表，并通过判断来获取medicineId并赋值给drugDataId
+        // var proId = -1, cityId = -1, id = 0;
+        // drugList.iosProvinces = [];
+        // drugList.iosCitys = [];
+        // drugList.oralArr = [];
+        // //对获取的数据进行id、parentId排列，value.name相同则parentId不增加
+        // drugData && drugData.map(function (value) {
+        //   if (!drugList.oralArr.includes(value.name)) {
+        //     drugList.oralArr.push(value.name);
+        //     proId++;
+        //     drugList.iosProvinces.push({id: proId, value: value.name});
+        //     cityId++;
+        //     id = 0;
+        //     drugList.iosCitys.push({id: id, parentId: cityId, value: value.brand + ' ' + value.specification});
+        //   } else {
+        //     id++;
+        //     drugList.iosCitys.push({id: id, parentId: cityId, value: value.brand + ' ' + value.specification});
+        //   }
+        // });
+        // var showDrugDom = $('#showDrug');
+        // showDrugDom.attr('data-drug-name', 0);
+        // showDrugDom.attr('data-drug-dose', 0);
         $('#selectDrug').bind('click', function () {
           alert(1)
           // $('.ios-select-widget-box').remove();
