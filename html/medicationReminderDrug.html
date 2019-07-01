@@ -122,8 +122,16 @@
         drugList.iosCitys = [];
         drugList.oralArr = [];
         //对获取的数据进行id、parentId排列，value.name相同则parentId不增加
+        Array.prototype.in_array = function (val) {
+          for (var i = 0; i < this.length; i++) {
+            if (this[i] === val) {
+              return true;
+            }
+          }
+          return false;
+        };
         drugData && drugData.map(function (value) {
-          if (!(drugList.oralArr.indexOf(value.name) !== -1)) {
+          if (!drugList.oralArr.in_array(value.name)) {
           // if (!drugList.oralArr.includes(value.name)) {
             drugList.oralArr.push(value.name);
             proId++;
