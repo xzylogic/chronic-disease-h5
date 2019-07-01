@@ -123,17 +123,17 @@
         drugList.oralArr = [];
         //对获取的数据进行id、parentId排列，value.name相同则parentId不增加
         drugData && drugData.map(function (value) {
-          if (!drugList.oralArr.includes(value.name)) {
-            // drugList.oralArr.push(value.name);
-            // proId++;
-            // drugList.iosProvinces.push({id: proId, value: value.name});
-            // cityId++;
-            // id = 0;
-            // drugList.iosCitys.push({id: id, parentId: cityId, value: value.brand + ' ' + value.specification});
-          } else {
-            // id++;
-            // drugList.iosCitys.push({id: id, parentId: cityId, value: value.brand + ' ' + value.specification});
-          }
+          // if (!drugList.oralArr.includes(value.name)) {
+          //   drugList.oralArr.push(value.name);
+          //   proId++;
+          //   drugList.iosProvinces.push({id: proId, value: value.name});
+          //   cityId++;
+          //   id = 0;
+          //   drugList.iosCitys.push({id: id, parentId: cityId, value: value.brand + ' ' + value.specification});
+          // } else {
+          //   id++;
+          //   drugList.iosCitys.push({id: id, parentId: cityId, value: value.brand + ' ' + value.specification});
+          // }
         });
         var showDrugDom = $('#showDrug');
         showDrugDom.attr('data-drug-name', 0);
