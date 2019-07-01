@@ -253,7 +253,7 @@
           commomDrugListName[val.name] = val.name;
           commomDrugListObj[val.brand + ' ' + val.specification] = val.brand + ' ' + val.specification;
         });
-        showCommonDrugList(commomDrugListObj, type, commomDrugListId, commomDrugListName);
+        // showCommonDrugList(commomDrugListObj, type, commomDrugListId, commomDrugListName);
       } else {
         $.toast(data.msg || '请求错误', 'text');
       }
@@ -596,16 +596,16 @@
   //   });
   // }
   //
-  //是否展示常用药品
-  function showCommonDrugList(mecObj, type = '口服药', id, name) {
-    // !mecObj ? (localStorage.getItem('mecObj') ? mecObj = JSON.parse(localStorage.getItem('mecObj')) : false) : false;
-    if (!$.isEmptyObject(mecObj)) {
-      $('.commonDrug').show();
-      // drugNum(mecObj, type, id, name);
-    } else {
-      $('.commonDrug').hide();
-    }
-  }
+  // //是否展示常用药品
+  // function showCommonDrugList(mecObj, type = '口服药', id, name) {
+  //   // !mecObj ? (localStorage.getItem('mecObj') ? mecObj = JSON.parse(localStorage.getItem('mecObj')) : false) : false;
+  //   if (!$.isEmptyObject(mecObj)) {
+  //     $('.commonDrug').show();
+  //     drugNum(mecObj, type, id, name);
+  //   } else {
+  //     $('.commonDrug').hide();
+  //   }
+  // }
 
   $(function () {
     //单击用药提醒列表跳转至此页面时获取当前页面URL的参数
