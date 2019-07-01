@@ -492,24 +492,23 @@
   //
   //常用药品
   function drugNum(mec, type, id, name) {
-    alert(1111)
-    // if (id) {
-    //   var drugKeyArr = Object.keys(mec).reverse(), drugHtml = '', _listCommonDrug = $('.listCommonDrug');
-    //   var drugIdArr = Object.keys(id).reverse();
-    //   var drugNameArr = Object.keys(name).reverse();
-    //   if (drugKeyArr.length === 6) {
-    //     delete mec[drugKeyArr.pop()]
-    //   }
-    //   //存储常用药品
-    //   // type === '胰岛素' ? localStorage.setItem('mecObjInsulin', JSON.stringify(mec)) : localStorage.setItem('mecObj', JSON.stringify(mec));
-    //   type === '胰岛素' ? mecObjInsulin = mec : mecObj = mec;
-    //   drugKeyArr.length >= 1 ? drugKeyArr.map(function (val, i) {
-    //     _listCommonDrug.html('');
-    //     drugHtml += '<li><span data-id=' + drugIdArr[i] + ' data-name=' + drugNameArr[i] + '>' + val + '</span></li>';
-    //     _listCommonDrug.append(drugHtml);
-    //   }) : (_listCommonDrug.html(''), $('.commonDrug').hide());
-    //   longPressDel();
-    // }
+    if (id) {
+      var drugKeyArr = Object.keys(mec).reverse(), drugHtml = '', _listCommonDrug = $('.listCommonDrug');
+      var drugIdArr = Object.keys(id).reverse();
+      var drugNameArr = Object.keys(name).reverse();
+      if (drugKeyArr.length === 6) {
+        delete mec[drugKeyArr.pop()]
+      }
+      //存储常用药品
+      // type === '胰岛素' ? localStorage.setItem('mecObjInsulin', JSON.stringify(mec)) : localStorage.setItem('mecObj', JSON.stringify(mec));
+      type === '胰岛素' ? mecObjInsulin = mec : mecObj = mec;
+      drugKeyArr.length >= 1 ? drugKeyArr.map(function (val, i) {
+        _listCommonDrug.html('');
+        drugHtml += '<li><span data-id=' + drugIdArr[i] + ' data-name=' + drugNameArr[i] + '>' + val + '</span></li>';
+        _listCommonDrug.append(drugHtml);
+      }) : (_listCommonDrug.html(''), $('.commonDrug').hide());
+      // longPressDel();
+    }
   }
 
   // //长按删除
@@ -600,7 +599,13 @@
   //是否展示常用药品
   function showCommonDrugList(mecObj, type = '口服药', id, name) {
     // !mecObj ? (localStorage.getItem('mecObj') ? mecObj = JSON.parse(localStorage.getItem('mecObj')) : false) : false;
-    if (!(JSON.stringify(mecObj) === "{}")) {
+    var ifIn = function() {
+      for(var key in mecObj) {
+        return false;
+      }
+      return true;
+    };
+    if (!ifIn()) {
     // if (!$.isEmptyObject(mecObj)) {
       $('.commonDrug').show();
       drugNum(mecObj, type, id, name);
