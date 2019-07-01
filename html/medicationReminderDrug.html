@@ -492,23 +492,24 @@
   //
   //常用药品
   function drugNum(mec, type, id, name) {
-    if (id) {
-      var drugKeyArr = Object.keys(mec).reverse(), drugHtml = '', _listCommonDrug = $('.listCommonDrug');
-      var drugIdArr = Object.keys(id).reverse();
-      var drugNameArr = Object.keys(name).reverse();
-      if (drugKeyArr.length === 6) {
-        delete mec[drugKeyArr.pop()]
-      }
-      //存储常用药品
-      // type === '胰岛素' ? localStorage.setItem('mecObjInsulin', JSON.stringify(mec)) : localStorage.setItem('mecObj', JSON.stringify(mec));
-      type === '胰岛素' ? mecObjInsulin = mec : mecObj = mec;
-      drugKeyArr.length >= 1 ? drugKeyArr.map(function (val, i) {
-        _listCommonDrug.html('');
-        drugHtml += '<li><span data-id=' + drugIdArr[i] + ' data-name=' + drugNameArr[i] + '>' + val + '</span></li>';
-        _listCommonDrug.append(drugHtml);
-      }) : (_listCommonDrug.html(''), $('.commonDrug').hide());
-      // longPressDel();
-    }
+    alert(1111)
+    // if (id) {
+    //   var drugKeyArr = Object.keys(mec).reverse(), drugHtml = '', _listCommonDrug = $('.listCommonDrug');
+    //   var drugIdArr = Object.keys(id).reverse();
+    //   var drugNameArr = Object.keys(name).reverse();
+    //   if (drugKeyArr.length === 6) {
+    //     delete mec[drugKeyArr.pop()]
+    //   }
+    //   //存储常用药品
+    //   // type === '胰岛素' ? localStorage.setItem('mecObjInsulin', JSON.stringify(mec)) : localStorage.setItem('mecObj', JSON.stringify(mec));
+    //   type === '胰岛素' ? mecObjInsulin = mec : mecObj = mec;
+    //   drugKeyArr.length >= 1 ? drugKeyArr.map(function (val, i) {
+    //     _listCommonDrug.html('');
+    //     drugHtml += '<li><span data-id=' + drugIdArr[i] + ' data-name=' + drugNameArr[i] + '>' + val + '</span></li>';
+    //     _listCommonDrug.append(drugHtml);
+    //   }) : (_listCommonDrug.html(''), $('.commonDrug').hide());
+    //   longPressDel();
+    // }
   }
 
   // //长按删除
