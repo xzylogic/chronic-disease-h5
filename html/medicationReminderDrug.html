@@ -490,27 +490,27 @@
   //   custom.ajaxRequest({type: 'POST', url: ajax_url3, data: JSON.stringify(remindDrugData)}, ajax_fun3, false);
   // }
   //
-  //常用药品
-  function drugNum(mec, type, id, name) {
-    if (id) {
-      var drugKeyArr = Object.keys(mec).reverse(), drugHtml = '', _listCommonDrug = $('.listCommonDrug');
-      var drugIdArr = Object.keys(id).reverse();
-      var drugNameArr = Object.keys(name).reverse();
-      if (drugKeyArr.length === 6) {
-        delete mec[drugKeyArr.pop()]
-      }
-      //存储常用药品
-      // type === '胰岛素' ? localStorage.setItem('mecObjInsulin', JSON.stringify(mec)) : localStorage.setItem('mecObj', JSON.stringify(mec));
-      type === '胰岛素' ? (mecObjInsulin = mec) : (mecObj = mec);
-      drugKeyArr.length >= 1 ? drugKeyArr.map(function (val, i) {
-        _listCommonDrug.html('');
-        drugHtml += '<li><span data-id=' + drugIdArr[i] + ' data-name=' + drugNameArr[i] + '>' + val + '</span></li>';
-        _listCommonDrug.append(drugHtml);
-      }) : (_listCommonDrug.html(''), $('.commonDrug').hide());
-      // longPressDel();
-    }
-  }
-
+  // //常用药品
+  // function drugNum(mec, type, id, name) {
+  //   if (id) {
+  //     var drugKeyArr = Object.keys(mec).reverse(), drugHtml = '', _listCommonDrug = $('.listCommonDrug');
+  //     var drugIdArr = Object.keys(id).reverse();
+  //     var drugNameArr = Object.keys(name).reverse();
+  //     if (drugKeyArr.length === 6) {
+  //       delete mec[drugKeyArr.pop()]
+  //     }
+  //     //存储常用药品
+  //     // type === '胰岛素' ? localStorage.setItem('mecObjInsulin', JSON.stringify(mec)) : localStorage.setItem('mecObj', JSON.stringify(mec));
+  //     type === '胰岛素' ? mecObjInsulin = mec : mecObj = mec;
+  //     drugKeyArr.length >= 1 ? drugKeyArr.map(function (val, i) {
+  //       _listCommonDrug.html('');
+  //       drugHtml += '<li><span data-id=' + drugIdArr[i] + ' data-name=' + drugNameArr[i] + '>' + val + '</span></li>';
+  //       _listCommonDrug.append(drugHtml);
+  //     }) : (_listCommonDrug.html(''), $('.commonDrug').hide());
+  //     longPressDel();
+  //   }
+  // }
+  //
   // //长按删除
   // function longPressDel() {
   //   var longClick = 0, timeOutEvent, _this, commonDrugContent;
@@ -601,7 +601,7 @@
     // !mecObj ? (localStorage.getItem('mecObj') ? mecObj = JSON.parse(localStorage.getItem('mecObj')) : false) : false;
     if (!$.isEmptyObject(mecObj)) {
       $('.commonDrug').show();
-      drugNum(mecObj, type, id, name);
+      // drugNum(mecObj, type, id, name);
     } else {
       $('.commonDrug').hide();
     }
