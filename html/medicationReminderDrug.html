@@ -297,6 +297,7 @@
       callback(minutes);
     };
     selectDateDom.bind('click', function () {
+      alert(23)
       document.querySelector('#iosselectDrug').style.display = 'none';
       // var oneLevelId = showDateDom.attr('data-hour');
       // var twoLevelId = showDateDom.attr('data-minute');
@@ -311,14 +312,13 @@
           callback: function (selectOneObj, selectTwoObj) {
             // showDateDom.attr('data-hour', selectOneObj.id);
             // showDateDom.attr('data-minute', selectTwoObj.id);
-            alert(222)
-            // var timeObjValue = selectOneObj.value + ':' + selectTwoObj.value;
-            // if (!timeObj[timeObjValue]) {
-            //   timeObj[timeObjValue] = timeObjValue;
-            //   addTimeHtml(timeObj);
-            // } else {
-            //   $.toast('此用药时间已添加', 'text');
-            // }
+            var timeObjValue = selectOneObj.value + ':' + selectTwoObj.value;
+            if (!timeObj[timeObjValue]) {
+              timeObj[timeObjValue] = timeObjValue;
+              addTimeHtml(timeObj);
+            } else {
+              $.toast('此用药时间已添加', 'text');
+            }
           }
         });
     });
