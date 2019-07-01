@@ -93,7 +93,6 @@
   FastClick.attach(document.body);
   $.toast.prototype.defaults.duration = 800;
 
-  alert(1)
   var anotherType = '口服药';  //页面进来是在口服药页面
   var drugList = {
     iosProvinces: [],    //口服药数据
@@ -107,7 +106,7 @@
   var mecObj = {}, mecObjInsulin = {};
   var drugData, drugDataId, drugDataBrand, drugDataName, getId;   //来获取medicineId、brand
 
-  function getDrugList(type) {
+  /*function getDrugList(type) {
     if (type === '口服药') {
       drugList.drugType = 'M';
     } else {
@@ -117,7 +116,6 @@
     var ajax_url = ajaxUrl.medicineList;
     var ajax_fun = function (data) {
       if (data.code === 0) {
-        alert(2)
         drugData = data.data;   //用来保存获得的药品列表，并通过判断来获取medicineId并赋值给drugDataId
         var proId = -1, cityId = -1, id = 0;
         drugList.iosProvinces = [];
@@ -231,9 +229,10 @@
     };
     custom.ajaxRequest({url: ajax_url, data: {type: drugList.drugType}}, ajax_fun, false);
     getCommonDrug(type);
-  }
+  }*/
 
   // 获取常用药品列表
+  getCommonDrug('口服药')
   function getCommonDrug(type) {
     var ajax_url2 = ajaxUrl.remindListCums;
     var ajax_fun2 = function (data) {
@@ -614,7 +613,7 @@
       $('.unit').text(urlBrand.split(' ')[1].substr(-1, 1));
     }
     //获取口服药、胰岛素药品列表
-    getDrugList(anotherType);
+    // getDrugList(anotherType);
     if (urlBrand) {
       var urlDose = decodeURI(getParams('dose')), urlTime = decodeURI(getParams('time')), urlRemark = decodeURI(getParams('remark')), urlMedicineId = decodeURI(getParams('medicineId')), urlName = decodeURI(getParams('name'));
       urlTime && urlTime.split(' ').map(function (val) {
@@ -644,7 +643,8 @@
         $('.unit').text('片');
         anotherType = '口服药';
       }
-      getDrugList(anotherType);   //获取口服药或胰岛素药品列表
+      getCommonDrug(anotherType)
+      // getDrugList(anotherType);   //获取口服药或胰岛素药品列表
     })
   })
 </script>
