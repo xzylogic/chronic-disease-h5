@@ -270,7 +270,7 @@
       }else{
         var ajax_fun = function(data){
           if(data.code === 0){
-            if(obj['isNormal'] === 1){
+            if(obj.isNormal === 1){
               $.alert('您本次评估结果尚无糖尿病'+ riskType +'风险，请继续维持健康的生活方式，并定期体检。', returnBack);
             }else{
               $.alert('您本次评估结果具有糖尿病'+ riskType +'风险，建议您到居住地所属社区卫生服务中心进行并发症筛查，及早控制病情。', returnBack);
