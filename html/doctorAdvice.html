@@ -238,7 +238,7 @@
               indexItem++;
             });
 
-            html += temp.format(data.abnormalType, abnormalHtml, data.dealTime, data.docName, data.hospitalName, data.dealContent, abnormalHtml2);
+            html += temp.format(data.abnormalType || '', abnormalHtml, data.dealTime, data.docName, data.hospitalName, data.dealContent, abnormalHtml2);
             // html += temp.format(data.interven_type, abnormalHtml, data.intervene_time, data.doctor_name, data.hospital_name, data.doctor_suggest, abnormalHtml2);
           }) : '';
           $('.newadviceList').html(html);
