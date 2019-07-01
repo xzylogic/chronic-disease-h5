@@ -138,7 +138,8 @@
         var showDrugDom = $('#showDrug');
         showDrugDom.attr('data-drug-name', 0);
         showDrugDom.attr('data-drug-dose', 0);
-        $('#selectDrug').bind('click', function () {
+        document.querySelector('#selectDrug').addEventListener('click', function () {
+        // $('#selectDrug').bind('click', function () {
           $('.ios-select-widget-box').remove();
           document.querySelector('#iosselectDrug').style.display = 'block';
           var oneLevelId = showDrugDom.attr('data-drug-name');
@@ -203,7 +204,8 @@
           $('.ios-select-widget-box.olay, .close, .sure').bind('click', function () {
             document.querySelector('#iosselectDrug').style.display = 'none';
           });
-        });
+        // });
+        }, false);
 
         document.querySelector('#iosselectDrug').addEventListener('click', function () {
           $('.iosselect-box').hide();
@@ -631,7 +633,8 @@
     // }
 
     //判断当前是口服药页面还是胰岛素页面
-    $('.tabWrap span').bind('click', function () {
+    document.querySelector('.tabWrap span').addEventListener('click', function () {
+    // $('.tabWrap span').bind('click', function () {
       $('.tabWrap span').removeClass();
       $(this).addClass('current');
       $('#showDrug').text('选择用药');
@@ -643,7 +646,9 @@
         anotherType = '口服药';
       }
       getDrugList(anotherType);   //获取口服药或胰岛素药品列表
-    })
+    // })
+    }, false);
+
   })
 </script>
 
