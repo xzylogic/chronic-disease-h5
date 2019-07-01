@@ -89,12 +89,7 @@
 <!-- 选药品 -->
 <link rel="stylesheet" href="../lib/css/iosSelect.css">
 <script src="../lib/js/iosSelect.js"></script>
-<script>
-  $('#selectDrug').bind('click', function () {
-    alert(1)
-  })
-</script>
-<!--<script type="text/javascript">
+<script type="text/javascript">
   FastClick.attach(document.body);
   $.toast.prototype.defaults.duration = 800;
 
@@ -258,7 +253,7 @@
     custom.ajaxRequest({url: ajax_url2, data: {type: drugList.drugType, userId: localStorage.getItem('uid')}}, ajax_fun2, false);
   }
 
-  &lt;!&ndash; 时间显示 &ndash;&gt;
+  <!-- 时间显示 -->
   var timeObj = {};
   // var timeObj = localStorage.getItem('timeObj') && JSON.parse(localStorage.getItem('timeObj')) || {};
   initTime();
@@ -519,7 +514,7 @@
         var deleteName = $(_this).find('span').attr('data-name');   //当前删除的常用药品Id
         longClick = 0;//设置初始为0
         timeOutEvent = setTimeout(function () {
-          //此处为长按事件-&#45;&#45;&#45;&#45;在此显示遮罩层及删除按钮
+          //此处为长按事件-----在此显示遮罩层及删除按钮
           longClick = 1;//假如长按，则设置为1
           $.confirm({
             title: '提示',
@@ -651,7 +646,7 @@
       getDrugList(anotherType);   //获取口服药或胰岛素药品列表
     })
   })
-</script>-->
+</script>
 
 </body>
 </html>
