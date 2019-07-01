@@ -159,7 +159,7 @@
                 // $('#drug-dose').val(selectTwoObj.id);
                 // $('#drug-dose').attr('drug-dose', selectTwoObj.value);
                 getId = selectTwoObj.value.split(' ');
-                drugData.map(function (val) {
+                drugData.some(function (val) {
                   if (drugList.drugType === 'I') {
                     if (val.brand === (getId[0] + ' ' + getId[1]) && val.specification === getId[2]) {
                       drugDataId = val.id;
@@ -353,7 +353,7 @@
   var delTimes = [];
   function deleteTime(val, id, i, obj) {
     if(id !== 'undefined' && id !== ''){
-      timesIdArr.map(function (data, m) {
+      timesIdArr.some(function (data, m) {
         if(timesIdArr[m] === id){
           timesIdArr.splice(m, 1);
           return true;
@@ -567,7 +567,7 @@
           //此处为点击事件
           $('#showDrug').text(commonDrugContent);
           getId = commonDrugContent.split(' ');
-          drugData.map(function (val) {
+          drugData.some(function (val) {
             if (drugList.drugType === 'I') {
               if (val.brand === (getId[0] + ' ' + getId[1]) && val.specification === getId[2]) {
                 drugDataId = val.id;

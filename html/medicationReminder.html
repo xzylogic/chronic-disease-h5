@@ -160,7 +160,7 @@
           var temp = $('#drugRemindList-Temp').html();
           $('.custom-nodata').hide();
           $('.custom-btm-fixed').show();
-          data.data.content.length > 0 ? data.data.content.map(function (res, i) {
+          data.data.content.length > 0 ? data.data.content.some(function (res, i) {
             var drugBrand = '', drugTime = '', dosage = '', drugUnit = '', drugMedicineId = '', drugName = '',
                 drugId = res.id, drugDelFlag = res.delFlag, drugRemark = res.remark, drugTimesId = '', drugMecId = '', drugType = res.type;
             var drugFlag = (res.delFlag === '0' ? 'checked' : '');
