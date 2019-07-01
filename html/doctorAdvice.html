@@ -75,11 +75,11 @@
 
 <script type="text/template" id="dovtorAdvice-Temp">
   <li>
-    <p><label>异常类型</label><span>{0}</span></p>
-    <p><label>异常数据</label>{1}<span style="display:none">{6}</span></p>
-    <p><label>干预时间</label><span>{2}</span></p>
-    <p><label>医生姓名</label><span>{3}</span></p>
-    <p><label>医疗机构</label><span>{4}</span></p>
+    <p><label>异常类型</label><span>{0}</span></p><br>
+    <p><label>异常数据</label>{1}<span style="display:none">{6}</span></p><br>
+    <p><label>干预时间</label><span>{2}</span></p><br>
+    <p><label>医生姓名</label><span>{3}</span></p><br>
+    <p><label>医疗机构</label><span>{4}</span></p><br>
     <p><label>医生建议</label><span>{5}</span></p>
   </li>
 </script>
@@ -238,7 +238,7 @@
               indexItem++;
             });
 
-            html += temp.format(data.abnormalType || '', abnormalHtml, data.dealTime, data.docName, data.hospitalName, data.dealContent, abnormalHtml2);
+            html += temp.format(data.abnormalType || ' ', abnormalHtml, data.dealTime, data.docName, data.hospitalName, data.dealContent, abnormalHtml2);
             // html += temp.format(data.interven_type, abnormalHtml, data.intervene_time, data.doctor_name, data.hospital_name, data.doctor_suggest, abnormalHtml2);
           }) : '';
           $('.newadviceList').html(html);
