@@ -131,7 +131,8 @@
           return false;
         };
         drugData && drugData.map(function (value) {
-          if (!drugList.oralArr.in_array(value.name)) {
+          if (!(drugList.oralArr && drugList.oralArr.in_array(value.name))) {
+            console.log(value.name)
           // if (!drugList.oralArr.includes(value.name)) {
             drugList.oralArr.push(value.name);
             proId++;
