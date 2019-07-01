@@ -140,6 +140,7 @@
         showDrugDom.attr('data-drug-dose', 0);
         $('#selectDrug').bind('click', function () {
           $('.ios-select-widget-box').remove();
+          alert(2323)
           document.querySelector('#iosselectDrug').style.display = 'block';
           var oneLevelId = showDrugDom.attr('data-drug-name');
           var twoLevelId = showDrugDom.attr('data-drug-dose');
@@ -634,6 +635,7 @@
     //判断当前是口服药页面还是胰岛素页面
     $('.tabWrap span').bind('click', function () {
       alert('aaa')
+      $("#selectDrug").unbind("click");
       $('.tabWrap span').removeClass();
       $(this).addClass('current');
       $('#showDrug').text('选择用药');
