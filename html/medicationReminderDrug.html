@@ -228,375 +228,375 @@
       hideMyloading();
     };
     custom.ajaxRequest({url: ajax_url, data: {type: drugList.drugType}}, ajax_fun, false);
-    getCommonDrug(type);
+    // getCommonDrug(type);
   }
 
   // 获取常用药品列表
-  function getCommonDrug(type) {
-    var ajax_url2 = ajaxUrl.remindListCums;
-    var ajax_fun2 = function (data) {
-      if (data.code === 0) {
-        var commomDrugListObj = {};
-        commomDrugListId = {};
-        commomDrugListName = {};
-        data.data && data.data.content.length > 0 && data.data.content.reverse().map(function (val) {
-          commomDrugListId[val.id] = val.id;
-          commomDrugListName[val.name] = val.name;
-          commomDrugListObj[val.brand + ' ' + val.specification] = val.brand + ' ' + val.specification;
-        });
-        showCommonDrugList(commomDrugListObj, type, commomDrugListId, commomDrugListName);
-      } else {
-        $.toast(data.msg || '请求错误', 'text');
-      }
-      hideMyloading();
-    };
-    custom.ajaxRequest({url: ajax_url2, data: {type: drugList.drugType, userId: localStorage.getItem('uid')}}, ajax_fun2, false);
-  }
-
-  <!-- 时间显示 -->
-  var timeObj = {};
-  // var timeObj = localStorage.getItem('timeObj') && JSON.parse(localStorage.getItem('timeObj')) || {};
-  initTime();
-
-  function initTime() {
-    var selectDateDom = $('#selectTime');
-    // var showDateDom = $('#showTime');
-    var hourData = function (callback) {
-      var hours = [];
-      for (var i = 0, len = 24; i < len; i++) {
-        if (i < 10) {
-          i = '0' + i;
-        }
-        hours.push({
-          id: i,
-          value: i
-        });
-      }
-      callback(hours);
-    };
-    var minuteData = function (one, callback) {
-      var minutes = [];
-      for (var i = 0, len = 60; i < len; i++) {
-        if (i < 10) {
-          i = '0' + i;
-        }
-        minutes.push({
-          id: i,
-          value: i
-        });
-      }
-      callback(minutes);
-    };
-    selectDateDom.bind('click', function () {
-      document.querySelector('#iosselectDrug').style.display = 'none';
-      // var oneLevelId = showDateDom.attr('data-hour');
-      // var twoLevelId = showDateDom.attr('data-minute');
-      var iosSelect2 = new IosSelect(2,
-        [hourData, minuteData],
-        {
-          title: '添加时间',
-          itemHeight: 35,
-          itemShowCount: 9,
-          oneLevelId: '08',
-          // twoLevelId: twoLevelId,
-          callback: function (selectOneObj, selectTwoObj) {
-            // showDateDom.attr('data-hour', selectOneObj.id);
-            // showDateDom.attr('data-minute', selectTwoObj.id);
-            var timeObjValue = selectOneObj.value + ':' + selectTwoObj.value;
-            if (!timeObj[timeObjValue]) {
-              timeObj[timeObjValue] = timeObjValue;
-              addTimeHtml(timeObj);
-            } else {
-              $.toast('此用药时间已添加', 'text');
-            }
-          }
-        });
-    });
-  }
-
-  //修改时间、添加时间
-  var timesId = getParams('timesId') && getParams('timesId').split('-');
-  var timesIdArr = [];
-  if(timesId){
-    timesId.map(function (id) {
-      if(id !== ''){
-        timesIdArr.push(id);
-      }
-    });
-  }
-  var oldTimeObj = {};
-  function addTimeHtml(_timeObj) {
-    //此行代码是  存储  时间的
-    // !_timeObj ? (localStorage.getItem('timeObj') ? _timeObj = JSON.parse(localStorage.getItem('timeObj')) : false) : localStorage.setItem('timeObj', JSON.stringify(timeObj));
-    if (_timeObj) {
-      var timeHtml = '';
-      var keyArr = Object.keys(_timeObj);
-      keyArr.length >= 1 ? keyArr.map(function (val, i) {
-        $('.listDrugTime').html('');
-        timeHtml +=
-          '      <li>\n' +
-          '        <img src=\'../custom/images/drug_clock.png\' class="icoClock"/>\n' +
-          '        <span class="time" data-hour="" data-minute="" id="showTime">' + val + '</span>\n' +
-          '        <span class="r" onClick="deleteTime(\'' + val + '\', \'' + timesIdArr[i] + '\', \'' + i + '\', this)"><img src=\'../custom/images/drug_delete.png\' class="icoDelete"/></span>\n' +
-          '      </li>';
-        $('.listDrugTime').append(timeHtml);
-        if (keyArr.length === 6) {
-          $('#selectTime').hide();
-        } else {
-          $('#selectTime').show();
-        }
-      }) : $('.listDrugTime').html('');
-    }
-  }
-
-  //删除时间
-  var delTimes = [];
-  function deleteTime(val, id, i, obj) {
-    if(id !== 'undefined' && id !== ''){
-      timesIdArr.some(function (data, m) {
-        if(timesIdArr[m] === id){
-          timesIdArr.splice(m, 1);
-          return true;
-        }
-      });
-      delTimes.push({id: id});
-    }
-
-    delete timeObj[val];
-    $(obj).parent().hide();
-    $('#selectTime').show();
-    // addTimeHtml(timeObj);
-  }
-
-  //备注信息字段长度
-  $('.weui-textarea').bind('input', function () {
-    var reasonLen = $(this).val().length;
-    $('#num').text(reasonLen);
-  });
-
-  //服用剂量输入限制,最多输入一位小数
-  function takeDose(obj) {
-    obj.value = obj.value.match(/\d+\.?\d{0,1}/, '');
-    if (Number(obj.value) > 100) {
-      obj.value = 100;
-    }
-  }
-
-  //保存
-  function save() {
-    var mecNum = $('.itext').val(), showDrugText = $('#showDrug').text();
-    if (showDrugText === '选择用药') {
-      $.toast('请填写药品名称', 'text');
-      return false;
-    } else if (mecNum === '' || null) {
-      $.toast('请填写服用剂量', 'text');
-      return false;
-    } else if ($.isEmptyObject(timeObj)) {
-      $.toast('请添加用药时间', 'text');
-      return false;
-    }
-    var nameSpecification = showDrugText.split(' ');
-    var remindDrugData;
-    var timeArr = [];
-    // console.log(oldTimeObj)
-    Object.keys(timeObj).map(function (val, m) {
-      // console.log(val)
-      if(oldTimeObj.hasOwnProperty(val)){
-        timesIdArr.map(function (id, n) {
-          if(m === n){
-            timeArr.push({id: id, remindId: getParams('id'), remindTime: val + ':00', delFlag: getParams('delFlag') || '0'});
-          }
-        });
-      }else{
-        timeArr.push({remindTime: val + ':00'});
-      }
-    });
-    remindDrugData = {
-      userId: localStorage.getItem('uid'),
-      type: anotherType === '胰岛素' ? 'I' : 'M',
-      remark: $('.weui-textarea').val(),
-      remindTimes: timeArr,
-      delFlag: getParams('delFlag') || '0',
-    };
-    if (anotherType === '胰岛素') {
-      remindDrugData.remindItems = [{
-        name: drugDataName,// 药品名称
-        specification: nameSpecification[2],// 药品规格
-        dose: mecNum,// 用药剂量
-        unit: nameSpecification[2].substr(-1, 1),// 用药单位
-        medicineId: drugDataId,
-        brand: nameSpecification[0] + ' ' + nameSpecification[1],
-      }]
-    } else {
-      remindDrugData.remindItems = [{
-        name: drugDataName,// 药品名称
-        specification: nameSpecification[1],// 药品规格
-        dose: mecNum,// 用药剂量
-        unit: nameSpecification[1].substr(-1, 1),// 用药单位
-        medicineId: drugDataId,
-        brand: nameSpecification[0],
-      }]
-    }
-    if(getParams('brand')){
-      remindDrugData.remindItems[0].id = getParams('mecId');
-      remindDrugData.remindItems[0].remindId = getParams('id');
-      remindDrugData.remindItems[0].delFlag = getParams('delFlag') || '0';
-      remindDrugData.delRemindTimes = delTimes;
-      remindDrugData.id = getParams('id');
-    }
-    // console.log(JSON.stringify(remindDrugData));
-    // console.log(remindDrugData);
-
-    // 保存常用药品
-    var ajax_url3 = ajaxUrl.remindSave;
-    var ajax_fun3 = function (data) {
-      if (data.code === 0) {
-        if (anotherType === '胰岛素') {
-          if (mecObjInsulin[showDrugText]) {
-            delete mecObjInsulin[showDrugText];
-          }
-          mecObjInsulin[showDrugText] = showDrugText;
-          showCommonDrugList(mecObjInsulin, anotherType, commomDrugListId, commomDrugListName);   //这一步会存储胰岛素常用药品
-        } else {
-          if (mecObj[showDrugText]) {
-            delete mecObj[showDrugText];
-          }
-          mecObj[showDrugText] = showDrugText;
-          showCommonDrugList(mecObj, anotherType, commomDrugListId, commomDrugListName);   //这一步会存储口服药常用药品
-        }
-        $.toast(data.msg || '保存成功', 'text');
-        setTimeout(function () {
-          NativeFunc({
-            ACTION: "CLOSEPAGE",
-            PARAM: {
-              INDEX: 0
-            }
-          });
-        }, 600);
-      } else {
-        $.toast(data.msg || '请求错误', 'text');
-      }
-      hideMyloading();
-    };
-    custom.ajaxRequest({type: 'POST', url: ajax_url3, data: JSON.stringify(remindDrugData)}, ajax_fun3, false);
-  }
-
-  //常用药品
-  function drugNum(mec, type, id, name) {
-    if (id) {
-      var drugKeyArr = Object.keys(mec).reverse(), drugHtml = '', _listCommonDrug = $('.listCommonDrug');
-      var drugIdArr = Object.keys(id).reverse();
-      var drugNameArr = Object.keys(name).reverse();
-      if (drugKeyArr.length === 6) {
-        delete mec[drugKeyArr.pop()]
-      }
-      //存储常用药品
-      // type === '胰岛素' ? localStorage.setItem('mecObjInsulin', JSON.stringify(mec)) : localStorage.setItem('mecObj', JSON.stringify(mec));
-      type === '胰岛素' ? mecObjInsulin = mec : mecObj = mec;
-      drugKeyArr.length >= 1 ? drugKeyArr.map(function (val, i) {
-        _listCommonDrug.html('');
-        drugHtml += '<li><span data-id=' + drugIdArr[i] + ' data-name=' + drugNameArr[i] + '>' + val + '</span></li>';
-        _listCommonDrug.append(drugHtml);
-      }) : (_listCommonDrug.html(''), $('.commonDrug').hide());
-      longPressDel();
-    }
-  }
-
-  //长按删除
-  function longPressDel() {
-    var longClick = 0, timeOutEvent, _this, commonDrugContent;
-    $(".listCommonDrug li").bind({
-      touchstart: function (e) {
-        // e.preventDefault();
-        _this = this;
-        commonDrugContent = $(_this).find('span').text();
-        var deleteId = $(_this).find('span').attr('data-id');   //当前删除的常用药品Id
-        var deleteName = $(_this).find('span').attr('data-name');   //当前删除的常用药品Id
-        longClick = 0;//设置初始为0
-        timeOutEvent = setTimeout(function () {
-          //此处为长按事件-----在此显示遮罩层及删除按钮
-          longClick = 1;//假如长按，则设置为1
-          $.confirm({
-            title: '提示',
-            text: '是否删除' + commonDrugContent,
-            onOK: function () {
-              showMyloading();
-              //删除常用药品
-              // var ajax_url4 = ajaxUrl.remindDeleteCum + '?type=' + drugList.drugType + '&id=' + localStorage.getItem('uid');
-              var ajax_url4 = ajaxUrl.remindDeleteCum;
-              var ajax_fun4 = function (data) {
-                if (data.code === 0) {
-                  //点击确认
-                  delete commomDrugListId[deleteId];
-                  delete commomDrugListName[deleteName];
-                  if (anotherType === '胰岛素') {
-                    delete mecObjInsulin[commonDrugContent];
-                    drugNum(mecObjInsulin, '胰岛素', commomDrugListId, commomDrugListName);
-                  } else {
-                    delete mecObj[commonDrugContent];
-                    drugNum(mecObj, '口服药', commomDrugListId, commomDrugListName);
-                  }
-                } else {
-                  $.toast(data.msg || '请求错误', 'text');
-                }
-                hideMyloading();
-              };
-              custom.ajaxRequest({
-                type: 'POST',
-                url: ajax_url4,
-                data: JSON.stringify({id: deleteId})
-              }, ajax_fun4, false);
-            },
-            onCancel: function () {
-              return false;
-            }
-          });
-        }, 600);
-      },
-      touchmove: function (e) {
-        // e.preventDefault();
-        clearTimeout(timeOutEvent);
-        timeOutEvent = 0;
-      },
-      touchend: function (e) {
-        // e.preventDefault();
-        _this = this;
-        commonDrugContent = $(_this).find('span').text();
-        clearTimeout(timeOutEvent);
-        if (timeOutEvent !== 0 && longClick === 0) {
-          //此处为点击事件
-          $('#showDrug').text(commonDrugContent);
-          getId = commonDrugContent.split(' ');
-          drugData.some(function (val) {
-            if (drugList.drugType === 'I') {
-              if (val.brand === (getId[0] + ' ' + getId[1]) && val.specification === getId[2]) {
-                drugDataId = val.id;
-                return true;
-              }
-            } else {
-              if (val.brand === getId[0] && val.specification === getId[1]) {
-                drugDataId = val.id;
-                return true;
-              }
-            }
-          });
-          drugDataName = $(_this).find('span').attr('data-name');
-        }
-        return false;
-      }
-    });
-  }
-
-  //是否展示常用药品
-  function showCommonDrugList(mecObj, type = '口服药', id, name) {
-    // !mecObj ? (localStorage.getItem('mecObj') ? mecObj = JSON.parse(localStorage.getItem('mecObj')) : false) : false;
-    if (!$.isEmptyObject(mecObj)) {
-      $('.commonDrug').show();
-      drugNum(mecObj, type, id, name);
-    } else {
-      $('.commonDrug').hide();
-    }
-  }
+  // function getCommonDrug(type) {
+  //   var ajax_url2 = ajaxUrl.remindListCums;
+  //   var ajax_fun2 = function (data) {
+  //     if (data.code === 0) {
+  //       var commomDrugListObj = {};
+  //       commomDrugListId = {};
+  //       commomDrugListName = {};
+  //       data.data && data.data.content.length > 0 && data.data.content.reverse().map(function (val) {
+  //         commomDrugListId[val.id] = val.id;
+  //         commomDrugListName[val.name] = val.name;
+  //         commomDrugListObj[val.brand + ' ' + val.specification] = val.brand + ' ' + val.specification;
+  //       });
+  //       showCommonDrugList(commomDrugListObj, type, commomDrugListId, commomDrugListName);
+  //     } else {
+  //       $.toast(data.msg || '请求错误', 'text');
+  //     }
+  //     hideMyloading();
+  //   };
+  //   custom.ajaxRequest({url: ajax_url2, data: {type: drugList.drugType, userId: localStorage.getItem('uid')}}, ajax_fun2, false);
+  // }
+  //
+  // <!-- 时间显示 -->
+  // var timeObj = {};
+  // // var timeObj = localStorage.getItem('timeObj') && JSON.parse(localStorage.getItem('timeObj')) || {};
+  // initTime();
+  //
+  // function initTime() {
+  //   var selectDateDom = $('#selectTime');
+  //   // var showDateDom = $('#showTime');
+  //   var hourData = function (callback) {
+  //     var hours = [];
+  //     for (var i = 0, len = 24; i < len; i++) {
+  //       if (i < 10) {
+  //         i = '0' + i;
+  //       }
+  //       hours.push({
+  //         id: i,
+  //         value: i
+  //       });
+  //     }
+  //     callback(hours);
+  //   };
+  //   var minuteData = function (one, callback) {
+  //     var minutes = [];
+  //     for (var i = 0, len = 60; i < len; i++) {
+  //       if (i < 10) {
+  //         i = '0' + i;
+  //       }
+  //       minutes.push({
+  //         id: i,
+  //         value: i
+  //       });
+  //     }
+  //     callback(minutes);
+  //   };
+  //   selectDateDom.bind('click', function () {
+  //     document.querySelector('#iosselectDrug').style.display = 'none';
+  //     // var oneLevelId = showDateDom.attr('data-hour');
+  //     // var twoLevelId = showDateDom.attr('data-minute');
+  //     var iosSelect2 = new IosSelect(2,
+  //       [hourData, minuteData],
+  //       {
+  //         title: '添加时间',
+  //         itemHeight: 35,
+  //         itemShowCount: 9,
+  //         oneLevelId: '08',
+  //         // twoLevelId: twoLevelId,
+  //         callback: function (selectOneObj, selectTwoObj) {
+  //           // showDateDom.attr('data-hour', selectOneObj.id);
+  //           // showDateDom.attr('data-minute', selectTwoObj.id);
+  //           var timeObjValue = selectOneObj.value + ':' + selectTwoObj.value;
+  //           if (!timeObj[timeObjValue]) {
+  //             timeObj[timeObjValue] = timeObjValue;
+  //             addTimeHtml(timeObj);
+  //           } else {
+  //             $.toast('此用药时间已添加', 'text');
+  //           }
+  //         }
+  //       });
+  //   });
+  // }
+  //
+  // //修改时间、添加时间
+  // var timesId = getParams('timesId') && getParams('timesId').split('-');
+  // var timesIdArr = [];
+  // if(timesId){
+  //   timesId.map(function (id) {
+  //     if(id !== ''){
+  //       timesIdArr.push(id);
+  //     }
+  //   });
+  // }
+  // var oldTimeObj = {};
+  // function addTimeHtml(_timeObj) {
+  //   //此行代码是  存储  时间的
+  //   // !_timeObj ? (localStorage.getItem('timeObj') ? _timeObj = JSON.parse(localStorage.getItem('timeObj')) : false) : localStorage.setItem('timeObj', JSON.stringify(timeObj));
+  //   if (_timeObj) {
+  //     var timeHtml = '';
+  //     var keyArr = Object.keys(_timeObj);
+  //     keyArr.length >= 1 ? keyArr.map(function (val, i) {
+  //       $('.listDrugTime').html('');
+  //       timeHtml +=
+  //         '      <li>\n' +
+  //         '        <img src=\'../custom/images/drug_clock.png\' class="icoClock"/>\n' +
+  //         '        <span class="time" data-hour="" data-minute="" id="showTime">' + val + '</span>\n' +
+  //         '        <span class="r" onClick="deleteTime(\'' + val + '\', \'' + timesIdArr[i] + '\', \'' + i + '\', this)"><img src=\'../custom/images/drug_delete.png\' class="icoDelete"/></span>\n' +
+  //         '      </li>';
+  //       $('.listDrugTime').append(timeHtml);
+  //       if (keyArr.length === 6) {
+  //         $('#selectTime').hide();
+  //       } else {
+  //         $('#selectTime').show();
+  //       }
+  //     }) : $('.listDrugTime').html('');
+  //   }
+  // }
+  //
+  // //删除时间
+  // var delTimes = [];
+  // function deleteTime(val, id, i, obj) {
+  //   if(id !== 'undefined' && id !== ''){
+  //     timesIdArr.some(function (data, m) {
+  //       if(timesIdArr[m] === id){
+  //         timesIdArr.splice(m, 1);
+  //         return true;
+  //       }
+  //     });
+  //     delTimes.push({id: id});
+  //   }
+  //
+  //   delete timeObj[val];
+  //   $(obj).parent().hide();
+  //   $('#selectTime').show();
+  //   // addTimeHtml(timeObj);
+  // }
+  //
+  // //备注信息字段长度
+  // $('.weui-textarea').bind('input', function () {
+  //   var reasonLen = $(this).val().length;
+  //   $('#num').text(reasonLen);
+  // });
+  //
+  // //服用剂量输入限制,最多输入一位小数
+  // function takeDose(obj) {
+  //   obj.value = obj.value.match(/\d+\.?\d{0,1}/, '');
+  //   if (Number(obj.value) > 100) {
+  //     obj.value = 100;
+  //   }
+  // }
+  //
+  // //保存
+  // function save() {
+  //   var mecNum = $('.itext').val(), showDrugText = $('#showDrug').text();
+  //   if (showDrugText === '选择用药') {
+  //     $.toast('请填写药品名称', 'text');
+  //     return false;
+  //   } else if (mecNum === '' || null) {
+  //     $.toast('请填写服用剂量', 'text');
+  //     return false;
+  //   } else if ($.isEmptyObject(timeObj)) {
+  //     $.toast('请添加用药时间', 'text');
+  //     return false;
+  //   }
+  //   var nameSpecification = showDrugText.split(' ');
+  //   var remindDrugData;
+  //   var timeArr = [];
+  //   // console.log(oldTimeObj)
+  //   Object.keys(timeObj).map(function (val, m) {
+  //     // console.log(val)
+  //     if(oldTimeObj.hasOwnProperty(val)){
+  //       timesIdArr.map(function (id, n) {
+  //         if(m === n){
+  //           timeArr.push({id: id, remindId: getParams('id'), remindTime: val + ':00', delFlag: getParams('delFlag') || '0'});
+  //         }
+  //       });
+  //     }else{
+  //       timeArr.push({remindTime: val + ':00'});
+  //     }
+  //   });
+  //   remindDrugData = {
+  //     userId: localStorage.getItem('uid'),
+  //     type: anotherType === '胰岛素' ? 'I' : 'M',
+  //     remark: $('.weui-textarea').val(),
+  //     remindTimes: timeArr,
+  //     delFlag: getParams('delFlag') || '0',
+  //   };
+  //   if (anotherType === '胰岛素') {
+  //     remindDrugData.remindItems = [{
+  //       name: drugDataName,// 药品名称
+  //       specification: nameSpecification[2],// 药品规格
+  //       dose: mecNum,// 用药剂量
+  //       unit: nameSpecification[2].substr(-1, 1),// 用药单位
+  //       medicineId: drugDataId,
+  //       brand: nameSpecification[0] + ' ' + nameSpecification[1],
+  //     }]
+  //   } else {
+  //     remindDrugData.remindItems = [{
+  //       name: drugDataName,// 药品名称
+  //       specification: nameSpecification[1],// 药品规格
+  //       dose: mecNum,// 用药剂量
+  //       unit: nameSpecification[1].substr(-1, 1),// 用药单位
+  //       medicineId: drugDataId,
+  //       brand: nameSpecification[0],
+  //     }]
+  //   }
+  //   if(getParams('brand')){
+  //     remindDrugData.remindItems[0].id = getParams('mecId');
+  //     remindDrugData.remindItems[0].remindId = getParams('id');
+  //     remindDrugData.remindItems[0].delFlag = getParams('delFlag') || '0';
+  //     remindDrugData.delRemindTimes = delTimes;
+  //     remindDrugData.id = getParams('id');
+  //   }
+  //   // console.log(JSON.stringify(remindDrugData));
+  //   // console.log(remindDrugData);
+  //
+  //   // 保存常用药品
+  //   var ajax_url3 = ajaxUrl.remindSave;
+  //   var ajax_fun3 = function (data) {
+  //     if (data.code === 0) {
+  //       if (anotherType === '胰岛素') {
+  //         if (mecObjInsulin[showDrugText]) {
+  //           delete mecObjInsulin[showDrugText];
+  //         }
+  //         mecObjInsulin[showDrugText] = showDrugText;
+  //         showCommonDrugList(mecObjInsulin, anotherType, commomDrugListId, commomDrugListName);   //这一步会存储胰岛素常用药品
+  //       } else {
+  //         if (mecObj[showDrugText]) {
+  //           delete mecObj[showDrugText];
+  //         }
+  //         mecObj[showDrugText] = showDrugText;
+  //         showCommonDrugList(mecObj, anotherType, commomDrugListId, commomDrugListName);   //这一步会存储口服药常用药品
+  //       }
+  //       $.toast(data.msg || '保存成功', 'text');
+  //       setTimeout(function () {
+  //         NativeFunc({
+  //           ACTION: "CLOSEPAGE",
+  //           PARAM: {
+  //             INDEX: 0
+  //           }
+  //         });
+  //       }, 600);
+  //     } else {
+  //       $.toast(data.msg || '请求错误', 'text');
+  //     }
+  //     hideMyloading();
+  //   };
+  //   custom.ajaxRequest({type: 'POST', url: ajax_url3, data: JSON.stringify(remindDrugData)}, ajax_fun3, false);
+  // }
+  //
+  // //常用药品
+  // function drugNum(mec, type, id, name) {
+  //   if (id) {
+  //     var drugKeyArr = Object.keys(mec).reverse(), drugHtml = '', _listCommonDrug = $('.listCommonDrug');
+  //     var drugIdArr = Object.keys(id).reverse();
+  //     var drugNameArr = Object.keys(name).reverse();
+  //     if (drugKeyArr.length === 6) {
+  //       delete mec[drugKeyArr.pop()]
+  //     }
+  //     //存储常用药品
+  //     // type === '胰岛素' ? localStorage.setItem('mecObjInsulin', JSON.stringify(mec)) : localStorage.setItem('mecObj', JSON.stringify(mec));
+  //     type === '胰岛素' ? mecObjInsulin = mec : mecObj = mec;
+  //     drugKeyArr.length >= 1 ? drugKeyArr.map(function (val, i) {
+  //       _listCommonDrug.html('');
+  //       drugHtml += '<li><span data-id=' + drugIdArr[i] + ' data-name=' + drugNameArr[i] + '>' + val + '</span></li>';
+  //       _listCommonDrug.append(drugHtml);
+  //     }) : (_listCommonDrug.html(''), $('.commonDrug').hide());
+  //     longPressDel();
+  //   }
+  // }
+  //
+  // //长按删除
+  // function longPressDel() {
+  //   var longClick = 0, timeOutEvent, _this, commonDrugContent;
+  //   $(".listCommonDrug li").bind({
+  //     touchstart: function (e) {
+  //       // e.preventDefault();
+  //       _this = this;
+  //       commonDrugContent = $(_this).find('span').text();
+  //       var deleteId = $(_this).find('span').attr('data-id');   //当前删除的常用药品Id
+  //       var deleteName = $(_this).find('span').attr('data-name');   //当前删除的常用药品Id
+  //       longClick = 0;//设置初始为0
+  //       timeOutEvent = setTimeout(function () {
+  //         //此处为长按事件-----在此显示遮罩层及删除按钮
+  //         longClick = 1;//假如长按，则设置为1
+  //         $.confirm({
+  //           title: '提示',
+  //           text: '是否删除' + commonDrugContent,
+  //           onOK: function () {
+  //             showMyloading();
+  //             //删除常用药品
+  //             // var ajax_url4 = ajaxUrl.remindDeleteCum + '?type=' + drugList.drugType + '&id=' + localStorage.getItem('uid');
+  //             var ajax_url4 = ajaxUrl.remindDeleteCum;
+  //             var ajax_fun4 = function (data) {
+  //               if (data.code === 0) {
+  //                 //点击确认
+  //                 delete commomDrugListId[deleteId];
+  //                 delete commomDrugListName[deleteName];
+  //                 if (anotherType === '胰岛素') {
+  //                   delete mecObjInsulin[commonDrugContent];
+  //                   drugNum(mecObjInsulin, '胰岛素', commomDrugListId, commomDrugListName);
+  //                 } else {
+  //                   delete mecObj[commonDrugContent];
+  //                   drugNum(mecObj, '口服药', commomDrugListId, commomDrugListName);
+  //                 }
+  //               } else {
+  //                 $.toast(data.msg || '请求错误', 'text');
+  //               }
+  //               hideMyloading();
+  //             };
+  //             custom.ajaxRequest({
+  //               type: 'POST',
+  //               url: ajax_url4,
+  //               data: JSON.stringify({id: deleteId})
+  //             }, ajax_fun4, false);
+  //           },
+  //           onCancel: function () {
+  //             return false;
+  //           }
+  //         });
+  //       }, 600);
+  //     },
+  //     touchmove: function (e) {
+  //       // e.preventDefault();
+  //       clearTimeout(timeOutEvent);
+  //       timeOutEvent = 0;
+  //     },
+  //     touchend: function (e) {
+  //       // e.preventDefault();
+  //       _this = this;
+  //       commonDrugContent = $(_this).find('span').text();
+  //       clearTimeout(timeOutEvent);
+  //       if (timeOutEvent !== 0 && longClick === 0) {
+  //         //此处为点击事件
+  //         $('#showDrug').text(commonDrugContent);
+  //         getId = commonDrugContent.split(' ');
+  //         drugData.some(function (val) {
+  //           if (drugList.drugType === 'I') {
+  //             if (val.brand === (getId[0] + ' ' + getId[1]) && val.specification === getId[2]) {
+  //               drugDataId = val.id;
+  //               return true;
+  //             }
+  //           } else {
+  //             if (val.brand === getId[0] && val.specification === getId[1]) {
+  //               drugDataId = val.id;
+  //               return true;
+  //             }
+  //           }
+  //         });
+  //         drugDataName = $(_this).find('span').attr('data-name');
+  //       }
+  //       return false;
+  //     }
+  //   });
+  // }
+  //
+  // //是否展示常用药品
+  // function showCommonDrugList(mecObj, type = '口服药', id, name) {
+  //   // !mecObj ? (localStorage.getItem('mecObj') ? mecObj = JSON.parse(localStorage.getItem('mecObj')) : false) : false;
+  //   if (!$.isEmptyObject(mecObj)) {
+  //     $('.commonDrug').show();
+  //     drugNum(mecObj, type, id, name);
+  //   } else {
+  //     $('.commonDrug').hide();
+  //   }
+  // }
 
   $(function () {
     //单击用药提醒列表跳转至此页面时获取当前页面URL的参数
@@ -613,22 +613,22 @@
     }
     //获取口服药、胰岛素药品列表
     getDrugList(anotherType);
-    if (urlBrand) {
-      var urlDose = decodeURI(getParams('dose')), urlTime = decodeURI(getParams('time')), urlRemark = decodeURI(getParams('remark')), urlMedicineId = decodeURI(getParams('medicineId')), urlName = decodeURI(getParams('name'));
-      urlTime && urlTime.split(' ').map(function (val) {
-        if (val === '') {
-          return;
-        }
-        timeObj[val] = val;
-      });
-      drugDataName = urlName;
-      drugDataId = urlMedicineId;
-      $('#showDrug').text(urlBrand);
-      $('.itext').val(urlDose);
-      $('.weui-textarea').val(urlRemark);
-      oldTimeObj = JSON.parse(JSON.stringify(timeObj));
-      addTimeHtml(timeObj);
-    }
+    // if (urlBrand) {
+    //   var urlDose = decodeURI(getParams('dose')), urlTime = decodeURI(getParams('time')), urlRemark = decodeURI(getParams('remark')), urlMedicineId = decodeURI(getParams('medicineId')), urlName = decodeURI(getParams('name'));
+    //   urlTime && urlTime.split(' ').map(function (val) {
+    //     if (val === '') {
+    //       return;
+    //     }
+    //     timeObj[val] = val;
+    //   });
+    //   drugDataName = urlName;
+    //   drugDataId = urlMedicineId;
+    //   $('#showDrug').text(urlBrand);
+    //   $('.itext').val(urlDose);
+    //   $('.weui-textarea').val(urlRemark);
+    //   oldTimeObj = JSON.parse(JSON.stringify(timeObj));
+    //   addTimeHtml(timeObj);
+    // }
 
     //判断当前是口服药页面还是胰岛素页面
     $('.tabWrap span').bind('click', function () {

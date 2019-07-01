@@ -100,7 +100,7 @@
       NativeFunc({
         ACTION: "OPENURL",
         PARAM: {
-          URL: nativeObj.htmlPath + '/medicationReminderDrug.html?v=1.3'
+          URL: nativeObj.htmlPath + '/medicationReminderDrug.html?v=1.4'
         }
       });
     }
@@ -160,7 +160,7 @@
           var temp = $('#drugRemindList-Temp').html();
           $('.custom-nodata').hide();
           $('.custom-btm-fixed').show();
-          data.data.content.length > 0 ? data.data.content.some(function (res, i) {
+          data.data.content.length > 0 ? data.data.content.map(function (res, i) {
             var drugBrand = '', drugTime = '', dosage = '', drugUnit = '', drugMedicineId = '', drugName = '',
                 drugId = res.id, drugDelFlag = res.delFlag, drugRemark = res.remark, drugTimesId = '', drugMecId = '', drugType = res.type;
             var drugFlag = (res.delFlag === '0' ? 'checked' : '');
@@ -217,7 +217,7 @@
                 NativeFunc({
                   ACTION: "OPENURL",
                   PARAM: {
-                    URL: nativeObj.htmlPath + '/medicationReminderDrug.html?brand='+brand+'&dose='+dose+'&time='+time+'&medicineId='+medicineId+'&name='+name+'&id='+id+'&delFlag='+delFlag+'&remark='+remark+'&timesId='+timesId+'&mecId='+mecId+'&type='+type+'&v=1.3'
+                    URL: nativeObj.htmlPath + '/medicationReminderDrug.html?brand='+brand+'&dose='+dose+'&time='+time+'&medicineId='+medicineId+'&name='+name+'&id='+id+'&delFlag='+delFlag+'&remark='+remark+'&timesId='+timesId+'&mecId='+mecId+'&type='+type+'&v=1.4'
                   }
                 });
               }
