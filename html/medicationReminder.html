@@ -244,6 +244,7 @@
       var ajax_url2 = ajaxUrl.remindEnable;
       var ajax_fun2 = function(data){
         if(data.code === 0){
+          getRemindList();
           console.log('修改状态成功', data);
           // $.toast(data.msg || '修改状态成功', 'text');
         }else{
