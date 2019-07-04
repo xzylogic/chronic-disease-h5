@@ -545,14 +545,25 @@
       delFlag: getParams('delFlag') || '0',
     };
     if (anotherType === '胰岛素') {
-      remindDrugData.remindItems = [{
-        name: drugDataName,// 药品名称
-        specification: nameSpecification[2],// 药品规格
-        dose: mecNum,// 用药剂量
-        unit: nameSpecification[2].substr(-1, 1),// 用药单位
-        medicineId: drugDataId,
-        brand: nameSpecification[0] + ' ' + nameSpecification[1],
-      }]
+      if(nameSpecification.length === 3){
+        remindDrugData.remindItems = [{
+          name: drugDataName,// 药品名称
+          specification: nameSpecification[2],// 药品规格
+          dose: mecNum,// 用药剂量
+          unit: nameSpecification[2].substr(-1, 1),// 用药单位
+          medicineId: drugDataId,
+          brand: nameSpecification[0] + ' ' + nameSpecification[1],
+        }]
+      }else{
+        remindDrugData.remindItems = [{
+          name: drugDataName,// 药品名称
+          specification: nameSpecification[1],// 药品规格
+          dose: mecNum,// 用药剂量
+          unit: nameSpecification[1].substr(-1, 1),// 用药单位
+          medicineId: drugDataId,
+          brand: nameSpecification[0],
+        }]
+      }
     } else {
       remindDrugData.remindItems = [{
         name: drugDataName,// 药品名称
@@ -614,7 +625,11 @@
       $('.tabWrap span').removeClass();
       anotherType = '胰岛素';
       $('.tabWrap span:eq(1)').addClass('current');
-      $('.unit').text(urlBrand.split(' ')[2].substr(-1, 1));
+      if(urlBrand.split(' ').length === 3){
+        $('.unit').text(urlBrand.split(' ')[2].substr(-1, 1));
+      }else{
+        $('.unit').text(urlBrand.split(' ')[1].substr(-1, 1));
+      }
     }else if(getParams('type') === 'M'){
       anotherType = '口服药';
       $('.tabWrap span:eq(0)').addClass('current');
