@@ -139,45 +139,45 @@
               }else{
                 flagItem = 'item';
               }
-              switch (res.type) {
-                case "0":
+              switch (parseInt(res.type)) {
+                case 0:
                   meal = '早餐前';
                   break;
-                case "1":
+                case 1:
                   meal = '早餐后';
                   break;
-                case "2":
+                case 2:
                   meal = '午餐前';
                   break;
-                case "3":
+                case 3:
                   meal = '午餐后';
                   break;
-                case "4":
+                case 4:
                   meal = '晚餐前';
                   break;
-                case "5":
+                case 5:
                   meal = '晚餐后';
                   break;
-                case "6":
+                case 6:
                   meal = '睡前';
                   break;
-                case "7":
+                case 7:
                   meal = '凌晨';
                   break;
                 default :
                   meal = '随机';
                   break;
               }
-              switch (res.flag) {
-                case '0':
+              switch (parseInt(res.flag)) {
+                case 0:
                   flagStatus = '';
                   flagImg = '';
                   break;
-                case '1':
+                case 1:
                   flagStatus = 'abnormal';
                   flagImg = '../custom/images/sup.png';
                   break;
-                case '2':
+                case 2:
                   flagStatus = 'abnormal';
                   flagImg = '../custom/images/down-arrow1.png';
                   break;
@@ -198,7 +198,7 @@
               }else{
                 flagItem = 'item';
               }
-              switch (res.diaFlag) {
+              switch (parseInt(res.diaFlag)) {
                 case 0:
                   flagStatus = '';
                   flagImg = '';
