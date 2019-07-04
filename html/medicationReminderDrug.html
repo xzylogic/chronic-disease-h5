@@ -530,7 +530,7 @@
       if(oldTimeObj.hasOwnProperty(val)){
         timesIdArr.map(function (id, n) {
           if(m === n){
-            timeArr.push({id: id, remindId: getParams('id'), remindTime: val + ':00', delFlag: getParams('delFlag') || '0'});
+            timeArr.push({id: id, remindId: getParams('id'), remindTime: val + ':00'});
           }
         });
       }else{
