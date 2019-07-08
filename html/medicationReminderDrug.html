@@ -530,7 +530,7 @@
       if(oldTimeObj.hasOwnProperty(val)){
         timesIdArr.map(function (id, n) {
           if(m === n){
-            timeArr.push({remindTime: val + ':00'});
+            timeArr.push({id: id, remindTime: val + ':00'});
           }
         });
       }else{
